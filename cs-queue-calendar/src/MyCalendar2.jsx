@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Calendar, Button, Badge, Select, ConfigProvider } from "antd";
+import {
+    Alert,
+    Calendar,
+    Button,
+    Badge,
+    Select,
+    ConfigProvider,
+    Flex,
+} from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/fa";
 import weekday from "dayjs/plugin/weekday";
@@ -18,14 +26,18 @@ const MyCalendar2 = () => {
 
     const events = [
         { day: 2, title: "جلسه مرحله‌ اول: پرسش‌وپاسخ داکیومنت CS Overview" },
-        { day: 0, title: "جلسه مصاحبه‌ گروه تعیین‌شده برای این تاریخ" },
+        {
+            day: 0,
+            title: "جلسه مرحله‌ سوم: پرسش‌وپاسخ داکیومنت CS Internship Prerequisites",
+        },
         {
             day: 2,
             title: "جلسه مرحله‌ دوم: پرسش‌وپاسخ فیلم معرفی برنامه‌ CS Internship",
         },
+
         {
             day: 0,
-            title: "جلسه مرحله‌ سوم: پرسش‌وپاسخ داکیومنت CS Internship Prerequisites",
+            title: "جلسه مرحله‌ چهار: مصاحبه‌ گروه تعیین‌شده برای این تاریخ",
         },
     ];
 
@@ -46,7 +58,7 @@ const MyCalendar2 = () => {
         console.log(newValue);
 
         if (event) {
-            setEventDescription(`${event.title}`);
+            setEventDescription(`${event.title} - ساعت ۱۸:۰۰ تا ۱۹:۰۰`);
         } else {
             setEventDescription("برای این تاریخ رویدادی وجود ندارد.");
         }
@@ -95,15 +107,6 @@ const MyCalendar2 = () => {
 
     return (
         <>
-            <ConfigProvider direction={"rtl"}>
-                <Alert
-                    message={eventDescription || "تاریخی انتخاب نشده است."}
-                    type="info"
-                    showIcon
-                    style={{ marginBottom: 16 }}
-                />
-            </ConfigProvider>
-
             <Calendar
                 value={value}
                 onSelect={onSelect}
@@ -119,14 +122,12 @@ const MyCalendar2 = () => {
                     );
 
                     return (
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                            }}
+                        <Flex
+                            justify="space-between"
+                            align="center"
+                            className="calendar-header"
                         >
-                            <div>
+                            <Flex gap={8}>
                                 <Button
                                     onClick={() =>
                                         onChange(value.subtract(1, "month"))
@@ -144,13 +145,8 @@ const MyCalendar2 = () => {
                                 >
                                     ماه بعد
                                 </Button>
-                            </div>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                }}
-                            >
+                            </Flex>
+                            <Flex gap={8}>
                                 <Select
                                     value={currentYear}
                                     onChange={(newYear) =>
@@ -159,7 +155,6 @@ const MyCalendar2 = () => {
                                             newYear
                                         )
                                     }
-                                    style={{ width: 100, marginRight: 8 }}
                                 >
                                     {years.map((year) => (
                                         <Select.Option key={year} value={year}>
@@ -175,7 +170,6 @@ const MyCalendar2 = () => {
                                             currentYear
                                         )
                                     }
-                                    style={{ width: 120 }}
                                 >
                                     {months.map((month, index) => (
                                         <Select.Option
@@ -186,8 +180,8 @@ const MyCalendar2 = () => {
                                         </Select.Option>
                                     ))}
                                 </Select>
-                            </div>
-                        </div>
+                            </Flex>
+                        </Flex>
                     );
                 }}
                 locale={{
@@ -199,6 +193,14 @@ const MyCalendar2 = () => {
                     firstDayOfWeek: 6,
                 }}
             />
+
+            <ConfigProvider direction={"rtl"}>
+                <Alert
+                    message={eventDescription || "تاریخی انتخاب نشده است."}
+                    type="info"
+                    showIcon
+                />
+            </ConfigProvider>
         </>
     );
 };
