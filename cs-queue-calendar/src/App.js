@@ -1,11 +1,21 @@
 import React from "react";
 import MyCalendar1 from "./MyCalendar1";
+import MyCalendar2 from "./MyCalendar2";
+import { ConfigProvider, theme } from "antd";
+import Header from "./Header";
 
 const App = () => {
     return (
         <div>
-            <h1>hello</h1>
-            <MyCalendar1 />
+            <Header />
+
+            <ConfigProvider
+                theme={{
+                    // algorithm: theme.darkAlgorithm,
+                }}
+            >
+                <MyCalendar2 />
+            </ConfigProvider>
         </div>
     );
 };
