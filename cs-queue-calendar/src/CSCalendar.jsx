@@ -8,6 +8,7 @@ import {
     ConfigProvider,
     Flex,
 } from "antd";
+
 import dayjs from "dayjs";
 import "dayjs/locale/fa";
 import weekday from "dayjs/plugin/weekday";
@@ -17,36 +18,55 @@ dayjs.locale("fa");
 dayjs.extend(weekday);
 dayjs.extend(localeData);
 
-const MyCalendar2 = () => {
+const CSCalendar = () => {
     const today = dayjs();
 
     const [value, setValue] = useState(today);
     const [selectedValue, setSelectedValue] = useState(today);
     const [eventDescription, setEventDescription] = useState("");
 
+    const weekDays = [
+        "شنبه",
+        "یک‌شنبه",
+        "دوشنبه",
+        "سه‌شنبه",
+        "چهارشنبه",
+        "پنج‌شنبه",
+        "جمعه",
+    ];
+
     const events = [
-        { day: 2, title: "جلسه مرحله‌ اول: پرسش‌وپاسخ داکیومنت CS Overview" },
-        {
-            day: 0,
-            title: "جلسه مرحله‌ سوم: پرسش‌وپاسخ داکیومنت CS Internship Prerequisites",
-        },
         {
             day: 2,
             title: "جلسه مرحله‌ دوم: پرسش‌وپاسخ فیلم معرفی برنامه‌ CS Internship",
         },
-
+        { day: 2, title: "جلسه مرحله‌ اول: پرسش‌وپاسخ داکیومنت CS Overview" },
         {
             day: 0,
-            title: "جلسه مرحله‌ چهار: مصاحبه‌ گروه تعیین‌شده برای این تاریخ",
+            title: "جلسه مرحله‌ چهارم: مصاحبه‌ گروه تعیین‌شده برای این تاریخ",
+        },
+        {
+            day: 0,
+            title: "جلسه مرحله‌ سوم: پرسش‌وپاسخ داکیومنت CS Internship Prerequisites",
         },
     ];
 
     const getEventForDate = (date) => {
+        const startDate = dayjs("2025-01-13");
+
+        if (date.isBefore(startDate, "day")) {
+            return null;
+        }
+
         const weekNumber =
-            Math.floor(date.diff(today.startOf("week"), "week") / 2) % 2;
-        const eventIndex =
-            (weekNumber * 2 + (date.day() === 0 ? 1 : 0)) % events.length;
-        return date.day() === 0 || date.day() === 2 ? events[eventIndex] : null;
+            Math.floor(date.diff(today.startOf("week"), "week")) % 2;
+
+        if (date.day() === 2) {
+            return events[weekNumber];
+        } else if (date.day() === 0) {
+            return events[2 + weekNumber];
+        }
+        return null;
     };
 
     const onSelect = (newValue) => {
@@ -54,9 +74,6 @@ const MyCalendar2 = () => {
         setSelectedValue(newValue);
 
         const event = getEventForDate(newValue);
-
-        console.log(newValue);
-
         if (event) {
             setEventDescription(`${event.title} - ساعت ۱۸:۰۰ تا ۱۹:۰۰`);
         } else {
@@ -71,7 +88,13 @@ const MyCalendar2 = () => {
     const handleTodayClick = () => {
         setValue(today);
         setSelectedValue(today);
-        setEventDescription("");
+
+        const event = getEventForDate(today);
+        if (event) {
+            setEventDescription(`${event.title} - ساعت ۱۸:۰۰ تا ۱۹:۰۰`);
+        } else {
+            setEventDescription("برای این تاریخ رویدادی وجود ندارد.");
+        }
     };
 
     const handleMonthYearChange = (month, year) => {
@@ -83,26 +106,16 @@ const MyCalendar2 = () => {
         return event ? <Badge status="success" text={event.title} /> : null;
     };
 
-    const weekDays = [
-        "شنبه",
-        "یک‌شنبه",
-        "دوشنبه",
-        "سه‌شنبه",
-        "چهارشنبه",
-        "پنج‌شنبه",
-        "جمعه",
-    ];
-
     useEffect(() => {
         const tableHeaderItems = Array.from(
             document.querySelectorAll(".ant-picker-content thead tr th")
         );
 
-        console.log(tableHeaderItems);
-
         tableHeaderItems.map(
             (item, index) => (item.textContent = weekDays[index])
         );
+
+        return () => console.log("Aloha");
     }, []);
 
     return (
@@ -205,4 +218,4 @@ const MyCalendar2 = () => {
     );
 };
 
-export default MyCalendar2;
+export default CSCalendar;

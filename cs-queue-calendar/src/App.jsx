@@ -1,8 +1,8 @@
 import React from "react";
-import MyCalendar2 from "./MyCalendar2";
 import { ConfigProvider, theme } from "antd";
 import Header from "./Header";
 import Footer from "./Footer";
+import CSCalendar from "./CSCalendar";
 
 const App = () => {
     return (
@@ -14,7 +14,7 @@ const App = () => {
                     algorithm: theme.darkAlgorithm,
                 }}
             >
-                <MyCalendar2 />
+                <CSCalendar />
             </ConfigProvider>
 
             <Footer />
