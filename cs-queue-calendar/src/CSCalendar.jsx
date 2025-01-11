@@ -37,16 +37,15 @@ const CSCalendar = () => {
 
     const events = [
         {
-            day: 2,
+            title: "جلسه مرحله‌ اول: پرسش‌وپاسخ داکیومنت CS Overview",
+        },
+        {
             title: "جلسه مرحله‌ دوم: پرسش‌وپاسخ فیلم معرفی برنامه‌ CS Internship",
         },
-        { day: 2, title: "جلسه مرحله‌ اول: پرسش‌وپاسخ داکیومنت CS Overview" },
         {
-            day: 0,
             title: "جلسه مرحله‌ چهارم: مصاحبه‌ گروه تعیین‌شده برای این تاریخ",
         },
         {
-            day: 0,
             title: "جلسه مرحله‌ سوم: پرسش‌وپاسخ داکیومنت CS Internship Prerequisites",
         },
     ];
@@ -58,8 +57,8 @@ const CSCalendar = () => {
             return null;
         }
 
-        const weekNumber =
-            Math.floor(date.diff(today.startOf("week"), "week")) % 2;
+        const daysSinceStart = date.diff(startDate, "day");
+        const weekNumber = Math.floor(daysSinceStart / 7) % 2;
 
         if (date.day() === 2) {
             return events[weekNumber];
