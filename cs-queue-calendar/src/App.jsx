@@ -4,29 +4,25 @@ import Header from "./Header";
 import Footer from "./Footer";
 import CSCalendar from "./CSCalendar";
 import { ThemeContext } from "./ThemeContext";
+import FloatButtonSection from "./FloatButtonSection";
 
 const App = () => {
-    const { theme: currentTheme, toggleTheme } = useContext(ThemeContext);
+    const { theme: currentTheme } = useContext(ThemeContext);
 
     return (
-        <div>
+        <ConfigProvider
+            theme={{
+                algorithm:
+                    currentTheme === "dark"
+                        ? theme.darkAlgorithm
+                        : theme.defaultAlgorithm,
+            }}
+        >
             <Header />
-
-            {/* <button onClick={toggleTheme}>Toggle Theme</button> */}
-
-            <ConfigProvider
-                theme={{
-                    algorithm:
-                        currentTheme === "dark"
-                            ? theme.darkAlgorithm
-                            : theme.defaultAlgorithm,
-                }}
-            >
-                <CSCalendar />
-            </ConfigProvider>
-
+            <CSCalendar />
             <Footer />
-        </div>
+            <FloatButtonSection />
+        </ConfigProvider>
     );
 };
 
