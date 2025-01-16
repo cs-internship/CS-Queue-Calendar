@@ -2,13 +2,36 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    transition: background-color 0.25s, color 0.25s !important;
+}
+
+:root {
+    --bg-color: #141414;
+    --text-color: white;
+}
+
+[data-theme="light"] {
+    --bg-color: white;
+    --text-color: black;
+    --footer-bg-color: #dce6f4;
+    --thumb-bg-color: #cacaca;
+    --calendar-border-color: #afafaf;
+}
+
+[data-theme="dark"] {
+    --bg-color: #141414;
+    --text-color: white;
+    --footer-bg-color: #111;
+    --thumb-bg-color: #7a7a7a;
+    --calendar-border-color: #5a5a5a;
 }
 
 body {
-    background-color: #141414;
     height: 100vh !important;
     overflow-y: hidden;
     min-width: 780px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 .ant-badge.ant-badge-status {
@@ -28,7 +51,7 @@ h1 {
     align-items: center;
     height: 72px;
     font-family: sans-serif;
-    color: white;
+    color: var(--text-color);
     cursor: default;
     letter-spacing: 0.3px;
 }
@@ -38,7 +61,7 @@ h1 {
 }
 
 .header-ICARUS {
-    color: white;
+    color: var(--text-color);
     text-decoration: none;
     transition: color 0.5s 0.3s;
     cursor: default;
@@ -58,7 +81,7 @@ thead {
     position: sticky !important;
     top: 0px;
     z-index: 100;
-    background-color: #141414;
+    background-color: var(--bg-color);
 
     th {
         line-height: 22px !important;
@@ -70,11 +93,11 @@ thead {
     height: 6px;
 
     &-track {
-        background-color: #141414;
+        background-color: var(--bg-color);
     }
 
     &-thumb {
-        background-color: #7a7a7a;
+        background-color: var(--thumb-bg-color);
         border-radius: 10px;
 
         &:hover {
@@ -89,7 +112,7 @@ thead {
 }
 
 .calendar-header {
-    border-bottom: 1px solid #5a5a5a !important;
+    border-bottom: 1px solid var(--calendar-border-color) !important;
     height: 50px;
     padding: 0 9px;
 }
@@ -98,14 +121,14 @@ thead {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #111;
+    background-color: var(--footer-bg-color);
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
     height: 56px;
     font-size: 24px;
-    color: white;
+    color: var(--text-color);
     text-decoration: none;
     font-family: sans-serif;
     font-size: 21px;
@@ -115,7 +138,7 @@ thead {
     margin: 0 20px;
     border-radius: 14px;
     overflow: hidden;
-    border: 1px solid #5a5a5a;
+    border: 1px solid var(--calendar-border-color);
     border-collapse: collapse;
 }
 
