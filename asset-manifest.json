@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/CS-Queue-Calendar/static/css/main.f2483884.css",
-    "main.js": "/CS-Queue-Calendar/static/js/main.98670d00.js",
+    "main.css": "/CS-Queue-Calendar/static/css/main.09739f2f.css",
+    "main.js": "/CS-Queue-Calendar/static/js/main.401dadad.js",
     "index.html": "/CS-Queue-Calendar/index.html",
-    "main.f2483884.css.map": "/CS-Queue-Calendar/static/css/main.f2483884.css.map",
-    "main.98670d00.js.map": "/CS-Queue-Calendar/static/js/main.98670d00.js.map"
+    "main.09739f2f.css.map": "/CS-Queue-Calendar/static/css/main.09739f2f.css.map",
+    "main.401dadad.js.map": "/CS-Queue-Calendar/static/js/main.401dadad.js.map"
   },
   "entrypoints": [
-    "static/css/main.f2483884.css",
-    "static/js/main.98670d00.js"
+    "static/css/main.09739f2f.css",
+    "static/js/main.401dadad.js"
   ]
 }
