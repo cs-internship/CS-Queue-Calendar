@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Input, Spin, message } from "antd";
-
+import { Button, Modal, Input, Spin } from "antd";
 import moment from "moment-jalaali";
 
 moment.loadPersian({ dialect: "persian-modern" });
@@ -54,10 +53,10 @@ const AnnouncementModule = ({
             )}) طبق «برنامه زمان‌بندی جلسات»، به شرح زیر برگزار می‌شود:
 
 1️⃣ سه‌شنبه، ${convertToPersianNumbers(firstEventDate)}
-موضوع: ${announcementData?.secondEvent?.title}
+موضوع: ${announcementData?.secondEvent?.title.replace(/:/g, " -")}
 
 2️⃣ یک‌شنبه، ${convertToPersianNumbers(secondEventDate)}
-موضوع: ${announcementData?.firstEvent?.title}
+موضوع: ${announcementData?.firstEvent?.title.replace(/:/g, " -")}
 
 ⏰ زمان جلسات: ۱۸:۰۰ تا ۱۹:۰۰
 

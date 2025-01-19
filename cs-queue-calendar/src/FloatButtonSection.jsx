@@ -39,10 +39,6 @@ const FloatButtonSection = ({ setIsModalOpen }) => {
         };
     };
 
-    const handleAnnouncement = () => {
-        console.log("joi");
-    };
-
     return (
         <>
             <FloatButton.Group

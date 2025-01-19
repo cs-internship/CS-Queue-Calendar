@@ -12,15 +12,10 @@ import dayjs from "dayjs";
 import "dayjs/locale/fa";
 import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
-
 import moment from "moment";
+import "moment/locale/fa";
 
-import "moment/locale/fa"; // برای استفاده از زبان فارسی
-
-import momentJalaali from "moment-jalaali";
-
-moment.locale("fa"); // فعال کردن زبان فارسی
-
+moment.locale("fa"); 
 dayjs.locale("fa");
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -50,7 +45,7 @@ const CSCalendar = ({ setAnnouncementData }) => {
             title: "جلسه مرحله‌ دوم: پرسش‌وپاسخ فیلم معرفی برنامه‌ CS Internship",
         },
         {
-            title: "جلسه مرحله‌ چهارم: مصاحبه‌ گروه تعیین‌شده برای این تاریخ",
+            title: "جلسه مرحله‌ چهارم: مصاحبه‌ گروه تعیین‌شده",
         },
         {
             title: "جلسه مرحله‌ سوم: پرسش‌وپاسخ داکیومنت فرآیند‌های برنامه CS Internship",
