@@ -206,12 +206,23 @@ thead {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    margin-bottom: 6px;
 }
 
 .modal-title {
-    color: #000;
+    color: var(--text-color);
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    margin-bottom: 16px;
+}
+
+.announcement-textarea {
+    margin-bottom: 8px;
+}
+
+.Toastify__toast {
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }

@@ -13,11 +13,19 @@ import "dayjs/locale/fa";
 import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
 
+import moment from "moment";
+
+import "moment/locale/fa"; // برای استفاده از زبان فارسی
+
+import momentJalaali from "moment-jalaali";
+
+moment.locale("fa"); // فعال کردن زبان فارسی
+
 dayjs.locale("fa");
 dayjs.extend(weekday);
 dayjs.extend(localeData);
 
-const CSCalendar = () => {
+const CSCalendar = ({ setAnnouncementData }) => {
     const today = dayjs();
 
     const [value, setValue] = useState(today);
@@ -104,21 +112,46 @@ const CSCalendar = () => {
         return event ? <Badge status="success" text={event.title} /> : null;
     };
 
-    const logStartOfWeek = () => {
-        const startOfWeek = today.startOf("week");
-        const firstEvent = getEventForDate(startOfWeek.add(1, "day"));
-        const secondEvent = getEventForDate(startOfWeek.add(3, "day"));
+    useEffect(() => {
+        const saturdayDate = moment().startOf("week");
 
-        console.log("تاریخ شنبه هفته:", startOfWeek.format("YYYY-MM-DD"));
-        console.log(
-            "ایونت شنبه:",
-            firstEvent ? firstEvent.title : "ایونتی وجود ندارد"
-        );
-        console.log(
-            "ایونت دوشنبه:",
-            secondEvent ? secondEvent.title : "ایونتی وجود ندارد"
-        );
-    };
+        const startWeekDate = saturdayDate
+            .clone()
+            .add(2, "day")
+            .format("YYYY/M/D");
+        const endWeekDate = saturdayDate
+            .clone()
+            .add(9, "day")
+            .format("YYYY/M/D");
+
+        const firstEventDate = saturdayDate
+            .clone()
+            .add(3, "day")
+            .format("YYYY/M/D");
+        const secondEventDate = saturdayDate
+            .clone()
+            .add(8, "day")
+            .format("YYYY/M/D");
+
+        const firstEvent = getEventForDate(saturdayDate.clone().add(3, "day"));
+        const secondEvent = getEventForDate(saturdayDate.clone().add(8, "day"));
+
+        const newAnnouncementData = {
+            startWeekDate,
+            endWeekDate,
+            firstEventDate,
+            secondEventDate,
+            firstEvent,
+            secondEvent,
+        };
+
+        setAnnouncementData((prev) => {
+            if (JSON.stringify(prev) !== JSON.stringify(newAnnouncementData)) {
+                return newAnnouncementData;
+            }
+            return prev;
+        });
+    }, []);
 
     useEffect(() => {
         const tableHeaderItems = Array.from(
@@ -134,13 +167,6 @@ const CSCalendar = () => {
 
     return (
         <>
-            <Button
-                type="primary"
-                onClick={logStartOfWeek}
-                style={{ marginTop: 16 }}
-            >
-                لاگ شنبه و ایونت‌ها
-            </Button>
             <Calendar
                 value={value}
                 onSelect={onSelect}
