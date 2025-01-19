@@ -1,13 +1,22 @@
 {
   "files": {
-    "main.css": "/CS-Queue-Calendar/static/css/main.09739f2f.css",
-    "main.js": "/CS-Queue-Calendar/static/js/main.401dadad.js",
+    "main.css": "/CS-Queue-Calendar/static/css/main.2ff78300.css",
+    "main.js": "/CS-Queue-Calendar/static/js/main.ab5b848b.js",
+    "static/media/Vazirmatn-Black.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-Black.06b4a8ea2ef9ccd440c1.ttf",
+    "static/media/Vazirmatn-ExtraBold.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-ExtraBold.664894794b7326d1ecad.ttf",
+    "static/media/Vazirmatn-Bold.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-Bold.847398b835060973f909.ttf",
+    "static/media/Vazirmatn-SemiBold.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-SemiBold.39d403963c79734ddc8d.ttf",
+    "static/media/Vazirmatn-Medium.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-Medium.8da87ade0bb0c9d6c645.ttf",
+    "static/media/Vazirmatn-ExtraLight.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-ExtraLight.d986babfa967475dc7fa.ttf",
+    "static/media/Vazirmatn-Light.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-Light.c3b3d750c77607afff75.ttf",
+    "static/media/Vazirmatn-Thin.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-Thin.3dc04c1b3c3be59927a1.ttf",
+    "static/media/Vazirmatn-Regular.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-Regular.eea547173dc1d61387f5.ttf",
     "index.html": "/CS-Queue-Calendar/index.html",
-    "main.09739f2f.css.map": "/CS-Queue-Calendar/static/css/main.09739f2f.css.map",
-    "main.401dadad.js.map": "/CS-Queue-Calendar/static/js/main.401dadad.js.map"
+    "main.2ff78300.css.map": "/CS-Queue-Calendar/static/css/main.2ff78300.css.map",
+    "main.ab5b848b.js.map": "/CS-Queue-Calendar/static/js/main.ab5b848b.js.map"
   },
   "entrypoints": [
-    "static/css/main.09739f2f.css",
-    "static/js/main.401dadad.js"
+    "static/css/main.2ff78300.css",
+    "static/js/main.ab5b848b.js"
   ]
 }
