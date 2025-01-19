@@ -1,12 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ConfigProvider, theme } from "antd";
 import Header from "./Header";
 import Footer from "./Footer";
 import CSCalendar from "./CSCalendar";
 import { ThemeContext } from "./ThemeContext";
 import FloatButtonSection from "./FloatButtonSection";
+import AnnouncementModule from "./AnnouncementModule";
 
 const App = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const { theme: currentTheme } = useContext(ThemeContext);
 
     return (
@@ -21,7 +24,13 @@ const App = () => {
             <Header />
             <CSCalendar />
             <Footer />
-            <FloatButtonSection />
+            <FloatButtonSection setIsModalOpen={setIsModalOpen} />
+            <ConfigProvider direction={"rtl"}>
+                <AnnouncementModule
+                    isModalOpen={isModalOpen}
+                    setIsModalOpen={setIsModalOpen}
+                />
+            </ConfigProvider>
         </ConfigProvider>
     );
 };

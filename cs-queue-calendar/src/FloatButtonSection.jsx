@@ -10,9 +10,10 @@ import {
     BgColorsOutlined,
     GithubOutlined,
     NotificationOutlined,
+    CopyOutlined,
 } from "@ant-design/icons";
 
-const FloatButtonSection = () => {
+const FloatButtonSection = ({ setIsModalOpen }) => {
     const { toggleTheme } = useContext(ThemeContext);
 
     const openLink = (link) => {
@@ -36,6 +37,10 @@ const FloatButtonSection = () => {
             clearTimeout(timer1);
             clearTimeout(timer2);
         };
+    };
+
+    const handleAnnouncement = () => {
+        console.log("joi");
     };
 
     return (
@@ -109,6 +114,15 @@ const FloatButtonSection = () => {
                     <FloatButton
                         icon={<BgColorsOutlined />}
                         onClick={handleChangeTheme}
+                    />
+                </Tooltip>
+
+                <Tooltip title="Announcement Message" placement="right">
+                    <FloatButton
+                        icon={<CopyOutlined />}
+                        onClick={() =>
+                            setIsModalOpen((pervState) => !pervState)
+                        }
                     />
                 </Tooltip>
             </FloatButton.Group>

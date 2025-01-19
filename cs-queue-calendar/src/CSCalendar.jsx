@@ -45,7 +45,7 @@ const CSCalendar = () => {
             title: "جلسه مرحله‌ چهارم: مصاحبه‌ گروه تعیین‌شده برای این تاریخ",
         },
         {
-            title: "جلسه مرحله‌ سوم: پرسش‌وپاسخ داکیومنت CS Internship Prerequisites",
+            title: "جلسه مرحله‌ سوم: پرسش‌وپاسخ داکیومنت فرآیند‌های برنامه CS Internship",
         },
     ];
 
@@ -104,6 +104,22 @@ const CSCalendar = () => {
         return event ? <Badge status="success" text={event.title} /> : null;
     };
 
+    const logStartOfWeek = () => {
+        const startOfWeek = today.startOf("week");
+        const firstEvent = getEventForDate(startOfWeek.add(1, "day"));
+        const secondEvent = getEventForDate(startOfWeek.add(3, "day"));
+
+        console.log("تاریخ شنبه هفته:", startOfWeek.format("YYYY-MM-DD"));
+        console.log(
+            "ایونت شنبه:",
+            firstEvent ? firstEvent.title : "ایونتی وجود ندارد"
+        );
+        console.log(
+            "ایونت دوشنبه:",
+            secondEvent ? secondEvent.title : "ایونتی وجود ندارد"
+        );
+    };
+
     useEffect(() => {
         const tableHeaderItems = Array.from(
             document.querySelectorAll(".ant-picker-content thead tr th")
@@ -118,6 +134,13 @@ const CSCalendar = () => {
 
     return (
         <>
+            <Button
+                type="primary"
+                onClick={logStartOfWeek}
+                style={{ marginTop: 16 }}
+            >
+                لاگ شنبه و ایونت‌ها
+            </Button>
             <Calendar
                 value={value}
                 onSelect={onSelect}
