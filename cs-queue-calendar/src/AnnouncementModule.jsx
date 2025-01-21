@@ -53,10 +53,10 @@ const AnnouncementModule = ({
             )}) طبق «برنامه زمان‌بندی جلسات»، به شرح زیر برگزار می‌شود:
 
 1️⃣ سه‌شنبه، ${convertToPersianNumbers(firstEventDate)}
-موضوع: ${announcementData?.secondEvent?.title.replace(/:/g, " -")}
+موضوع: ${announcementData?.firstEvent?.title.replace(/:/g, " -")}
 
 2️⃣ یک‌شنبه، ${convertToPersianNumbers(secondEventDate)}
-موضوع: ${announcementData?.firstEvent?.title.replace(/:/g, " -")}
+موضوع: ${announcementData?.secondEvent?.title.replace(/:/g, " -")}
 
 ⏰ زمان جلسات: ۱۸:۰۰ تا ۱۹:۰۰
 

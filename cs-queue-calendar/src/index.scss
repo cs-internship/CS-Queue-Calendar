@@ -47,7 +47,7 @@ body {
 
 h1 {
     font-size: 32px;
-    text-shadow: 2.5px 0 rgba(98, 0, 255, 0.25), -2.5px 0 rgba(255, 0, 0, 0.25);
+    text-shadow: 1.5px 0 rgba(98, 0, 255, 0.25), -1.5px 0 rgba(255, 0, 0, 0.25);
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
@@ -180,11 +180,11 @@ thead {
         outline: 1px solid rgb(0, 0, 0);
     }
     70% {
-        outline: 140vw solid rgb(0, 0, 0);
+        outline: solid rgb(0, 0, 0) max(140vw, 140vh);
         opacity: 1;
     }
     99% {
-        outline: 140vw solid rgb(0, 0, 0);
+        outline: solid rgb(0, 0, 0) max(140vw, 140vh);
         opacity: 0;
     }
     100% {

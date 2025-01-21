@@ -15,7 +15,7 @@ import localeData from "dayjs/plugin/localeData";
 import moment from "moment";
 import "moment/locale/fa";
 
-moment.locale("fa"); 
+moment.locale("fa");
 dayjs.locale("fa");
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -86,18 +86,6 @@ const CSCalendar = ({ setAnnouncementData }) => {
         setValue(newValue);
     };
 
-    const handleTodayClick = () => {
-        setValue(today);
-        setSelectedValue(today);
-
-        const event = getEventForDate(today);
-        if (event) {
-            setEventDescription(`${event.title} - ساعت ۱۸:۰۰ تا ۱۹:۰۰`);
-        } else {
-            setEventDescription("برای این تاریخ رویدادی وجود ندارد.");
-        }
-    };
-
     const handleMonthYearChange = (month, year) => {
         setValue(value.month(month).year(year));
     };
@@ -108,7 +96,7 @@ const CSCalendar = ({ setAnnouncementData }) => {
     };
 
     useEffect(() => {
-        const saturdayDate = moment().startOf("week");
+        const saturdayDate = moment().add(0, "day").startOf("week");
 
         const startWeekDate = saturdayDate
             .clone()
@@ -128,8 +116,8 @@ const CSCalendar = ({ setAnnouncementData }) => {
             .add(8, "day")
             .format("YYYY/M/D");
 
-        const firstEvent = getEventForDate(saturdayDate.clone().add(3, "day"));
-        const secondEvent = getEventForDate(saturdayDate.clone().add(8, "day"));
+        const firstEvent = getEventForDate(saturdayDate.clone().add(24, "day"));
+        const secondEvent = getEventForDate(saturdayDate.clone().add(15, "day"));
 
         const newAnnouncementData = {
             startWeekDate,
@@ -139,6 +127,8 @@ const CSCalendar = ({ setAnnouncementData }) => {
             firstEvent,
             secondEvent,
         };
+
+        console.log(newAnnouncementData);
 
         setAnnouncementData((prev) => {
             if (JSON.stringify(prev) !== JSON.stringify(newAnnouncementData)) {
@@ -190,7 +180,7 @@ const CSCalendar = ({ setAnnouncementData }) => {
                                 >
                                     ماه قبل
                                 </Button>
-                                <Button onClick={handleTodayClick}>
+                                <Button onClick={() => onSelect(today)}>
                                     امروز
                                 </Button>
                                 <Button
