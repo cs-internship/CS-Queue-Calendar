@@ -22,6 +22,52 @@ const AnnouncementModule = ({
         );
     };
 
+//     useEffect(() => {
+//         if (announcementData.startWeekDate) {
+//             const startWeekDate = moment(
+//                 announcementData.startWeekDate,
+//                 "YYYY/M/D"
+//             ).format("jD jMMMM");
+
+//             const endWeekDate = moment(
+//                 announcementData.endWeekDate,
+//                 "YYYY/M/D"
+//             ).format("jD jMMMM");
+
+//             const firstEventDate = moment(
+//                 announcementData.firstEventDate,
+//                 "YYYY/M/D"
+//             ).format("jD jMMMM");
+
+//             const secondEventDate = moment(
+//                 announcementData.secondEventDate,
+//                 "YYYY/M/D"
+//             ).format("jD jMMMM");
+
+//             setTextAreaContent(`سلام به همگی، وقتتون بخیر
+
+// جلسات گروه صف این هفته (${convertToPersianNumbers(
+//                 startWeekDate
+//             )} تا ${convertToPersianNumbers(
+//                 endWeekDate
+//             )}) طبق «برنامه زمان‌بندی جلسات»، به شرح زیر برگزار می‌شود:
+
+// 1️⃣ سه‌شنبه، ${convertToPersianNumbers(firstEventDate)}
+// موضوع: ${announcementData?.firstEvent?.title.replace(/:/g, " -")}
+
+// 2️⃣ یک‌شنبه، ${convertToPersianNumbers(secondEventDate)}
+// موضوع: ${announcementData?.secondEvent?.title.replace(/:/g, " -")}
+
+// ⏰ زمان جلسات: ۱۸:۰۰ تا ۱۹:۰۰
+
+// 🚪 زمان ورود: از ساعت ۱۷:۴۵ تا ۱۸:۰۰ (مطابق با قوانین شرکت در جلسات)
+
+// 💬 افرادی که مایل به شرکت در هر یک از این جلسات هستند، به همین پیام ریپلای کرده و مشخص کنند که در کدام جلسه شرکت خواهند کرد.
+
+// .`);
+//         }
+//     }, [announcementData]);
+
     useEffect(() => {
         if (announcementData.startWeekDate) {
             const startWeekDate = moment(
@@ -44,9 +90,8 @@ const AnnouncementModule = ({
                 "YYYY/M/D"
             ).format("jD jMMMM");
 
-            setTextAreaContent(`سلام به همگی، وقتتون بخیر
-
-جلسات گروه صف این هفته (${convertToPersianNumbers(
+            setTextAreaContent(`سلام وقتتون بخیر،
+جلسات گروه صف هفته بعد (${convertToPersianNumbers(
                 startWeekDate
             )} تا ${convertToPersianNumbers(
                 endWeekDate
@@ -62,9 +107,9 @@ const AnnouncementModule = ({
 
 🚪 زمان ورود: از ساعت ۱۷:۴۵ تا ۱۸:۰۰ (مطابق با قوانین شرکت در جلسات)
 
-💬 افرادی که مایل به شرکت در هر یک از این جلسات هستند، به همین پیام ریپلای کرده و مشخص کنند که در کدام جلسه شرکت خواهند کرد.
+💬 افرادی که مایل به شرکت در هر یک از این جلسات (مرحله ۱-۲-۳) هستند، به همین پیام ریپلای کرده و مشخص کنند که در کدام جلسه شرکت خواهند کرد.
 
-.`);
+#زمان‌بندی‌_جلسات`);
         }
     }, [announcementData]);
 

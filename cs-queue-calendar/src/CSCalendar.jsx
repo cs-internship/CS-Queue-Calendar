@@ -12,8 +12,10 @@ import dayjs from "dayjs";
 import "dayjs/locale/fa";
 import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
-import moment from "moment";
-import "moment/locale/fa";
+// import moment from "moment";
+// import "moment/locale/fa";
+
+import moment from "jalali-moment";
 
 moment.locale("fa");
 dayjs.locale("fa");
@@ -55,6 +57,8 @@ const CSCalendar = ({ setAnnouncementData }) => {
     const getEventForDate = (date) => {
         const startDate = dayjs("2025-01-13");
 
+        // console.log(date);
+
         if (date.isBefore(startDate, "day")) {
             return null;
         }
@@ -95,29 +99,95 @@ const CSCalendar = ({ setAnnouncementData }) => {
         return event ? <Badge status="success" text={event.title} /> : null;
     };
 
+    // const dateCellRender = (date) => {
+    //     const gregorianDate = date.format("YYYY-MM-DD");
+    //     const persianDate = moment(date.toDate()).format("jYYYY-jMM-jDD");
+
+    //     const event = getEventForDate(date);
+
+    //     return (
+    //         <div title={`${gregorianDate}\n${persianDate}`}>
+    //             {event ? (
+    //                 <Badge status="success" text={event.title} />
+    //             ) : (
+    //                 <div>hi</div>
+    //             )}
+    //         </div>
+    //     );
+    // };
+
     useEffect(() => {
-        const saturdayDate = moment().add(0, "day").startOf("week");
+        const tds = document.querySelectorAll("td");
+
+        tds.forEach((td) => {
+            const gregorianDate = td.title;
+            if (gregorianDate) {
+                // const persianDate = moment(gregorianDate, "YYYY/M/D").format(
+                //     "jYYYY/jMM/jDD"
+                // );
+                // console.log(gregorianDate);
+
+                console.log(gregorianDate.split("\n")[0]);
+
+                // const persianDate = moment(
+                //     gregorianDate.split("\n")[0].toString(),
+                //     "YYYY-MM-DD"
+                // )
+                //     .locale("fa")
+                //     .format("jYYYY-jMM-jDD");
+                const persianDate = moment("2025-01-31", "YYYY-MM-DD")
+                    .locale("fa")
+                    .format("YYYY/M/D");
+
+                console.log("PER >>", persianDate);
+
+                td.title = `${gregorianDate}\n${persianDate}`;
+            }
+        });
+    }, [value]);
+
+    useEffect(() => {
+
+        const miladiDate = "2025-01-02";
+        const shamsiDate = moment(miladiDate, "YYYY-MM-DD")
+            .locale("fa")
+            .format("jYYYY-jMM-jDD");
+
+        console.log("FAR30 >>", shamsiDate); // خروجی: 1403-10-12
+    }, []);
+
+    useEffect(() => {
+        const saturdayDate = moment().add(10, "day").startOf("week");
+
+        // console.log(saturdayDate.format("YYYY/M/D"));
 
         const startWeekDate = saturdayDate
-            .clone()
-            .add(2, "day")
-            .format("YYYY/M/D");
-        const endWeekDate = saturdayDate
             .clone()
             .add(9, "day")
             .format("YYYY/M/D");
 
+        const endWeekDate = saturdayDate
+            .clone()
+            .add(16, "day")
+            .format("YYYY/M/D");
+
         const firstEventDate = saturdayDate
             .clone()
-            .add(3, "day")
+            .add(10, "day")
             .format("YYYY/M/D");
         const secondEventDate = saturdayDate
             .clone()
-            .add(8, "day")
+            .add(15, "day")
             .format("YYYY/M/D");
 
-        const firstEvent = getEventForDate(saturdayDate.clone().add(24, "day"));
-        const secondEvent = getEventForDate(saturdayDate.clone().add(15, "day"));
+        const firstEvent = getEventForDate(
+            dayjs(saturdayDate.clone().add(10, "day").toDate())
+        );
+        const secondEvent = getEventForDate(
+            dayjs(saturdayDate.clone().add(15, "day").toDate())
+        );
+
+        console.log("::", saturdayDate.clone().add(10, "day"));
 
         const newAnnouncementData = {
             startWeekDate,
