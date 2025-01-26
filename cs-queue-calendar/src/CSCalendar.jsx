@@ -12,9 +12,6 @@ import dayjs from "dayjs";
 import "dayjs/locale/fa";
 import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
-// import moment from "moment";
-// import "moment/locale/fa";
-
 import moment from "jalali-moment";
 
 moment.locale("fa");
@@ -28,6 +25,7 @@ const CSCalendar = ({ setAnnouncementData }) => {
     const [value, setValue] = useState(today);
     const [selectedValue, setSelectedValue] = useState(today);
     const [eventDescription, setEventDescription] = useState("");
+    const [yearMonth, setYearMonth] = useState("");
 
     const weekDays = [
         "شنبه",
@@ -56,8 +54,6 @@ const CSCalendar = ({ setAnnouncementData }) => {
 
     const getEventForDate = (date) => {
         const startDate = dayjs("2025-01-13");
-
-        // console.log(date);
 
         if (date.isBefore(startDate, "day")) {
             return null;
@@ -99,67 +95,39 @@ const CSCalendar = ({ setAnnouncementData }) => {
         return event ? <Badge status="success" text={event.title} /> : null;
     };
 
-    // const dateCellRender = (date) => {
-    //     const gregorianDate = date.format("YYYY-MM-DD");
-    //     const persianDate = moment(date.toDate()).format("jYYYY-jMM-jDD");
-
-    //     const event = getEventForDate(date);
-
-    //     return (
-    //         <div title={`${gregorianDate}\n${persianDate}`}>
-    //             {event ? (
-    //                 <Badge status="success" text={event.title} />
-    //             ) : (
-    //                 <div>hi</div>
-    //             )}
-    //         </div>
-    //     );
-    // };
-
     useEffect(() => {
+        return () => {
+            setTimeout(() => {
+                createTds();
+            }, 0);
+        };
+    }, [yearMonth]);
+
+    const createTds = () => {
         const tds = document.querySelectorAll("td");
+
+        tds.forEach((td) => {
+            td.title = td.title.split("\n")[0];
+        });
 
         tds.forEach((td) => {
             const gregorianDate = td.title;
             if (gregorianDate) {
-                // const persianDate = moment(gregorianDate, "YYYY/M/D").format(
-                //     "jYYYY/jMM/jDD"
-                // );
-                // console.log(gregorianDate);
+                const moment = require("moment-jalaali");
 
-                console.log(gregorianDate.split("\n")[0]);
-
-                // const persianDate = moment(
-                //     gregorianDate.split("\n")[0].toString(),
-                //     "YYYY-MM-DD"
-                // )
-                //     .locale("fa")
-                //     .format("jYYYY-jMM-jDD");
-                const persianDate = moment("2025-01-31", "YYYY-MM-DD")
+                const persianDate = moment(gregorianDate, "YYYY-MM-DD")
                     .locale("fa")
-                    .format("YYYY/M/D");
-
-                console.log("PER >>", persianDate);
+                    .format("jYYYY/jMM/jDD");
 
                 td.title = `${gregorianDate}\n${persianDate}`;
             }
         });
-    }, [value]);
+    };
 
     useEffect(() => {
+        const saturdayDate = moment().add(0, "day").startOf("week");
 
-        const miladiDate = "2025-01-02";
-        const shamsiDate = moment(miladiDate, "YYYY-MM-DD")
-            .locale("fa")
-            .format("jYYYY-jMM-jDD");
-
-        console.log("FAR30 >>", shamsiDate); // خروجی: 1403-10-12
-    }, []);
-
-    useEffect(() => {
-        const saturdayDate = moment().add(10, "day").startOf("week");
-
-        // console.log(saturdayDate.format("YYYY/M/D"));
+        console.log("saturdayDate >>", saturdayDate);
 
         const startWeekDate = saturdayDate
             .clone()
@@ -186,8 +154,6 @@ const CSCalendar = ({ setAnnouncementData }) => {
         const secondEvent = getEventForDate(
             dayjs(saturdayDate.clone().add(15, "day").toDate())
         );
-
-        console.log("::", saturdayDate.clone().add(10, "day"));
 
         const newAnnouncementData = {
             startWeekDate,
@@ -217,7 +183,7 @@ const CSCalendar = ({ setAnnouncementData }) => {
             (item, index) => (item.textContent = weekDays[index])
         );
 
-        return () => console.log("Aloha");
+        return () => console.log("Aloha!");
     }, []);
 
     return (
@@ -226,7 +192,7 @@ const CSCalendar = ({ setAnnouncementData }) => {
                 value={value}
                 onSelect={onSelect}
                 onPanelChange={onPanelChange}
-                dateCellRender={dateCellRender}
+                cellRender={dateCellRender}
                 headerRender={({ value, onChange }) => {
                     const currentMonth = value.month();
                     const currentYear = value.year();
@@ -234,6 +200,10 @@ const CSCalendar = ({ setAnnouncementData }) => {
                     const years = Array.from(
                         { length: 20 },
                         (_, i) => currentYear - 10 + i
+                    );
+
+                    setYearMonth(
+                        currentMonth.toString() + currentYear.toString()
                     );
 
                     return (

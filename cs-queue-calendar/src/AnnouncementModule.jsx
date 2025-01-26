@@ -22,94 +22,49 @@ const AnnouncementModule = ({
         );
     };
 
-//     useEffect(() => {
-//         if (announcementData.startWeekDate) {
-//             const startWeekDate = moment(
-//                 announcementData.startWeekDate,
-//                 "YYYY/M/D"
-//             ).format("jD jMMMM");
-
-//             const endWeekDate = moment(
-//                 announcementData.endWeekDate,
-//                 "YYYY/M/D"
-//             ).format("jD jMMMM");
-
-//             const firstEventDate = moment(
-//                 announcementData.firstEventDate,
-//                 "YYYY/M/D"
-//             ).format("jD jMMMM");
-
-//             const secondEventDate = moment(
-//                 announcementData.secondEventDate,
-//                 "YYYY/M/D"
-//             ).format("jD jMMMM");
-
-//             setTextAreaContent(`سلام به همگی، وقتتون بخیر
-
-// جلسات گروه صف این هفته (${convertToPersianNumbers(
-//                 startWeekDate
-//             )} تا ${convertToPersianNumbers(
-//                 endWeekDate
-//             )}) طبق «برنامه زمان‌بندی جلسات»، به شرح زیر برگزار می‌شود:
-
-// 1️⃣ سه‌شنبه، ${convertToPersianNumbers(firstEventDate)}
-// موضوع: ${announcementData?.firstEvent?.title.replace(/:/g, " -")}
-
-// 2️⃣ یک‌شنبه، ${convertToPersianNumbers(secondEventDate)}
-// موضوع: ${announcementData?.secondEvent?.title.replace(/:/g, " -")}
-
-// ⏰ زمان جلسات: ۱۸:۰۰ تا ۱۹:۰۰
-
-// 🚪 زمان ورود: از ساعت ۱۷:۴۵ تا ۱۸:۰۰ (مطابق با قوانین شرکت در جلسات)
-
-// 💬 افرادی که مایل به شرکت در هر یک از این جلسات هستند، به همین پیام ریپلای کرده و مشخص کنند که در کدام جلسه شرکت خواهند کرد.
-
-// .`);
-//         }
-//     }, [announcementData]);
+    const extractJDJMMMM = (dateObj) => {
+        return convertToPersianNumbers(
+            moment(
+                moment(dateObj, "YYYY/M/D")
+                    ["_i"].split(" ")[0]
+                    .split("-")
+                    .slice(3)
+                    .join("/"),
+                "jYYYY/jMM/jDD"
+            ).format("jD jMMMM")
+        );
+    };
 
     useEffect(() => {
         if (announcementData.startWeekDate) {
-            const startWeekDate = moment(
-                announcementData.startWeekDate,
-                "YYYY/M/D"
-            ).format("jD jMMMM");
+            setTextAreaContent(`📅 برنامه #زمان‌بندی‌_جلسات گروه صف در هفته آینده (${extractJDJMMMM(
+                announcementData.startWeekDate
+            )} تا ${extractJDJMMMM(announcementData.endWeekDate)})
 
-            const endWeekDate = moment(
-                announcementData.endWeekDate,
-                "YYYY/M/D"
-            ).format("jD jMMMM");
+🔸 **سه‌شنبه، ${extractJDJMMMM(announcementData.firstEventDate)}**
+موضوع: **${announcementData?.firstEvent?.title.replace(/:/g, " -")}**
 
-            const firstEventDate = moment(
-                announcementData.firstEventDate,
-                "YYYY/M/D"
-            ).format("jD jMMMM");
+🔸 **یک‌شنبه، ${extractJDJMMMM(announcementData.secondEventDate)}**
+موضوع: **${announcementData?.secondEvent?.title.replace(/:/g, " -")}**${
+    announcementData?.secondEvent?.title.split(":")[0] === "جلسه مرحله‌ چهارم"
+        ? "\n(رزرو این جلسه امکان‌پذیر نیست)"
+        : ""
+}  
 
-            const secondEventDate = moment(
-                announcementData.secondEventDate,
-                "YYYY/M/D"
-            ).format("jD jMMMM");
+⏰ **زمان جلسات**: ۱۸:۰۰ تا ۱۹:۰۰
 
-            setTextAreaContent(`سلام وقتتون بخیر،
-جلسات گروه صف هفته بعد (${convertToPersianNumbers(
-                startWeekDate
-            )} تا ${convertToPersianNumbers(
-                endWeekDate
-            )}) طبق «برنامه زمان‌بندی جلسات»، به شرح زیر برگزار می‌شود:
+🚪 **زمان ورود**: ۱۷:۴۵ تا ۱۸:۰۰ (مطابق با قوانین شرکت در جلسات)
 
-1️⃣ سه‌شنبه، ${convertToPersianNumbers(firstEventDate)}
-موضوع: ${announcementData?.firstEvent?.title.replace(/:/g, " -")}
+💬 **مهلت اعلام حضور**:  
+افرادی که قصد شرکت در جلسات هفته آینده را دارند، تا تاریخ **${extractJDJMMMM(
+                announcementData.endWeekDate
+            )}** فرصت دارند به همین پیام ریپلای زده و مشخص کنند در کدام جلسه شرکت خواهند کرد.  
+جلساتی که تا تاریخ **${extractJDJMMMM(
+                announcementData.endWeekDate
+            )}** ریپلای دریافت کرده باشند، در هفته بعد برگزار خواهد شد.
 
-2️⃣ یک‌شنبه، ${convertToPersianNumbers(secondEventDate)}
-موضوع: ${announcementData?.secondEvent?.title.replace(/:/g, " -")}
-
-⏰ زمان جلسات: ۱۸:۰۰ تا ۱۹:۰۰
-
-🚪 زمان ورود: از ساعت ۱۷:۴۵ تا ۱۸:۰۰ (مطابق با قوانین شرکت در جلسات)
-
-💬 افرادی که مایل به شرکت در هر یک از این جلسات (مرحله ۱-۲-۳) هستند، به همین پیام ریپلای کرده و مشخص کنند که در کدام جلسه شرکت خواهند کرد.
-
-#زمان‌بندی‌_جلسات`);
+**برنامه زمان‌بندی جلسات گروه**:  
+https://ali-sdg90.github.io/CS-Queue-Calendar/`);
         }
     }, [announcementData]);
 
