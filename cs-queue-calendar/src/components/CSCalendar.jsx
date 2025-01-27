@@ -13,6 +13,8 @@ import "dayjs/locale/fa";
 import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
 import moment from "jalali-moment";
+import { createTds } from "../utils/createTds";
+import { events, weekDays } from "../constants/events";
 
 moment.locale("fa");
 dayjs.locale("fa");
@@ -26,31 +28,6 @@ const CSCalendar = ({ setAnnouncementData }) => {
     const [selectedValue, setSelectedValue] = useState(today);
     const [eventDescription, setEventDescription] = useState("");
     const [yearMonth, setYearMonth] = useState("");
-
-    const weekDays = [
-        "شنبه",
-        "یک‌شنبه",
-        "دوشنبه",
-        "سه‌شنبه",
-        "چهارشنبه",
-        "پنج‌شنبه",
-        "جمعه",
-    ];
-
-    const events = [
-        {
-            title: "جلسه مرحله‌ اول: پرسش‌وپاسخ داکیومنت CS Overview",
-        },
-        {
-            title: "جلسه مرحله‌ دوم: پرسش‌وپاسخ فیلم معرفی برنامه‌ CS Internship",
-        },
-        {
-            title: "جلسه مرحله‌ چهارم: مصاحبه‌ گروه تعیین‌شده",
-        },
-        {
-            title: "جلسه مرحله‌ سوم: پرسش‌وپاسخ داکیومنت فرآیند‌های برنامه CS Internship",
-        },
-    ];
 
     const getEventForDate = (date) => {
         const startDate = dayjs("2025-01-13");
@@ -103,31 +80,10 @@ const CSCalendar = ({ setAnnouncementData }) => {
         };
     }, [yearMonth]);
 
-    const createTds = () => {
-        const tds = document.querySelectorAll("td");
-
-        tds.forEach((td) => {
-            td.title = td.title.split("\n")[0];
-        });
-
-        tds.forEach((td) => {
-            const gregorianDate = td.title;
-            if (gregorianDate) {
-                const moment = require("moment-jalaali");
-
-                const persianDate = moment(gregorianDate, "YYYY-MM-DD")
-                    .locale("fa")
-                    .format("jYYYY/jMM/jDD");
-
-                td.title = `${gregorianDate}\n${persianDate}`;
-            }
-        });
-    };
-
     useEffect(() => {
         const saturdayDate = moment().add(0, "day").startOf("week");
 
-        console.log("saturdayDate >>", saturdayDate);
+        // console.log("saturdayDate >>", saturdayDate);
 
         const startWeekDate = saturdayDate
             .clone()
@@ -150,10 +106,10 @@ const CSCalendar = ({ setAnnouncementData }) => {
 
         const firstEvent = getEventForDate(
             dayjs(saturdayDate.clone().add(10, "day").toDate())
-        );
+        ).title;
         const secondEvent = getEventForDate(
             dayjs(saturdayDate.clone().add(15, "day").toDate())
-        );
+        ).title;
 
         const newAnnouncementData = {
             startWeekDate,
@@ -164,7 +120,7 @@ const CSCalendar = ({ setAnnouncementData }) => {
             secondEvent,
         };
 
-        console.log(newAnnouncementData);
+        console.log("newAnnouncementData >>", newAnnouncementData);
 
         setAnnouncementData((prev) => {
             if (JSON.stringify(prev) !== JSON.stringify(newAnnouncementData)) {

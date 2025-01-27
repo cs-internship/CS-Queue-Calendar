@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { ConfigProvider, theme } from "antd";
-import Header from "./Header";
-import Footer from "./Footer";
-import CSCalendar from "./CSCalendar";
-import { ThemeContext } from "./ThemeContext";
-import FloatButtonSection from "./FloatButtonSection";
-import AnnouncementModule from "./AnnouncementModule";
-import Toastify from "./Toastify";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import CSCalendar from "./components/CSCalendar";
+import { ThemeContext } from "./store/ThemeContext";
+import FloatButtonSection from "./components/FloatButtonSection";
+import AnnouncementModule from "./components/AnnouncementModule";
+import Toastify from "./components/Toastify";
 
 const App = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);

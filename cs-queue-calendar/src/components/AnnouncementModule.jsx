@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Input, Spin } from "antd";
-import moment from "moment-jalaali";
-
-moment.loadPersian({ dialect: "persian-modern" });
+import { formatPersianDate } from "../utils/formatPersianDate";
 
 const AnnouncementModule = ({
     isModalOpen,
@@ -14,57 +12,37 @@ const AnnouncementModule = ({
         "Aloha, Nothing to see here"
     );
 
-    const convertToPersianNumbers = (str) => {
-        const persianNumbers = "۰۱۲۳۴۵۶۷۸۹";
-        return str.replace(
-            /[0-9]/g,
-            (char) => persianNumbers[parseInt(char, 10)]
-        );
-    };
-
-    const extractJDJMMMM = (dateObj) => {
-        return convertToPersianNumbers(
-            moment(
-                moment(dateObj, "YYYY/M/D")
-                    ["_i"].split(" ")[0]
-                    .split("-")
-                    .slice(3)
-                    .join("/"),
-                "jYYYY/jMM/jDD"
-            ).format("jD jMMMM")
-        );
-    };
-
     useEffect(() => {
         if (announcementData.startWeekDate) {
-            setTextAreaContent(`📅 برنامه #زمان‌بندی‌_جلسات گروه صف در هفته آینده (${extractJDJMMMM(
+            setTextAreaContent(`📅 برنامه #زمان‌بندی‌_جلسات گروه صف در هفته آینده (${formatPersianDate(
                 announcementData.startWeekDate
-            )} تا ${extractJDJMMMM(announcementData.endWeekDate)})
+            )} تا ${formatPersianDate(announcementData.endWeekDate)})
 
-🔸 **سه‌شنبه، ${extractJDJMMMM(announcementData.firstEventDate)}**
-موضوع: **${announcementData?.firstEvent?.title.replace(/:/g, " -")}**
+🔸 **سه‌شنبه، ${formatPersianDate(announcementData.firstEventDate)}**
+موضوع: **${announcementData?.firstEvent?.replace(/:/g, " -")}**
 
-🔸 **یک‌شنبه، ${extractJDJMMMM(announcementData.secondEventDate)}**
-موضوع: **${announcementData?.secondEvent?.title.replace(/:/g, " -")}**${
-    announcementData?.secondEvent?.title.split(":")[0] === "جلسه مرحله‌ چهارم"
-        ? "\n(رزرو این جلسه امکان‌پذیر نیست)"
-        : ""
-}  
+🔸 **یک‌شنبه، ${formatPersianDate(announcementData.secondEventDate)}**
+موضوع: **${announcementData?.secondEvent?.replace(/:/g, " -")}**${
+                announcementData?.secondEvent?.split(":")[0] ===
+                "جلسه مرحله‌ چهارم"
+                    ? "\n(رزرو این جلسه امکان‌پذیر نیست)"
+                    : ""
+            }  
 
 ⏰ **زمان جلسات**: ۱۸:۰۰ تا ۱۹:۰۰
 
 🚪 **زمان ورود**: ۱۷:۴۵ تا ۱۸:۰۰ (مطابق با قوانین شرکت در جلسات)
 
 💬 **مهلت اعلام حضور**:  
-افرادی که قصد شرکت در جلسات هفته آینده را دارند، تا تاریخ **${extractJDJMMMM(
+افرادی که قصد شرکت در جلسات هفته آینده را دارند، تا تاریخ **${formatPersianDate(
                 announcementData.endWeekDate
             )}** فرصت دارند به همین پیام ریپلای زده و مشخص کنند در کدام جلسه شرکت خواهند کرد.  
-جلساتی که تا تاریخ **${extractJDJMMMM(
+جلساتی که تا تاریخ **${formatPersianDate(
                 announcementData.endWeekDate
-            )}** ریپلای دریافت کرده باشند، در هفته بعد برگزار خواهد شد.
+            )}** ریپلای دریافت کرده باشند، در هفته بعد برگزار خواهند شد.
 
 **برنامه زمان‌بندی جلسات گروه**:  
-https://ali-sdg90.github.io/CS-Queue-Calendar/`);
+${window.location.href}`);
         }
     }, [announcementData]);
 
@@ -117,7 +95,7 @@ https://ali-sdg90.github.io/CS-Queue-Calendar/`);
 
             {textAreaContent !== "Aloha, Nothing to see here" ? (
                 <Input.TextArea
-                    rows={18}
+                    rows={20}
                     value={textAreaContent}
                     onChange={(e) => setTextAreaContent(e.target.value)}
                     placeholder="متن خود را وارد کنید..."

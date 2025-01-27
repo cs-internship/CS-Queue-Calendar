@@ -1,0 +1,52 @@
+.ant-badge.ant-badge-status {
+    direction: rtl;
+}
+
+.ant-picker-calendar-date-content::-webkit-scrollbar {
+    width: 0;
+}
+
+.ant-picker-date-panel {
+    max-height: calc(100vh - 268px) !important;
+    overflow-y: auto !important;
+}
+
+thead {
+    position: sticky !important;
+    top: 0px;
+    z-index: 100;
+    background-color: var(--bg-color);
+
+    th {
+        line-height: 22px !important;
+    }
+}
+
+.ant-picker-cell:not(.ant-picker-cell-in-view) {
+    opacity: 0.4 !important;
+    filter: grayscale(10);
+}
+
+.calendar-header {
+    border-bottom: 1px solid var(--calendar-border-color) !important;
+    height: 50px;
+    padding: 0 9px;
+}
+
+.ant-picker-calendar {
+    margin: 0 60px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--calendar-border-color);
+    border-collapse: collapse;
+}
+
+.ant-alert {
+    margin: 20px 60px;
+    border-radius: 10px;
+    height: 50px;
+}
+
+.ant-select {
+    width: 80px;
+}

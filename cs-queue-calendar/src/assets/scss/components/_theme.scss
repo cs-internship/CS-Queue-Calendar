@@ -1,0 +1,48 @@
+:root {
+    --bg-color: #141414;
+    --text-color: white;
+}
+
+[data-theme="light"] {
+    --bg-color: white;
+    --text-color: black;
+    --footer-bg-color: #dce6f4;
+    --thumb-bg-color: #cacaca;
+    --calendar-border-color: #afafaf;
+}
+
+[data-theme="dark"] {
+    --bg-color: #141414;
+    --text-color: white;
+    --footer-bg-color: #111;
+    --thumb-bg-color: #7a7a7a;
+    --calendar-border-color: #5a5a5a;
+}
+
+.fancy-theme-transition {
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    bottom: 80px;
+    left: 11px;
+    border-radius: 50%;
+    z-index: 1000;
+    animation: fancy-transition 1.2s ease;
+}
+
+@keyframes fancy-transition {
+    0% {
+        outline: 1px solid rgb(0, 0, 0);
+    }
+    70% {
+        outline: solid rgb(0, 0, 0) max(140vw, 140vh);
+        opacity: 1;
+    }
+    99% {
+        outline: solid rgb(0, 0, 0) max(140vw, 140vh);
+        opacity: 0;
+    }
+    100% {
+        visibility: hidden;
+    }
+}

@@ -1,0 +1,29 @@
+h1 {
+    font-size: 32px;
+    text-shadow: 1.5px 0 rgba(98, 0, 255, 0.25), -1.5px 0 rgba(255, 0, 0, 0.25);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 72px;
+    font-family: sans-serif;
+    color: var(--text-color);
+    cursor: default;
+    letter-spacing: 0.3px;
+}
+
+.header-title {
+    margin: 0 8px;
+}
+
+.header-ICARUS {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.5s 0.3s;
+    cursor: default;
+
+    &:hover {
+        transition: color 0.15s;
+        color: rgb(131, 135, 255);
+    }
+}

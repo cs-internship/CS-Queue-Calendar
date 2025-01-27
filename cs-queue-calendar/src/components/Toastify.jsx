@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ThemeContext } from "./ThemeContext";
+import { ThemeContext } from "../store/ThemeContext";
 
 const Toastify = ({ toastifyObj }) => {
     const { theme: currentTheme } = useContext(ThemeContext);

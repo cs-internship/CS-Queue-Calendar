@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { FloatButton, Tooltip } from "antd";
-import { ThemeContext } from "./ThemeContext";
+import { ThemeContext } from "../store/ThemeContext";
 import {
     PlusOutlined,
     LinkedinOutlined,
@@ -66,7 +66,7 @@ const FloatButtonSection = ({ setIsModalOpen }) => {
                     />
                 </Tooltip>
 
-                <Tooltip title="CS Internship - GitHub" placement="right">
+                <Tooltip title="CS Internship on GitHub" placement="right">
                     <FloatButton
                         icon={<GithubOutlined />}
                         onClick={() =>
