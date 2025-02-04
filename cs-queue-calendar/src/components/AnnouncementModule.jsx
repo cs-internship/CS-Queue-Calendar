@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Input, Spin } from "antd";
+import { Button, Modal, Input, Spin, Flex } from "antd";
 import { formatPersianDate } from "../utils/formatPersianDate";
 
 const AnnouncementModule = ({
@@ -7,6 +7,7 @@ const AnnouncementModule = ({
     setIsModalOpen,
     setToastifyObj,
     announcementData,
+    setAddToCurrentWeek,
 }) => {
     const [textAreaContent, setTextAreaContent] = useState(
         "Aloha, Nothing to see here"
@@ -71,17 +72,56 @@ ${window.location.href}`);
             open={isModalOpen}
             onCancel={handleCancel}
             footer={[
-                <Button key="back" onClick={handleCancel} className="close-btn">
-                    بازگشت
-                </Button>,
-                <Button
-                    key="submit"
-                    type="primary"
-                    onClick={handleCopyMessage}
-                    className="submit-btn"
-                >
-                    کپی پیام
-                </Button>,
+                <Flex justify="space-between" key={"footer-container"}>
+                    <Flex gap={8} key={"footer-right-section"}>
+                        <Button
+                            key="nextWeek"
+                            onClick={() =>
+                                setAddToCurrentWeek(
+                                    (prevState) => (prevState += 7)
+                                )
+                            }
+                            className="close-btn"
+                        >
+                            هفته آینده
+                        </Button>
+                        <Button
+                            key="currentWeek"
+                            onClick={() => setAddToCurrentWeek(0)}
+                            className="close-btn"
+                        >
+                            هفته جاری
+                        </Button>
+                        <Button
+                            key="prevWeek"
+                            onClick={() =>
+                                setAddToCurrentWeek(
+                                    (prevState) => (prevState -= 7)
+                                )
+                            }
+                            className="close-btn"
+                        >
+                            هفته گذشته
+                        </Button>
+                    </Flex>
+                    <Flex gap={8} key={"footer-left-section"}>
+                        <Button
+                            key="back"
+                            onClick={handleCancel}
+                            className="close-btn"
+                        >
+                            بازگشت
+                        </Button>
+                        <Button
+                            key="submit"
+                            type="primary"
+                            onClick={handleCopyMessage}
+                            className="submit-btn"
+                        >
+                            کپی پیام
+                        </Button>
+                    </Flex>
+                </Flex>,
             ]}
             width="842px"
             closeIcon={false}

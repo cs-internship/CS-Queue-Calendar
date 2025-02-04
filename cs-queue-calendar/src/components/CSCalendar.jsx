@@ -14,23 +14,24 @@ import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
 import moment from "jalali-moment";
 import { createTds } from "../utils/createTds";
-import { events, weekDays } from "../constants/events";
+import { events } from "../constants/events";
+import { startCalendarDate } from "../constants/startCalendarDate";
+import { persianWeekDays } from "../constants/persianWeekDays";
 
 moment.locale("fa");
 dayjs.locale("fa");
 dayjs.extend(weekday);
 dayjs.extend(localeData);
 
-const CSCalendar = ({ setAnnouncementData }) => {
+const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
     const today = dayjs();
 
     const [value, setValue] = useState(today);
-    const [selectedValue, setSelectedValue] = useState(today);
     const [eventDescription, setEventDescription] = useState("");
     const [yearMonth, setYearMonth] = useState("");
 
     const getEventForDate = (date) => {
-        const startDate = dayjs("2025-01-13");
+        const startDate = dayjs(startCalendarDate);
 
         if (date.isBefore(startDate, "day")) {
             return null;
@@ -49,7 +50,6 @@ const CSCalendar = ({ setAnnouncementData }) => {
 
     const onSelect = (newValue) => {
         setValue(newValue);
-        setSelectedValue(newValue);
 
         const event = getEventForDate(newValue);
         if (event) {
@@ -81,7 +81,9 @@ const CSCalendar = ({ setAnnouncementData }) => {
     }, [yearMonth]);
 
     useEffect(() => {
-        const saturdayDate = moment().add(0, "day").startOf("week");
+        const saturdayDate = moment()
+            .add(addToCurrentWeek, "day")
+            .startOf("week");
 
         // console.log("saturdayDate >>", saturdayDate);
 
@@ -104,12 +106,21 @@ const CSCalendar = ({ setAnnouncementData }) => {
             .add(15, "day")
             .format("YYYY/M/D");
 
-        const firstEvent = getEventForDate(
-            dayjs(saturdayDate.clone().add(10, "day").toDate())
-        ).title;
-        const secondEvent = getEventForDate(
-            dayjs(saturdayDate.clone().add(15, "day").toDate())
-        ).title;
+        const startDate = moment("2025-01-13", "YYYY-MM-DD")
+            .locale("fa")
+            .format("YYYY-MM-DD HH:mm:ss");
+
+        let firstEvent = "برای این تاریخ رویدادی وجود ندارد.";
+        let secondEvent = "برای این تاریخ رویدادی وجود ندارد.";
+
+        if (saturdayDate.isAfter(startDate, "day")) {
+            firstEvent = getEventForDate(
+                dayjs(saturdayDate.clone().add(10, "day").toDate())
+            ).title;
+            secondEvent = getEventForDate(
+                dayjs(saturdayDate.clone().add(15, "day").toDate())
+            ).title;
+        }
 
         const newAnnouncementData = {
             startWeekDate,
@@ -128,7 +139,7 @@ const CSCalendar = ({ setAnnouncementData }) => {
             }
             return prev;
         });
-    }, []);
+    }, [addToCurrentWeek]);
 
     useEffect(() => {
         const tableHeaderItems = Array.from(
@@ -136,11 +147,18 @@ const CSCalendar = ({ setAnnouncementData }) => {
         );
 
         tableHeaderItems.map(
-            (item, index) => (item.textContent = weekDays[index])
+            (item, index) => (item.textContent = persianWeekDays[index])
         );
 
-        return () => console.log("Aloha!");
+        document.querySelector(".today-btn").click();
     }, []);
+
+    useEffect(() => {
+        const currentMonth = value.month();
+        const currentYear = value.year();
+
+        setYearMonth(currentMonth.toString() + currentYear.toString());
+    }, [value]);
 
     return (
         <>
@@ -158,10 +176,6 @@ const CSCalendar = ({ setAnnouncementData }) => {
                         (_, i) => currentYear - 10 + i
                     );
 
-                    setYearMonth(
-                        currentMonth.toString() + currentYear.toString()
-                    );
-
                     return (
                         <Flex
                             justify="space-between"
@@ -176,7 +190,10 @@ const CSCalendar = ({ setAnnouncementData }) => {
                                 >
                                     ماه قبل
                                 </Button>
-                                <Button onClick={() => onSelect(today)}>
+                                <Button
+                                    className="today-btn"
+                                    onClick={() => onSelect(today)}
+                                >
                                     امروز
                                 </Button>
                                 <Button
@@ -229,7 +246,7 @@ const CSCalendar = ({ setAnnouncementData }) => {
                     lang: {
                         locale: "fa",
                         today: "امروز",
-                        weeks: weekDays,
+                        weeks: persianWeekDays,
                     },
                     firstDayOfWeek: 6,
                 }}

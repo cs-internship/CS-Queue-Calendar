@@ -5,6 +5,8 @@ import App from "./App";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { ThemeProvider } from "./store/ThemeContext";
 
+// Built with love for the bright future of the CS Internship ♡
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>

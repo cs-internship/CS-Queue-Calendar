@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CryptoJS from "crypto-js";
 
-const date = "1403-04-19"; // 1403-10-30
+const date = "1403-10-30";
 
 const Header = () => {
     const [EEClicked, setEEClicked] = useState([false, false]);
@@ -16,7 +16,7 @@ const Header = () => {
         if (!EEClicked[dashNO]) {
             window.open(
                 decrypt(
-                    "U2FsdGVkX18+Oy1rQJJnOndkAB/1o8SBRhMt5NBlIXv20iVTfc/FeDTfPFC1TJhp53XOM5/xczuw1jT6tHsOAQ=="
+                    "U2FsdGVkX1/6Qzhsn/GOmvLuTL2y3E9PiuIq9z5eyMlHYCBbHTRgO4+YONp1oZPMWNvhHthzh2FtMlqpzQOYBA=="
                 ),
                 "_blank"
             );
@@ -33,14 +33,14 @@ const Header = () => {
         <div className={"header-container"}>
             <h1>
                 <div
-                    className={!EEClicked[0] && "header-ICARUS"}
+                    className={!EEClicked[0] ? "header-ICARUS" : ""}
                     onClick={() => clickOnEE(0)}
                 >
                     -
                 </div>
                 <div className={"header-title"}>CS-Queue-Calendar</div>
                 <div
-                    className={!EEClicked[1] && "header-ICARUS"}
+                    className={!EEClicked[1] ? "header-ICARUS" : ""}
                     onClick={() => clickOnEE(1)}
                 >
                     -
