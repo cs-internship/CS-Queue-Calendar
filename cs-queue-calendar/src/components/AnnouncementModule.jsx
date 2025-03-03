@@ -42,7 +42,10 @@ const AnnouncementModule = ({
                 announcementData.startWeekDate
             )}** ریپلای دریافت کرده باشند، در هفته بعد برگزار خواهند شد.
 
-**برنامه زمان‌بندی جلسات گروه**:  
+**قوانین شرکت در جلسات**:
+https://t.me/c/1191433472/3801
+
+**برنامه زمان‌بندی جلسات**:  
 ${window.location.href}`);
         }
     }, [announcementData]);
