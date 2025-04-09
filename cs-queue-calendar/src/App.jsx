@@ -21,20 +21,6 @@ const App = () => {
         secondEvent: "",
     });
 
-    useEffect(() => {
-        return () =>
-            console.log(`Aloha!
-
-This program was built on 1403/10/30 for the CS Internship program with love.
-
-🔗 You can check out the app source through the footer link.  
-📖 Interested in joining the CS Internship? Read the CS page on Virgool.  
-❓ Have questions? Feel free to ask in the CS Queue Telegram group.
-
-Good luck! Hope to see you all very soon in the program :)
-- A.S.`);
-    });
-
     const { theme: currentTheme } = useContext(ThemeContext);
 
     return (

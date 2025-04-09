@@ -9,6 +9,6 @@ export const events = [
         title: "جلسه مرحله‌ چهارم: مصاحبه‌ گروه تعیین‌شده",
     },
     {
-        title: "جلسه مرحله‌ اول: پرسش‌وپاسخ داکیومنت CS Overview",
+        title: "جلسه مرحله‌ اول: پرسش‌وپاسخ داکیومنت CS Internship Overview",
     },
 ];

@@ -131,7 +131,7 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
             secondEvent,
         };
 
-        console.log("newAnnouncementData >>", newAnnouncementData);
+        // console.log("newAnnouncementData >>", newAnnouncementData);
 
         setAnnouncementData((prev) => {
             if (JSON.stringify(prev) !== JSON.stringify(newAnnouncementData)) {
