@@ -50,3 +50,15 @@ thead {
 .ant-select {
     width: 80px;
 }
+
+.event-description {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .event-calender-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

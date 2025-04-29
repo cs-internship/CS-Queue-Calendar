@@ -17,6 +17,7 @@ import { createTds } from "../utils/createTds";
 import { events } from "../constants/events";
 import { startCalendarDate } from "../constants/startCalendarDate";
 import { persianWeekDays } from "../constants/persianWeekDays";
+import CalendarEventCreator from "./CalendarEventCreator";
 
 moment.locale("fa");
 dayjs.locale("fa");
@@ -254,7 +255,22 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
 
             <ConfigProvider direction={"rtl"}>
                 <Alert
-                    message={eventDescription || "تاریخی انتخاب نشده است."}
+                    message={
+                        <div className="event-description">
+                            <div className="event-title">
+                                {eventDescription}
+                            </div>
+
+                            {eventDescription !==
+                                "برای این تاریخ رویدادی وجود ندارد." && (
+                                <CalendarEventCreator
+                                    eventDate={value.format("YYYY-MM-DD")}
+                                    eventText={eventDescription}
+                                    className="event-calender-btn"
+                                />
+                            )}
+                        </div>
+                    }
                     type="info"
                     showIcon
                 />
