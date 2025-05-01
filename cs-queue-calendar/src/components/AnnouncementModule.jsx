@@ -75,7 +75,11 @@ ${window.location.href}`);
             open={isModalOpen}
             onCancel={handleCancel}
             footer={[
-                <Flex justify="space-between" key={"footer-container"}>
+                <Flex
+                    justify="space-between"
+                    key={"footer-container"}
+                    className="modal-footer"
+                >
                     <Flex gap={8} key={"footer-right-section"}>
                         <Button
                             key="nextWeek"

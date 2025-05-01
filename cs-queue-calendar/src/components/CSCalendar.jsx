@@ -17,6 +17,7 @@ import { createTds } from "../utils/createTds";
 import { events } from "../constants/events";
 import { startCalendarDate } from "../constants/startCalendarDate";
 import { persianWeekDays } from "../constants/persianWeekDays";
+import { useIsMobile } from "./useIsMobile";
 import CalendarEventCreator from "./CalendarEventCreator";
 
 moment.locale("fa");
@@ -30,6 +31,8 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
     const [value, setValue] = useState(today);
     const [eventDescription, setEventDescription] = useState("");
     const [yearMonth, setYearMonth] = useState("");
+
+    const isMobile = useIsMobile();
 
     const getEventForDate = (date) => {
         const startDate = dayjs(startCalendarDate);
@@ -51,10 +54,14 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
 
     const onSelect = (newValue) => {
         setValue(newValue);
-
         const event = getEventForDate(newValue);
+
         if (event) {
-            setEventDescription(`${event.title} - ساعت ۱۸:۰۰ تا ۱۹:۰۰`);
+            setEventDescription(
+                isMobile
+                    ? `${event.title} - ساعت ۱۸:۰۰ تا ۱۹:۰۰`
+                    : `${event.fullName} - ساعت ۱۸:۰۰ تا ۱۹:۰۰`
+            );
         } else {
             setEventDescription("برای این تاریخ رویدادی وجود ندارد.");
         }
@@ -70,7 +77,12 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
 
     const dateCellRender = (date) => {
         const event = getEventForDate(date);
-        return event ? <Badge status="success" text={event.title} /> : null;
+        return event ? (
+            <Badge
+                status="success"
+                text={isMobile ? `${event.title}` : `${event.fullName}`}
+            />
+        ) : null;
     };
 
     useEffect(() => {

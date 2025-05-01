@@ -30,7 +30,7 @@ https://t.me/c/1191433472/3801`;
     };
 
     return (
-        <div>
+        <div className="calendar-event-creator">
             <Button
                 onClick={() =>
                     window.open(createGoogleCalendarLink(), "_blank")
