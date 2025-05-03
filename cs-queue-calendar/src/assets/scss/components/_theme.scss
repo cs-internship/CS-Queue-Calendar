@@ -36,10 +36,12 @@
     }
     70% {
         outline: solid rgb(0, 0, 0) max(140vw, 140vh);
+        outline: solid rgb(0, 0, 0) max(140vw, 140svh);
         opacity: 1;
     }
     99% {
         outline: solid rgb(0, 0, 0) max(140vw, 140vh);
+        outline: solid rgb(0, 0, 0) max(140vw, 140svh);
         opacity: 0;
     }
     100% {

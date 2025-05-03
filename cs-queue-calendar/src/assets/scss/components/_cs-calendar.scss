@@ -8,6 +8,7 @@
 
 .ant-picker-date-panel {
     max-height: calc(100vh - 268px) !important;
+    max-height: calc(100svh - 268px) !important;
     overflow-y: auto !important;
 }
 

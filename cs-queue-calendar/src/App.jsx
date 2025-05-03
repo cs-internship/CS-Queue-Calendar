@@ -11,6 +11,7 @@ import Toastify from "./components/Toastify";
 const App = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [toastifyObj, setToastifyObj] = useState("");
+    
     const [addToCurrentWeek, setAddToCurrentWeek] = useState(0);
     const [announcementData, setAnnouncementData] = useState({
         startWeekDate: "",

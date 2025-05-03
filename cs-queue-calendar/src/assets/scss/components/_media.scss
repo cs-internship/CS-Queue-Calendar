@@ -30,7 +30,7 @@
     }
 
     .ant-picker-panel {
-        height: calc(100vh - 240px);
+        height: calc(100vh - 232px);
     }
 
     .ant-alert {
@@ -60,6 +60,11 @@
         font-size: 28px !important;
         height: 62px !important;
     }
+
+    .page-footer {
+        font-size: 18px !important;
+        height: 48px !important;
+    }
 }
 
 @media (max-width: 440px) {
@@ -71,7 +76,7 @@
     }
 
     .ant-picker-panel {
-        height: calc(100vh - 270px) !important;
+        height: calc(100vh - 262px) !important;
     }
 }
 
