@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/CS-Queue-Calendar/static/css/main.cc5e5290.css",
+    "main.css": "/CS-Queue-Calendar/static/css/main.f3f71f87.css",
     "main.js": "/CS-Queue-Calendar/static/js/main.16aa8abd.js",
     "static/media/Vazirmatn-Black.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-Black.06b4a8ea2ef9ccd440c1.ttf",
     "static/media/Vazirmatn-ExtraBold.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-ExtraBold.664894794b7326d1ecad.ttf",
@@ -12,11 +12,11 @@
     "static/media/Vazirmatn-Thin.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-Thin.3dc04c1b3c3be59927a1.ttf",
     "static/media/Vazirmatn-Regular.ttf": "/CS-Queue-Calendar/static/media/Vazirmatn-Regular.eea547173dc1d61387f5.ttf",
     "index.html": "/CS-Queue-Calendar/index.html",
-    "main.cc5e5290.css.map": "/CS-Queue-Calendar/static/css/main.cc5e5290.css.map",
+    "main.f3f71f87.css.map": "/CS-Queue-Calendar/static/css/main.f3f71f87.css.map",
     "main.16aa8abd.js.map": "/CS-Queue-Calendar/static/js/main.16aa8abd.js.map"
   },
   "entrypoints": [
-    "static/css/main.cc5e5290.css",
+    "static/css/main.f3f71f87.css",
     "static/js/main.16aa8abd.js"
   ]
 }
