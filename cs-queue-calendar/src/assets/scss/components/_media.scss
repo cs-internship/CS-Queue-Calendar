@@ -72,11 +72,41 @@
         display: flex;
         flex-flow: column-reverse;
         height: 80px !important;
-        padding: 5px 9px !important;
+        padding: 7px 9px !important;
     }
 
     .ant-picker-panel {
         height: calc(100vh - 262px) !important;
+    }
+
+    .ant-picker-body th,
+    .ant-badge-status-text,
+    .ant-picker-calendar-date-value,
+    .event-title,
+    .ant-btn,
+    .ant-select-selection-item,
+    .modal-header,
+    .ant-input {
+        font-size: 12px !important;
+    }
+
+    .modal-title {
+        font-size: 14px !important;
+    }
+
+    .ant-btn {
+        height: 28px !important;
+        padding: 0px 12px !important;
+    }
+
+    .ant-select-selector {
+        height: 30px !important;
+        padding: 0px 9px !important;
+    }
+
+    ::-webkit-scrollbar {
+        width: 4px !important;
+        height: 4px 1 !important;
     }
 }
 
