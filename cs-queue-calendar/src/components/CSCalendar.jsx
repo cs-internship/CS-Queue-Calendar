@@ -129,10 +129,10 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
         if (saturdayDate.isAfter(startDate, "day")) {
             firstEvent = getEventForDate(
                 dayjs(saturdayDate.clone().add(10, "day").toDate())
-            ).title;
+            ).fullName;
             secondEvent = getEventForDate(
                 dayjs(saturdayDate.clone().add(15, "day").toDate())
-            ).title;
+            ).fullName;
         }
 
         const newAnnouncementData = {

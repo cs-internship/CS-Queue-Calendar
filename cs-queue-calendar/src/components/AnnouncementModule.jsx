@@ -13,6 +13,10 @@ const AnnouncementModule = ({
         "Aloha, Nothing to see here"
     );
 
+    // useEffect(() => {
+    //     console.log("Announcement Data:", announcementData);
+    // }, [announcementData]);
+
     useEffect(() => {
         if (announcementData.startWeekDate) {
             setTextAreaContent(`📅 برنامه #زمان‌بندی‌_جلسات گروه صف در هفته آینده (${formatPersianDate(
