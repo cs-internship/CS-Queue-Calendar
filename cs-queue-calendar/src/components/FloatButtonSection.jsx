@@ -80,7 +80,7 @@ const FloatButtonSection = ({ setIsModalOpen }) => {
                         icon={<LinkedinOutlined />}
                         onClick={() =>
                             openLink(
-                                "https://www.linkedin.com/company/cs-internship/"
+                                "https://www.linkedin.com/search/results/all/?keywords=%23cs_internship&origin=GLOBAL_SEARCH_HEADER&sid=L3k"
                             )
                         }
                     />
