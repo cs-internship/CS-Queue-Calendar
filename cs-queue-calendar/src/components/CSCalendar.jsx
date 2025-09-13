@@ -152,7 +152,7 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
             }
             return prev;
         });
-    }, [addToCurrentWeek]);
+    }, [addToCurrentWeek, setAnnouncementData]);
 
     useEffect(() => {
         const tableHeaderItems = Array.from(
