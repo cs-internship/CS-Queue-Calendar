@@ -1,0 +1,34 @@
+# Dependencies
+node_modules
+package.json
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build / output folders
+build
+dist
+.next
+out
+coverage
+
+# Logs and system files
+*.log
+.DS_Store
+
+# IDE / editor settings
+.vscode
+.idea
+
+# Auto-generated / compiled files
+*.min.js
+*.min.css
+*.bundle.js
+*.map
+
+# Test snapshots
+*.snap
+
+# Static assets
+public/*
+!public/index.html

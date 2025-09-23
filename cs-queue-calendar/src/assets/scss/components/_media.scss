@@ -4,6 +4,10 @@
         min-width: 400px !important;
     }
 
+    .calendar-section {
+        height: unset !important;
+    }
+
     .ant-picker-calendar {
         margin: 0 10px !important;
     }
@@ -67,7 +71,7 @@
     }
 }
 
-@media (max-width: 440px) {
+@media (max-width: 458px) {
     .calendar-header {
         display: flex;
         flex-flow: column-reverse;

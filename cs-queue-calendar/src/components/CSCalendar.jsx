@@ -152,7 +152,7 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
             }
             return prev;
         });
-    }, [addToCurrentWeek]);
+    }, [addToCurrentWeek, setAnnouncementData]);
 
     useEffect(() => {
         const tableHeaderItems = Array.from(
@@ -174,7 +174,7 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
     }, [value]);
 
     return (
-        <>
+        <Flex justify="space-between" vertical className="calendar-section">
             <Calendar
                 value={value}
                 onSelect={onSelect}
@@ -235,6 +235,7 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
                                 </Select>
                                 <Select
                                     value={currentMonth}
+                                    className="month-select"
                                     onChange={(newMonth) =>
                                         handleMonthYearChange(
                                             newMonth,
@@ -287,7 +288,7 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
                     showIcon
                 />
             </ConfigProvider>
-        </>
+        </Flex>
     );
 };
 

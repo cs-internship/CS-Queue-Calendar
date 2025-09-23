@@ -1,9 +1,10 @@
-import { createContext, useState, useEffect } from "react";
-
-export const ThemeContext = createContext();
+import { useState, useEffect } from "react";
+import { ThemeContext } from "./ThemeContext";
 
 export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+    const [theme, setTheme] = useState(
+        localStorage.getItem("theme") || "light"
+    );
 
     useEffect(() => {
         document.documentElement.setAttribute("data-theme", theme);

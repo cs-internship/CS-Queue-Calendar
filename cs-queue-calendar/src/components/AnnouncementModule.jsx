@@ -29,8 +29,8 @@ const AnnouncementModule = ({
 🔸 **یک‌شنبه، ${formatPersianDate(announcementData.secondEventDate)}**
 موضوع: **${announcementData?.secondEvent?.replace(/:/g, " -")}**${
                 announcementData?.secondEvent?.split(":")[0] ===
-                "جلسه مرحله‌ چهارم"
-                    ? "\n(رزرو این جلسه امکان‌پذیر نیست)"
+                "جلسه مصاحبه ورود به برنامه"
+                    ? "\n(درصورتی وجود ظرفیت در برنامه، جلسه مصاحبه ورود در این زمان برگزار خواهد شد)"
                     : ""
             }  
 
@@ -67,6 +67,8 @@ ${window.location.href}`);
                 mode: "success",
             }));
         } catch (error) {
+            console.error("Failed to copy text: ", error);
+            
             setToastifyObj(() => ({
                 title: "مشکلی در کپی کردن پیام رخ داده است.",
                 mode: "error",

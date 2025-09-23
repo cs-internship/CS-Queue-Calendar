@@ -1,5 +1,10 @@
+.calendar-section{
+    height: calc(100vh - 128px);
+}
+
 .ant-badge.ant-badge-status {
     direction: rtl;
+    width: 100%;
 }
 
 .ant-picker-calendar-date-content::-webkit-scrollbar {
@@ -32,6 +37,10 @@ thead {
     border-bottom: 1px solid var(--calendar-border-color) !important;
     height: 50px;
     padding: 0 9px;
+
+    .month-select {
+        width: 100px !important;
+    }
 }
 
 .ant-picker-calendar {

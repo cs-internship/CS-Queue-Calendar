@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { FloatButton, Tooltip } from "antd";
-import { ThemeContext } from "../store/ThemeContext";
+import { ThemeContext } from "../store/Theme/ThemeContext";
 import {
     PlusOutlined,
     LinkedinOutlined,
@@ -80,7 +80,7 @@ const FloatButtonSection = ({ setIsModalOpen }) => {
                         icon={<LinkedinOutlined />}
                         onClick={() =>
                             openLink(
-                                "https://www.linkedin.com/search/results/all/?keywords=%23cs_internship&origin=GLOBAL_SEARCH_HEADER&sid=L3k"
+                                "https://www.linkedin.com/company/cs-internship/"
                             )
                         }
                     />
@@ -108,6 +108,7 @@ const FloatButtonSection = ({ setIsModalOpen }) => {
 
                 <Tooltip title="Change Theme" placement="right">
                     <FloatButton
+                        disabled={showTransition}
                         icon={<BgColorsOutlined />}
                         onClick={handleChangeTheme}
                     />
