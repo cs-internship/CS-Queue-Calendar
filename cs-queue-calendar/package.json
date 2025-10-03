@@ -3,6 +3,39 @@
   "name": "cs-queue-calendar",
   "version": "0.1.0",
   "private": true,
+  "description": "CS Queue Calendar — React calendar for displaying CS Internship queue meetings with Persian/Gregorian support.",
+  "main": "src/index.js",
+  "keywords": [
+    "calendar",
+    "react",
+    "jalali",
+    "persian",
+    "cs-internship",
+    "queue",
+    "schedule"
+  ],
+  "author": "Ali Sadeghi",
+  "contributors": [
+    "Ali Sadeghi"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cs-internship/CS-Queue-Calendar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cs-internship/CS-Queue-Calendar/issues"
+  },
+  "files": [
+    "build",
+    "public",
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9"
+  },
   "dependencies": {
     "antd": "^5.23.0",
     "caniuse-lite": "^1.0.30001741",
@@ -58,5 +91,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.4.0"
+  },
+  "publishConfig": {
+    "branch": "gh-pages"
   }
 }

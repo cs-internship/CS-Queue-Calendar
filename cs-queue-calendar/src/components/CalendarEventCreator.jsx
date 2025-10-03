@@ -36,7 +36,7 @@ https://t.me/c/1191433472/3801`;
                     window.open(createGoogleCalendarLink(), "_blank")
                 }
             >
-                اضافه کردن ایونت به گوگل کلندر
+                اضافه کردن رویداد به گوگل کلندر
             </Button>
         </div>
     );
