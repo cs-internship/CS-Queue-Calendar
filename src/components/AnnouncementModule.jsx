@@ -68,7 +68,7 @@ ${window.location.href}`);
             }));
         } catch (error) {
             console.error("Failed to copy text: ", error);
-            
+
             setToastifyObj(() => ({
                 title: "مشکلی در کپی کردن پیام رخ داده است.",
                 mode: "error",

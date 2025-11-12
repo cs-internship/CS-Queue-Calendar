@@ -1,0 +1,323 @@
+name: React CI/CD (CRA → GitHub Pages)
+
+env:
+  CI: "true"
+  IS_ACT: "false"
+
+on:
+  push:
+    branches:
+      - main
+      - feature/**
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: 🧪 Test, Lint & Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install deps (CI)
+        run: npm ci
+
+      - name: Prettier check
+        run: npm run format:check
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Run tests (no watch) with coverage + summary
+        run: |
+          npm test --silent -- --coverage | tee test-output.txt
+          echo "### ✅ Test Results" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat test-output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jest-coverage
+          path: coverage/
+          if-no-files-found: ignore
+
+  release:
+    name: 🚀 Version & Release
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+
+    outputs:
+      released: ${{ steps.get_tag.outputs.released }}
+      tag: ${{ steps.get_tag.outputs.tag }}
+
+    steps:
+      - name: Checkout (full history & tags)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install deps (CI)
+        run: npm ci
+
+      - name: Semantic Release
+        id: semantic_release
+        if: ${{ env.IS_ACT != 'true' }}
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+            @semantic-release/github
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Get created tag
+        id: get_tag
+        if: ${{ always() }}
+        run: |
+          if [ "${IS_ACT}" = "true" ]; then
+            echo "tag=local-test" >> $GITHUB_OUTPUT
+            echo "released=true" >> $GITHUB_OUTPUT
+          else
+            git fetch --tags || true
+            TAGS=$(git tag --points-at HEAD || true)
+            TAG=$(echo "$TAGS" | head -n1 | tr -d '\r\n')
+            if [ -n "$TAG" ]; then
+              echo "tag=$TAG" >> $GITHUB_OUTPUT
+              echo "released=true" >> $GITHUB_OUTPUT
+            else
+              echo "tag=" >> $GITHUB_OUTPUT
+              echo "released=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+  build:
+    name: 🏗️ Build (CRA)
+    runs-on: ubuntu-latest
+    needs: release
+    if: needs.release.outputs.released == 'true'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install deps (CI)
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Add SPA 404 fallback
+        run: cp build/index.html build/404.html
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-build
+          path: build/
+          if-no-files-found: error
+
+  deploy:
+    name: 🚀 Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: build
+    if: needs.release.outputs.released == 'true'
+
+    steps:
+      - name: Download build artifact
+        if: ${{ env.IS_ACT != 'true' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: react-build
+          path: build
+
+      - name: Deploy using gh-pages action
+        if: ${{ env.IS_ACT != 'true' }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build
+          publish_branch: gh-pages
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+
+  notify-release:
+    name: 📢 Telegram Success Notification
+    runs-on: ubuntu-latest
+    needs: [release, deploy]
+    if: needs.release.outputs.released == 'true'
+
+    steps:
+      - name: Checkout (full history & tags)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Send Telegram notification
+        env:
+          IS_ACT: ${{ env.IS_ACT }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ACTION_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          RELEASE_TAG: ${{ needs.release.outputs.tag }}
+          GITHUB_ACTOR: ${{ github.actor }}
+        run: |
+          escape_html() {
+            printf '%s' "$1" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -e 's/"/\&quot;/g'
+          }
+
+          if [ "${IS_ACT}" = "true" ]; then
+            TAG="local-test"
+          else
+            TAG="${RELEASE_TAG}"
+          fi
+
+          LAST_AUTHOR="${GITHUB_ACTOR}"
+          AUTHOR_LINK="https://github.com/${LAST_AUTHOR}"
+          DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+
+          eTAG=$(escape_html "$TAG")
+          eAuthor=$(escape_html "$LAST_AUTHOR")
+          eAuthorLink=$(escape_html "$AUTHOR_LINK")
+          eActionRun=$(escape_html "$ACTION_RUN_URL")
+          eDate=$(escape_html "$DATE")
+
+          printf -v MESSAGE '%s\n%s\n%s\n%s\n%s' \
+            "🚀 <b>New release published!</b>" \
+            "🏷️ <b>Version:</b> ${eTAG}" \
+            "👤 <b>Author:</b> <a href=\"${eAuthorLink}\">${eAuthor}</a>" \
+            "🕓 <b>Date:</b> ${eDate}" \
+            "🔗 <a href=\"${eActionRun}\">View GitHub Action Run</a>"
+
+          RESPONSE="$(curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${MESSAGE}" \
+            -d "parse_mode=HTML" \
+            -d "disable_web_page_preview=true" \
+            -w "\n%{http_code}")"
+
+          HTTP_CODE="$(echo "$RESPONSE" | tail -n1)"
+          BODY="$(echo "$RESPONSE" | sed '$d')"
+
+          if [ "$HTTP_CODE" != "200" ] || ! echo "$BODY" | grep -q '"ok":true'; then
+            echo "❌ Telegram API error. HTTP=$HTTP_CODE BODY=$BODY"
+            exit 1
+          fi
+
+          echo "✅ Telegram notification sent."
+
+  notify-error:
+    name: 📢 Telegram Error Notification
+    runs-on: ubuntu-latest
+    needs: [test, release, build, deploy]
+    if: ${{ failure() }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Send Telegram error notification
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          LAST_AUTHOR="${GITHUB_ACTOR}"
+          AUTHOR_LINK="https://github.com/${LAST_AUTHOR}"
+          FAILED_STEPS=()
+
+          if [ "${{ needs.test.result }}" = "failure" ]; then
+            FAILED_STEPS+=("Tests")
+          fi
+          if [ "${{ needs.release.result }}" = "failure" ]; then
+            FAILED_STEPS+=("Release")
+          fi
+          if [ "${{ needs.build.result }}" = "failure" ]; then
+            FAILED_STEPS+=("Build")
+          fi
+          if [ "${{ needs.deploy.result }}" = "failure" ]; then
+            FAILED_STEPS+=("Deploy")
+          fi
+
+          if [ ${#FAILED_STEPS[@]} -eq 0 ]; then
+            echo "No failed steps detected. Exiting."
+            exit 0
+          fi
+
+          FAILED_LIST=$(IFS=', '; echo "${FAILED_STEPS[*]}")
+
+          escape_html() {
+            printf '%s' "$1" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -e 's/"/\&quot;/g'
+          }
+
+          eFailedList=$(escape_html "$FAILED_LIST")
+          eActor=$(escape_html "$LAST_AUTHOR")
+          eAuthorLink=$(escape_html "$AUTHOR_LINK")
+          eRunURL=$(escape_html "$GITHUB_RUN_URL")
+          eDate=$(escape_html "$(date -u +"%Y-%m-%d %H:%M:%S UTC")")
+
+          printf -v MESSAGE '%s\n%s\n%s\n%s\n%s' \
+          "❌ <b>Pipeline Error Detected</b>" \
+          "⚠️ <b>Failed Steps:</b> ${eFailedList}" \
+          "👤 <b>Triggered by:</b> <a href=\"${eAuthorLink}\">${eActor}</a>" \
+          "🕓 <b>Date:</b> ${eDate}" \
+          "🔗 <a href=\"${eRunURL}\">View GitHub Action Run</a>"
+
+          RESPONSE="$(curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${MESSAGE}" \
+            -d "parse_mode=HTML" \
+            -d "disable_web_page_preview=true" \
+            -w "\n%{http_code}")"
+
+          HTTP_CODE="$(echo "$RESPONSE" | tail -n1)"
+          BODY="$(echo "$RESPONSE" | sed '$d')"
+
+          if [ "$HTTP_CODE" != "200" ] || ! echo "$BODY" | grep -q '"ok":true'; then
+            echo "❌ Telegram API error. HTTP=$HTTP_CODE BODY=$BODY"
+            exit 1
+          fi
+
+          echo "✅ Telegram error notification sent."

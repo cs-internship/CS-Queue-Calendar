@@ -1,0 +1,132 @@
+{
+  // ======================================
+  // General Editor Settings
+  // ======================================
+
+  // Use 4 spaces for indentation
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+
+  // Automatically wrap long lines instead of horizontal scrolling
+  "editor.wordWrap": "off",
+
+  // Always use LF for line endings (consistent across OS)
+  "files.eol": "\n",
+
+  // Remove trailing whitespaces and ensure a final newline
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  // ======================================
+  // Code Formatting (Prettier)
+  // ======================================
+
+  // Use Prettier as the default formatter
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Automatically format code on save
+  "editor.formatOnSave": true,
+
+  // Prettier rules for consistent code style
+  "prettier.semi": true, // Always use semicolons
+  "prettier.singleQuote": false, // Prefer double quotes
+  "prettier.trailingComma": "all", // Add trailing commas wherever possible
+  "prettier.printWidth": 100, // Wrap lines at 100 characters
+  "prettier.tabWidth": 4, // 4-space indentation
+
+  // ======================================
+  // Linting (ESLint)
+  // ======================================
+
+  "eslint.enable": true,
+  "eslint.validate": ["javascript"], // Validate only JavaScript files
+  "eslint.alwaysShowStatus": true, // Always show ESLint status in the bottom bar
+
+  // ======================================
+  // Testing (Jest)
+  // ======================================
+
+  // Prevent VS Code from opening the Peek View for failed tests
+  "testing.automaticallyOpenPeekView": "never",
+
+  // ======================================
+  // Integrated Terminal & Node Environment
+  // ======================================
+
+  // Set NODE_ENV to development for integrated terminals
+  "terminal.integrated.env.linux": {
+    "NODE_ENV": "development"
+  },
+  "terminal.integrated.env.windows": {
+    "NODE_ENV": "development"
+  },
+
+  // Prefer Git Bash as the default terminal on Windows
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+
+  // ======================================
+  // Git & Source Control
+  // ======================================
+
+  // Allow committing without staging all changes manually
+  "git.enableSmartCommit": true,
+
+  // Automatically fetch from remote repositories
+  "git.autofetch": true,
+
+  // Skip confirmation prompts when syncing changes
+  "git.confirmSync": false,
+
+  // Automatically sync after every commit
+  "git.postCommitCommand": "sync",
+
+  // ======================================
+  // IntelliSense & JavaScript Settings
+  // ======================================
+
+  // Enable auto imports and refactoring for JS
+  "javascript.suggest.autoImports": true,
+
+  // Automatically update imports when moving/renaming files
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  // Disable TypeScript validation (pure JS project)
+  "typescript.validate.enable": false,
+
+  // Enable Emmet abbreviations in JS files
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+
+  // ======================================
+  // Workspace Cleanliness & Search
+  // ======================================
+
+  // Exclude non-relevant directories from global search
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/coverage": true,
+    "**/dist": true,
+    "**/.git": true
+  },
+
+  // ======================================
+  // Conventional Commits / Husky Support
+  // ======================================
+
+  // Optional: assist with commit scopes and structured messages
+  "conventionalCommits.scopes": ["bot", "ci", "core", "queue", "docs"],
+  "conventionalCommits.promptBody": true,
+  "conventionalCommits.promptFooter": true,
+
+  // ======================================
+  // Custom Title Bar Colors
+  // ======================================
+
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#5c5c5cd2",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#515151d2",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  }
+}

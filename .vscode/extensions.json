@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "vivaxy.vscode-conventional-commits",
+    "github.vscode-github-actions",
+    "christian-kohler.npm-intellisense",
+    "redhat.vscode-yaml",
+    "timonwong.shellcheck",
+    "EditorConfig.EditorConfig",
+    "orta.vscode-jest"
+  ]
+}

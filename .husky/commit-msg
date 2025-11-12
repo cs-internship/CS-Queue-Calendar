@@ -1,0 +1,13 @@
+# shellcheck shell=sh
+
+npx --no -- commitlint --edit "${1:-.git/COMMIT_EDITMSG}"
+RESULT=$?
+
+if [ $RESULT -ne 0 ]; then
+  echo ""
+  echo "🚫 Commit message format is invalid!"
+  echo "💡 Please follow the convention: <type>(scope): <subject>"
+  echo "   Example: feat(bot): add new queue system"
+  echo ""
+  exit 1
+fi

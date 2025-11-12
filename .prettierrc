@@ -1,0 +1,28 @@
+{
+  "trailingComma": "es5",
+  "tabWidth": 4,
+  "semi": true,
+  "singleQuote": false,
+  "endOfLine": "auto",
+  "overrides": [
+    {
+      "files": [
+        "package.json",
+        "package-lock.json",
+        "yarn.lock",
+        "pnpm-lock.yaml",
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml",
+        ".github/actions/**/*.yml",
+        ".github/actions/**/*.yaml",
+        "ci.yml",
+        ".prettierrc",
+        ".vscode/**/*.json",
+        ".github/**/*.json"
+      ],
+      "options": {
+        "tabWidth": 2
+      }
+    }
+  ]
+}
