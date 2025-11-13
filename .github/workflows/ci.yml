@@ -222,7 +222,7 @@ jobs:
           eDate=$(escape_html "$DATE")
 
           printf -v MESSAGE '%s\n%s\n%s\n%s\n%s' \
-            "🚀 <b>New release published!</b>" \
+            "🚀 <b>New release published - CS Queue Calendar</b>" \
             "🏷️ <b>Version:</b> ${eTAG}" \
             "👤 <b>Author:</b> <a href=\"${eAuthorLink}\">${eAuthor}</a>" \
             "🕓 <b>Date:</b> ${eDate}" \
