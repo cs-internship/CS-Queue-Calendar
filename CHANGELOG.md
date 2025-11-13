@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.0.1...v1.1.0) (2025-11-13)
+
+
+### Features
+
+* **tests:** add comprehensive tests for components, utils, and context providers ([436d9ee](https://github.com/cs-internship/CS-Queue-Calendar/commit/436d9ee2820633fdcd37dcf93800305cc870fee5))
+
 ## [1.0.1](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.0.0...v1.0.1) (2025-11-13)
 
 
