@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.0.0...v1.0.1) (2025-11-13)
+
+
+### Bug Fixes
+
+* enhance release notification message for clarity, test new telegram bot token ([0c6fbca](https://github.com/cs-internship/CS-Queue-Calendar/commit/0c6fbca9c43e0163ce990af46de42b946e6e5c84))
+
 # 1.0.0 (2025-11-13)
 
 
