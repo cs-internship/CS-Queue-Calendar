@@ -1,4 +1,4 @@
-name: React CI/CD (CRA → GitHub Pages)
+name: React CI/CD
 
 env:
   CI: "true"
@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   test:
-    name: 🧪 Test, Lint & Coverage
+    name: 🧪 Run Tests and Coverage
     runs-on: ubuntu-latest
 
     steps:
@@ -299,7 +299,7 @@ jobs:
           eDate=$(escape_html "$(date -u +"%Y-%m-%d %H:%M:%S UTC")")
 
           printf -v MESSAGE '%s\n%s\n%s\n%s\n%s' \
-          "❌ <b>Pipeline Error Detected</b>" \
+          "❌ <b>Pipeline Error Detected - CS Queue Calendar</b>" \
           "⚠️ <b>Failed Steps:</b> ${eFailedList}" \
           "👤 <b>Triggered by:</b> <a href=\"${eAuthorLink}\">${eActor}</a>" \
           "🕓 <b>Date:</b> ${eDate}" \
