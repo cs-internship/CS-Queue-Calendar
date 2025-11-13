@@ -1,7 +1,7 @@
 {
   "homepage": "https://cs-internship.github.io/CS-Queue-Calendar/",
   "name": "cs-queue-calendar",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "React calendar for displaying CS Internship queue meetings with Persian/Gregorian support.",
   "main": "./src/index.jsx",
   "scripts": {
