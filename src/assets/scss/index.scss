@@ -5,10 +5,14 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    transition: none !important;
+    font-family: "Vazirmatn" !important;
+}
+
+.loaded * {
     transition:
         background-color 0.25s,
         color 0.25s !important;
-    font-family: "Vazirmatn" !important;
 }
 
 body {

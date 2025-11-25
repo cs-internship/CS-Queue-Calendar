@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ConfigProvider, theme } from "antd";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -23,6 +23,14 @@ const App = () => {
     });
 
     const { theme: currentTheme } = useContext(ThemeContext);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            document.body.classList.add("loaded");
+        }, 0);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <ConfigProvider
