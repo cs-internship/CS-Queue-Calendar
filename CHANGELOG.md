@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.1.0...v1.1.1) (2025-11-25)
+
+
+### Bug Fixes
+
+* **theme:** implement smooth transition effects and update default theme colors ([c58e873](https://github.com/cs-internship/CS-Queue-Calendar/commit/c58e873a9967b9d2788c5781a046d71317ced43e))
+
 # [1.1.0](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.0.1...v1.1.0) (2025-11-13)
 
 
