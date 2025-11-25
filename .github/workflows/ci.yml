@@ -221,8 +221,9 @@ jobs:
           eActionRun=$(escape_html "$ACTION_RUN_URL")
           eDate=$(escape_html "$DATE")
 
-          printf -v MESSAGE '%s\n%s\n%s\n%s\n%s' \
-            "🚀 <b>New release published - CS Queue Calendar</b>" \
+          printf -v MESSAGE '%s\n%s\n%s\n%s\n%s\n%s' \
+            "🚀 <b>New release published</b>" \
+            "🛠️ <b>Service:</b> CS Queue Calendar" \
             "🏷️ <b>Version:</b> ${eTAG}" \
             "👤 <b>Author:</b> <a href=\"${eAuthorLink}\">${eAuthor}</a>" \
             "🕓 <b>Date:</b> ${eDate}" \
@@ -298,8 +299,9 @@ jobs:
           eRunURL=$(escape_html "$GITHUB_RUN_URL")
           eDate=$(escape_html "$(date -u +"%Y-%m-%d %H:%M:%S UTC")")
 
-          printf -v MESSAGE '%s\n%s\n%s\n%s\n%s' \
-          "❌ <b>Pipeline Error Detected - CS Queue Calendar</b>" \
+          printf -v MESSAGE '%s\n%s\n%s\n%s\n%s\n%s' \
+          "❌ <b>Pipeline Error Detected</b>" \
+          "🛠️ <b>Service:</b> CS Queue Calendar" \
           "⚠️ <b>Failed Steps:</b> ${eFailedList}" \
           "👤 <b>Triggered by:</b> <a href=\"${eAuthorLink}\">${eActor}</a>" \
           "🕓 <b>Date:</b> ${eDate}" \
