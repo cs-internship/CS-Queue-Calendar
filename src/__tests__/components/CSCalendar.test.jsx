@@ -2,25 +2,31 @@ import React from "react";
 import { render, waitFor, screen, fireEvent } from "@testing-library/react";
 import CSCalendar from "../../components/CSCalendar";
 
-// Mock dependencies
-jest.mock("../../utils/createTds", () => ({
-    createTds: jest.fn(),
-}));
-
 jest.mock("../../constants/events", () => ({
     events: [
         {
             title: "جلسه مرحله سوم",
             fullName: "جلسه مرحله‌ سوم: پرسش‌وپاسخ",
+            link: "https://teams.microsoft.com/meeting-3",
+            resource: "https://example.com/resource-3",
         },
         {
             title: "جلسه مرحله دوم",
             fullName: "جلسه مرحله‌ دوم: پرسش‌وپاسخ",
+            link: "https://teams.microsoft.com/meeting-2",
+            resource: "https://example.com/resource-2",
         },
-        { title: "جلسه مصاحبه", fullName: "جلسه مصاحبه ورود به برنامه" },
+        {
+            title: "جلسه مصاحبه",
+            fullName: "جلسه مصاحبه ورود به برنامه",
+            link: "",
+            resource: "",
+        },
         {
             title: "جلسه مرحله اول",
             fullName: "جلسه مرحله‌ اول: پرسش‌وپاسخ",
+            link: "https://teams.microsoft.com/meeting-1",
+            resource: "https://example.com/resource-1",
         },
     ],
 }));
@@ -39,10 +45,6 @@ jest.mock("../../constants/persianWeekDays", () => ({
         "پنج‌شنبه",
         "جمعه",
     ],
-}));
-
-jest.mock("../../components/useIsMobile", () => ({
-    useIsMobile: jest.fn(() => false),
 }));
 
 jest.mock("../../components/CalendarEventCreator", () => {
@@ -187,7 +189,7 @@ describe("CSCalendar", () => {
         expect(getByText("ماه بعد")).toBeInTheDocument();
     });
 
-    it("should render Alert component", () => {
+    it("should not render bottom Alert component anymore (popup replaces it)", () => {
         const { container } = render(
             <CSCalendar
                 setAnnouncementData={mockSetAnnouncementData}
@@ -195,23 +197,85 @@ describe("CSCalendar", () => {
             />
         );
 
-        expect(container.querySelector(".ant-alert")).toBeInTheDocument();
+        expect(container.querySelector(".ant-alert")).not.toBeInTheDocument();
     });
 
-    it("should display event description", () => {
-        const { getByText } = render(
+    it("clicking a calendar cell with event should open anchored popup showing event details", async () => {
+        const { container, getByText } = render(
             <CSCalendar
                 setAnnouncementData={mockSetAnnouncementData}
                 addToCurrentWeek={mockAddToCurrentWeek}
             />
         );
 
-        // Should render event description or "no event" message
-        const eventDescription = getByText((content, element) => {
-            return element && element.className === "event-description";
+        await waitFor(() => {
+            // find clickable cell wrapper
+            const cells = container.querySelectorAll(
+                ".calendar-cell-with-event"
+            );
+            expect(cells.length).toBeGreaterThanOrEqual(0);
+            // find the first wrapper that actually contains an event (stage-tag)
+            const clickable = Array.from(cells).find((c) =>
+                c.querySelector(".stage-tag")
+            );
+            expect(clickable).toBeTruthy();
+            if (clickable) fireEvent.click(clickable);
         });
 
-        expect(eventDescription).toBeInTheDocument();
+        // popup should show the Persian date label
+        expect(getByText("تاریخ شمسی")).toBeInTheDocument();
+        // session link should be labeled as Microsoft Teams in Persian and resource should be present
+        expect(getByText("ماکروسافت تیمز")).toBeInTheDocument();
+        expect(getByText("مشاهده منبع")).toBeInTheDocument();
+    });
+
+    it("clicking the calendar TD (cell square) containing a staged event opens the popup", async () => {
+        const { container, getByText } = render(
+            <CSCalendar
+                setAnnouncementData={mockSetAnnouncementData}
+                addToCurrentWeek={mockAddToCurrentWeek}
+            />
+        );
+
+        await waitFor(() => {
+            // find a table cell that contains our clickable wrapper
+            const tds = Array.from(
+                container.querySelectorAll(".ant-picker-cell")
+            );
+            const tdWithEvent = tds.find((td) =>
+                td.querySelector(".calendar-cell-with-event .stage-tag")
+            );
+
+            expect(tdWithEvent).toBeTruthy();
+
+            if (tdWithEvent) {
+                fireEvent.click(tdWithEvent);
+            }
+        });
+
+        expect(getByText("تاریخ شمسی")).toBeInTheDocument();
+        expect(getByText("ماکروسافت تیمز")).toBeInTheDocument();
+        expect(getByText("مشاهده منبع")).toBeInTheDocument();
+    });
+
+    it("every calendar cell should contain a date-label Tag and be annotated with data-date", async () => {
+        const { container } = render(
+            <CSCalendar
+                setAnnouncementData={mockSetAnnouncementData}
+                addToCurrentWeek={mockAddToCurrentWeek}
+            />
+        );
+
+        await waitFor(() => {
+            const wrappers = container.querySelectorAll(
+                ".calendar-cell-with-event"
+            );
+            expect(wrappers.length).toBeGreaterThan(0);
+            const hasDateAttr = Array.from(wrappers).some((w) =>
+                w.getAttribute("data-date")
+            );
+            expect(hasDateAttr).toBeTruthy();
+        });
     });
 
     it("should have select elements for month and year", () => {
@@ -356,7 +420,7 @@ describe("CSCalendar", () => {
         expect(todayBtn).toBeInTheDocument();
     });
 
-    it("should render ConfigProvider with RTL direction", () => {
+    it("should not show the anchored popup on initial render", () => {
         const { container } = render(
             <CSCalendar
                 setAnnouncementData={mockSetAnnouncementData}
@@ -364,8 +428,8 @@ describe("CSCalendar", () => {
             />
         );
 
-        const alert = container.querySelector(".ant-alert");
-        expect(alert).toBeInTheDocument();
+        const popup = container.querySelector(".event-popup");
+        expect(popup).not.toBeInTheDocument();
     });
 
     it("should handle onPanelChange when month/year changes", () => {

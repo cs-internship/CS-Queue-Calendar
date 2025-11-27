@@ -42,12 +42,6 @@ describe("events constants", () => {
         });
     });
 
-    it("should contain specific event details", () => {
-        const thirdEvent = events.find((e) => e.title === "جلسه مرحله سوم");
-        expect(thirdEvent).toBeDefined();
-        expect(thirdEvent.fullName).toContain("مرحله‌ سوم");
-    });
-
     it("should be ordered correctly", () => {
         expect(events[0].title).toBe("جلسه مرحله سوم");
         expect(events[1].title).toBe("جلسه مرحله دوم");

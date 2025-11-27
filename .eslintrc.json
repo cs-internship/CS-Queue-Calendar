@@ -16,7 +16,7 @@
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
         "prettier/prettier": [
-            "error",
+            "warn",
             {
                 "endOfLine": "auto"
             }

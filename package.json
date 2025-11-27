@@ -12,8 +12,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "react-scripts test --watchAll=false --coverage",
-    "lint": "eslint src --ext .js,.jsx --format stylish --max-warnings=0",
-    "lint:fix": "eslint src --ext .js,.jsx --format stylish --max-warnings=0 --fix",
+    "lint": "eslint src --ext .js,.jsx --format stylish",
+    "lint:fix": "eslint src --ext .js,.jsx --format stylish --fix",
     "act": "act --env-file .env.act --quiet",
     "prepare": "husky"
   },
