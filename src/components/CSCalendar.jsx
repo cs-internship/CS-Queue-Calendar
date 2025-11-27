@@ -128,11 +128,6 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
                     onKeyDown={(e) => e.key === "Enter" && handleOpen(e)}
                     className="calendar-cell-with-event"
                 >
-                    {date.isSame(dayjs(), "day") && (
-                        <span className="today-badge" aria-hidden>
-                            <span className="today-badge__label">Today</span>
-                        </span>
-                    )}
                     <Tag className="date-label">{date.date()}</Tag>
 
                     {event && (
