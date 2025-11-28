@@ -1,9 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import moment from "jalali-moment";
 import CalendarEventCreator from "./CalendarEventCreator";
+import "../assets/scss/components/_event-popup.scss";
 
 const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
     const popupRef = useRef(null);
+
+    const [mounted, setMounted] = useState(visible);
+    const [isOpen, setIsOpen] = useState(false);
 
     const justOpenedRef = useRef(false);
 
@@ -37,15 +41,28 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
     }, [visible, onClose]);
 
     useEffect(() => {
-        if (!visible) return undefined;
-        justOpenedRef.current = true;
-        const t = setTimeout(() => (justOpenedRef.current = false), 120);
+        if (visible) {
+            setMounted(true);
+
+            const t1 = setTimeout(() => setIsOpen(true), 12);
+
+            justOpenedRef.current = true;
+            const t2 = setTimeout(() => (justOpenedRef.current = false), 140);
+            return () => {
+                clearTimeout(t1);
+                clearTimeout(t2);
+            };
+        }
+
+        setIsOpen(false);
+
+        const t = setTimeout(() => setMounted(false), 300);
         return () => clearTimeout(t);
     }, [visible]);
 
-    if (!visible || !anchorRect) return null;
+    if (!mounted || !anchorRect) return null;
 
-    const defaultWidth = 320;
+    const defaultWidth = Math.min(380, Math.max(300, anchorRect?.width || 320));
     const popupPadding = 12;
 
     let left =
@@ -79,10 +96,14 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
         ? moment(date.toDate()).locale("fa").format("jYYYY/jMM/jDD")
         : "-";
 
+    const transformOrigin = prefersAbove ? "bottom center" : "top center";
+
     return (
         <div
             ref={popupRef}
-            className={`event-popup ${prefersAbove ? "event-popup--above" : ""}`}
+            className={`event-popup ${prefersAbove ? "event-popup--above" : ""} ${
+                isOpen ? "is-mounted" : "is-closing"
+            }`}
             style={{
                 position: "absolute",
                 top: top,
@@ -93,7 +114,11 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
             aria-modal="false"
         >
             <div className="event-popup__arrow" style={{ left: arrowLeft }} />
-            <div className="event-popup__content">
+            <div
+                className={`event-popup__content ${isOpen ? "is-open" : ""}`}
+                style={{ transformOrigin }}
+            >
+                {/* close button removed — using outside click / Escape to close */}
                 <div className="event-popup__header">
                     <div className="event-popup__header-left">
                         {event && (
@@ -162,6 +187,15 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
                     </>
                 )}
 
+                <div className="event-popup__footer">
+                    <div className="event-popup__meta">
+                        <div className="event-popup__label small">زمان</div>
+                        <div className="event-popup__value small">
+                            {event?.time || "ساعت ۱۸:۰۰ تا ۱۹:۰۰"}
+                        </div>
+                    </div>
+                </div>
+
                 {date && event && (
                     <div className="event-popup__creator">
                         <CalendarEventCreator
@@ -170,24 +204,6 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
                         />
                     </div>
                 )}
-
-                <div className="event-popup__footer">
-                    <div className="event-popup__meta">
-                        <div className="event-popup__label small">زمان</div>
-                        <div className="event-popup__value small">
-                            ساعت ۱۸:۰۰ تا ۱۹:۰۰
-                        </div>
-                    </div>
-
-                    <div className="event-popup__actions">
-                        <button
-                            onClick={onClose}
-                            className="ant-btn ant-btn-primary"
-                        >
-                            بستن
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     );
