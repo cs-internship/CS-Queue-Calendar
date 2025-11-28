@@ -23,16 +23,48 @@
 
     .event-popup__arrow {
         position: absolute;
-        width: 0;
-        height: 0;
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        border-bottom: 10px solid var(--bg-color-alt, #fff);
-        top: -10px;
+        width: 24px;
+        height: 16px;
+        left: calc(50% - 12px);
+        top: -8px;
+        pointer-events: none;
         transform-origin: center;
-        filter: drop-shadow(0 10px 18px rgba(16, 24, 40, 0.08));
-        transform: translateY(8px);
         opacity: 0;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 12px solid rgba(0, 0, 0, 0.06); /* border/outline color */
+            filter: drop-shadow(0 8px 16px rgba(16, 24, 40, 0.06));
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            width: 0;
+            height: 0;
+            border-left: 11px solid transparent;
+            border-right: 11px solid transparent;
+            border-bottom: 11px solid var(--bg-color-alt, #fff); /* match popup */
+        }
+
+        transform: translateY(8px);
+        transition:
+            transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+            opacity 180ms ease !important;
+    }
+
+    &.is-mounted .event-popup__arrow {
+        opacity: 1;
+        transform: translateY(0);
         transition:
             transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
             opacity 180ms ease !important;
@@ -49,9 +81,15 @@
     &.event-popup--above {
         .event-popup__arrow {
             top: auto;
-            bottom: -10px;
-            border-bottom: 0;
-            border-top: 10px solid var(--bg-color-alt, #fff);
+            bottom: -8px;
+            &::before {
+                border-bottom: 0;
+                border-top: 12px solid rgba(0, 0, 0, 0.06);
+            }
+            &::after {
+                border-bottom: 0;
+                border-top: 11px solid var(--bg-color-alt, #fff);
+            }
             transform-origin: bottom center;
         }
     }

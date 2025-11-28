@@ -44,26 +44,28 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
         if (visible) {
             setMounted(true);
 
-            const t1 = setTimeout(() => setIsOpen(true), 12);
+            const enter = setTimeout(() => setIsOpen(true), 16);
 
             justOpenedRef.current = true;
-            const t2 = setTimeout(() => (justOpenedRef.current = false), 140);
+            const guard = setTimeout(
+                () => (justOpenedRef.current = false),
+                160
+            );
+
             return () => {
-                clearTimeout(t1);
-                clearTimeout(t2);
+                clearTimeout(enter);
+                clearTimeout(guard);
             };
         }
 
         setIsOpen(false);
-
-        const t = setTimeout(() => setMounted(false), 300);
-        return () => clearTimeout(t);
+        const leave = setTimeout(() => setMounted(false), 340);
+        return () => clearTimeout(leave);
     }, [visible]);
 
     if (!mounted || !anchorRect) return null;
 
-    const defaultWidth = Math.min(380, Math.max(300, anchorRect?.width || 320));
-    const popupPadding = 12;
+    const defaultWidth = Math.min(420, Math.max(300, anchorRect?.width || 320));
 
     let left =
         anchorRect.left +
@@ -113,12 +115,15 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
             role="dialog"
             aria-modal="false"
         >
-            <div className="event-popup__arrow" style={{ left: arrowLeft }} />
+            <div
+                className="event-popup__arrow"
+                style={{ left: arrowLeft }}
+                aria-hidden
+            />
             <div
                 className={`event-popup__content ${isOpen ? "is-open" : ""}`}
                 style={{ transformOrigin }}
             >
-                {/* close button removed — using outside click / Escape to close */}
                 <div className="event-popup__header">
                     <div className="event-popup__header-left">
                         {event && (
