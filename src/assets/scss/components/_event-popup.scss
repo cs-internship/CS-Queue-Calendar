@@ -231,17 +231,8 @@
     }
 
     .event-popup__link {
-        color: #1677ff;
-        text-decoration: none;
+        font-size: 13px;
         font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-
-        &:hover {
-            color: #165bad;
-            text-decoration: underline;
-        }
     }
 
     .event-popup__footer {
@@ -292,4 +283,8 @@
 
 .calendar-event-creator .ant-btn {
     padding: 0 30px;
+    transition:
+        background-color 0.25s,
+        color 0.25s,
+        border-color 0.25s !important;
 }

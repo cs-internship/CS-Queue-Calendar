@@ -303,7 +303,7 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
     }, [value, yearMonth]);
 
     return (
-        <Flex justify="space-between" vertical className="calendar-section">
+        <Flex vertical className="calendar-section">
             <CalendarIntro />
 
             <Calendar

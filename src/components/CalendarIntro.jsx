@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Typography, Space } from "antd";
 
 const CalendarIntro = () => {
-    const { Title, Paragraph, Link, Text } = Typography;
+    const { Paragraph, Link } = Typography;
 
     return (
         <Card bordered={false} className="calendar-intro" dir="rtl">
@@ -11,10 +11,6 @@ const CalendarIntro = () => {
                 size={4}
                 className="calendar-intro__body"
             >
-                <Text className="calendar-intro__badge">راهنمای تقویم</Text>
-                <Title level={4} className="calendar-intro__title">
-                    تقویم رسمی جلسات پرسش‌وپاسخ
-                </Title>
                 <Paragraph className="calendar-intro__paragraph">
                     این تقویم، مرجع رسمی زمان‌بندی جلسات پرسش‌وپاسخ مراحل ورود
                     به برنامه CS Internship است و ساختار برگزاری جلسات گروه صف

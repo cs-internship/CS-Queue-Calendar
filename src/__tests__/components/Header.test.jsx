@@ -29,7 +29,11 @@ describe("Header", () => {
 
     it("should render title text", () => {
         render(<Header />);
-        expect(screen.getByText("CS-Queue-Calendar")).toBeInTheDocument();
+        expect(
+            screen.getByText(
+                "تقویم جلسات گروه صف برنامه CS Internship"
+            )
+        ).toBeInTheDocument();
     });
 
     it("should have dashes on both sides", () => {
@@ -57,7 +61,9 @@ describe("Header", () => {
     it("should render title with correct styling", () => {
         const { container } = render(<Header />);
         const title = container.querySelector("h1");
-        expect(title).toHaveTextContent("CS-Queue-Calendar");
+        expect(title).toHaveTextContent(
+            "تقویم جلسات گروه صف برنامه CS Internship"
+        );
     });
 
     it("should call window.open when first dash is clicked", () => {
