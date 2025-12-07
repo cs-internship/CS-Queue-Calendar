@@ -30,9 +30,7 @@ describe("Header", () => {
     it("should render title text", () => {
         render(<Header />);
         expect(
-            screen.getByText(
-                "تقویم جلسات گروه صف برنامه CS Internship"
-            )
+            screen.getByText("تقویم جلسات گروه صف برنامه CS Internship")
         ).toBeInTheDocument();
     });
 
