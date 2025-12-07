@@ -98,7 +98,7 @@
         background: linear-gradient(180deg, var(--bg-color-alt, #fff), #fbfbfb);
         border-radius: 10px;
         box-shadow: 0 10px 30px rgba(16, 24, 40, 0.12);
-        padding: 16px;
+        padding: 18px 20px;
         color: var(--text-color);
         font-size: 14px;
         direction: rtl;
@@ -131,7 +131,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        margin-bottom: 10px;
+        margin-bottom: 14px;
     }
     .event-popup__subtitle {
         font-size: 12px;
@@ -200,53 +200,47 @@
     .event-popup__row {
         display: flex;
         gap: 12px;
-        margin-bottom: 10px;
-        align-items: center;
+        margin-bottom: 12px;
+        align-items: flex-start;
+        line-height: 1.5;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
     .event-popup__label {
-        min-width: 84px;
+        min-width: 96px;
         color: rgba(0, 0, 0, 0.58);
         font-weight: 700;
         text-align: right;
         letter-spacing: 0.2px;
         flex: 0 0 auto;
+        padding-top: 2px;
     }
     .event-popup__value {
         flex: 1 1 auto;
         word-break: break-word;
-        color: rgba(0, 0, 0, 0.8);
+        color: rgba(0, 0, 0, 0.86);
     }
 
     .event-popup__link {
-        color: var(--link-color, #2f6fed);
+        color: #1677ff;
         text-decoration: none;
-        font-weight: 700;
-        display: inline-block;
-        padding: 6px 10px;
-        border-radius: 8px;
-        transition:
-            background 120ms ease,
-            transform 80ms ease;
-    }
-    .event-popup__link--primary {
-        background: linear-gradient(
-            90deg,
-            rgba(47, 111, 237, 0.12),
-            rgba(47, 111, 237, 0.06)
-        );
-        border: 1px solid rgba(47, 111, 237, 0.1);
-        color: var(--link-color, #2f6fed);
-    }
-    .event-popup__link:hover {
-        background: rgba(47, 111, 237, 0.06);
-        transform: translateY(-1px);
-        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        &:hover {
+            color: #165bad;
+            text-decoration: underline;
+        }
     }
 
     .event-popup__footer {
         display: flex;
         justify-content: space-between;
-        margin-top: 12px;
+        margin-top: 14px;
         align-items: center;
         gap: 12px;
     }
@@ -264,17 +258,11 @@
 
     .event-popup__actions {
         display: flex;
-        gap: 8px;
-    }
-    .event-popup__actions .ant-btn {
-        padding: 8px 14px;
-        border-radius: 8px;
-        font-weight: 600;
-        box-shadow: none;
+        gap: 10px;
     }
 
     .event-popup__creator {
-        margin-top: 10px;
+        margin-top: 14px;
         display: flex;
         justify-content: flex-end;
     }

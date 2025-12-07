@@ -288,6 +288,19 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
         setYearMonth(currentMonth.toString() + currentYear.toString());
     }, [value]);
 
+    useEffect(() => {
+        const stripNativeTitles = () => {
+            document
+                .querySelectorAll(
+                    ".ant-picker-cell[title], .ant-picker-cell-inner[title]"
+                )
+                .forEach((node) => node.removeAttribute("title"));
+        };
+
+        const raf = requestAnimationFrame(stripNativeTitles);
+        return () => cancelAnimationFrame(raf);
+    }, [value, yearMonth]);
+
     return (
         <Flex justify="space-between" vertical className="calendar-section">
             <Calendar
