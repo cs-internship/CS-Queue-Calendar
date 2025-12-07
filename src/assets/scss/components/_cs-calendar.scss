@@ -1,5 +1,6 @@
 .calendar-section {
-    height: calc(100vh - 128px);
+    min-height: calc(100vh - 128px);
+    gap: 12px;
 }
 
 .ant-badge.ant-badge-status {

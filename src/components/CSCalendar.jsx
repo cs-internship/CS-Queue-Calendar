@@ -6,6 +6,7 @@ import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
 import moment from "jalali-moment";
 import EventPopup from "./EventPopup";
+import CalendarIntro from "./CalendarIntro";
 import { events } from "../constants/events";
 import { startCalendarDate } from "../constants/startCalendarDate";
 import { persianWeekDays } from "../constants/persianWeekDays";
@@ -303,6 +304,8 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
 
     return (
         <Flex justify="space-between" vertical className="calendar-section">
+            <CalendarIntro />
+
             <Calendar
                 value={value}
                 onSelect={onSelect}

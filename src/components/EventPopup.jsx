@@ -1,13 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Card, Typography, Space, Descriptions, Button, Flex } from "antd";
-import {
-    CalendarOutlined,
-    ClockCircleOutlined,
-    ExportOutlined,
-    LinkOutlined,
-    FileTextOutlined,
-    CloseOutlined,
-} from "@ant-design/icons";
 import moment from "jalali-moment";
 import CalendarEventCreator from "./CalendarEventCreator";
 import "../assets/scss/components/_event-popup.scss";
@@ -133,148 +124,89 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
                 className={`event-popup__content ${isOpen ? "is-open" : ""}`}
                 style={{ transformOrigin }}
             >
-                <Card
-                    bordered={false}
-                    size="small"
-                    className="event-popup__card"
-                    dir="rtl"
-                >
-                    <Space
-                        direction="vertical"
-                        size={10}
-                        className="event-popup__body"
-                    >
-                        <Flex
-                            align="center"
-                            justify="space-between"
-                            className="event-popup__header"
-                        >
-                            <Flex
-                                align="center"
-                                gap={10}
-                                className="event-popup__header-left"
-                            >
-                                {event && (
-                                    <span
-                                        className="event-popup__color-dot"
-                                        style={{
-                                            background: event.color || "#444",
-                                        }}
-                                        aria-hidden
-                                    />
-                                )}
-                                <div>
-                                    <Typography.Title
-                                        level={5}
-                                        className="event-popup__header-title"
-                                    >
-                                        {event?.title || "OªOýOÝUOOO¦ OªU,O3UØ"}
-                                    </Typography.Title>
-                                    {event?.fullName && (
-                                        <Typography.Text className="event-popup__subtitle">
-                                            {event.fullName}
-                                        </Typography.Text>
-                                    )}
-                                </div>
-                            </Flex>
-                            <Button
-                                type="text"
-                                size="small"
-                                icon={<CloseOutlined />}
-                                onClick={onClose}
-                                className="event-popup__close-btn"
+                <div className="event-popup__header">
+                    <div className="event-popup__header-left">
+                        {event && (
+                            <span
+                                className="event-popup__color-dot"
+                                style={{ background: event.color || "#444" }}
+                                aria-hidden
                             />
-                        </Flex>
+                        )}
+                        <div className="event-popup__header-title">
+                            {event?.title || "جزئیات جلسه"}
+                        </div>
+                    </div>
+                </div>
+                <div className="event-popup__row">
+                    <div className="event-popup__label">تاریخ شمسی</div>
+                    <div className="event-popup__value">{persian}</div>
+                </div>
+                <div className="event-popup__row">
+                    <div className="event-popup__label">تاریخ میلادی</div>
+                    <div className="event-popup__value">{gregorian}</div>
+                </div>
 
-                        <Descriptions
-                            column={1}
-                            size="small"
-                            colon={false}
-                            className="event-popup__descriptions"
-                            labelStyle={{ width: 120, fontWeight: 600 }}
-                        >
-                            <Descriptions.Item
-                                label={
-                                    <Space size={6}>
-                                        <CalendarOutlined />
-                                        {"O¦OOñUOOr O'U.O3UO"}
-                                    </Space>
-                                }
-                            >
-                                {persian}
-                            </Descriptions.Item>
-                            <Descriptions.Item
-                                label={
-                                    <Space size={6}>
-                                        <CalendarOutlined />
-                                        {"O¦OOñUOOr U.UOU,OO_UO"}
-                                    </Space>
-                                }
-                            >
-                                {gregorian}
-                            </Descriptions.Item>
-                            <Descriptions.Item
-                                label={
-                                    <Space size={6}>
-                                        <FileTextOutlined />
-                                        {"O1U+U^OU+ OªU,O3UØ"}
-                                    </Space>
-                                }
-                            >
-                                {event?.fullName || event?.title || "-"}
-                            </Descriptions.Item>
-                            <Descriptions.Item
-                                label={
-                                    <Space size={6}>
-                                        <ClockCircleOutlined />
-                                        {"OýU.OU+"}
-                                    </Space>
-                                }
-                            >
-                                {event?.time ||
-                                    "O3OO1O¦ UñU,:UøUø O¦O UñU1:UøUø"}
-                            </Descriptions.Item>
-                        </Descriptions>
+                {event && (
+                    <>
+                        <div className="event-popup__row">
+                            <div className="event-popup__label">عنوان جلسه</div>
+                            <div className="event-popup__value">
+                                {event.fullName || event.title}
+                            </div>
+                        </div>
 
-                        {(event?.link || event?.resource) && (
-                            <Flex gap={8} wrap className="event-popup__actions">
-                                {event?.link && (
-                                    <Button
-                                        type="primary"
-                                        icon={<ExportOutlined />}
+                        {event.link && (
+                            <div className="event-popup__row">
+                                <div className="event-popup__label">
+                                    لینک جلسه
+                                </div>
+                                <div className="event-popup__value">
+                                    <a
                                         href={event.link}
                                         target="_blank"
                                         rel="noreferrer"
-                                        size="small"
+                                        className="event-popup__link event-popup__link--primary"
                                     >
-                                        {"U.OUcOñU^O3OU?O¦ O¦UOU.Oý"}
-                                    </Button>
-                                )}
-                                {event?.resource && (
-                                    <Button
-                                        type="default"
-                                        icon={<LinkOutlined />}
+                                        {"ماکروسافت تیمز"}
+                                    </a>
+                                </div>
+                            </div>
+                        )}
+
+                        {event.resource && (
+                            <div className="event-popup__row">
+                                <div className="event-popup__label">منبع</div>
+                                <div className="event-popup__value">
+                                    <a
                                         href={event.resource}
                                         target="_blank"
                                         rel="noreferrer"
-                                        size="small"
+                                        className="event-popup__link"
                                     >
-                                        {"U.O'OUØO_UØ U.U+O\"O1"}
-                                    </Button>
-                                )}
-                            </Flex>
-                        )}
-
-                        {date && event && (
-                            <div className="event-popup__creator">
-                                <CalendarEventCreator
-                                    eventDate={date.format("YYYY-MM-DD")}
-                                    eventText={event.fullName || event.title}
-                                />
+                                        {"مشاهده منبع"}
+                                    </a>
+                                </div>
                             </div>
                         )}
-                    </Space>
-                </Card>
+                    </>
+                )}
+
+                <div className="event-popup__row">
+                    <div className="event-popup__label">زمان</div>
+                    <div className="event-popup__value">
+                        {event?.time || "ساعت ۱۸:۰۰ تا ۱۹:۰۰"}
+                    </div>
+                </div>
+
+                {date && event && (
+                    <div className="event-popup__creator">
+                        <CalendarEventCreator
+                            eventDate={date.format("YYYY-MM-DD")}
+                            eventText={event.fullName || event.title}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );
