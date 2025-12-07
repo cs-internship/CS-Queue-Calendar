@@ -145,3 +145,21 @@ thead {
         justify-content: center;
     }
 }
+
+.ant-picker-cell:not(.ant-picker-cell-in-view) {
+    .stage-tag {
+        background-color: #5d6ef5 !important;
+    }
+}
+
+.tooltip-style {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 2px 4px;
+
+    div {
+        font-size: 13px;
+        line-height: 19px;
+    }
+}

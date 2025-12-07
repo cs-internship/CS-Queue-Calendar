@@ -93,7 +93,7 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
 
         const stageLabel =
             (event &&
-                (event.stage ||
+                (event.title ||
                     (event.title &&
                         (event.title.match(/مرحله\s*[^\s]+/)?.[0] ||
                             event.title.replace(/^جلسه\s*/u, ""))) ||

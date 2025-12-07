@@ -134,7 +134,7 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
                             />
                         )}
                         <div className="event-popup__header-title">
-                            {event?.stage || event?.title || "جزئیات جلسه"}
+                            {event?.title || "جزئیات جلسه"}
                         </div>
                     </div>
                 </div>
@@ -192,12 +192,10 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
                     </>
                 )}
 
-                <div className="event-popup__footer">
-                    <div className="event-popup__meta">
-                        <div className="event-popup__label small">زمان</div>
-                        <div className="event-popup__value small">
-                            {event?.time || "ساعت ۱۸:۰۰ تا ۱۹:۰۰"}
-                        </div>
+                <div className="event-popup__row">
+                    <div className="event-popup__label">زمان</div>
+                    <div className="event-popup__value">
+                        {event?.time || "ساعت ۱۸:۰۰ تا ۱۹:۰۰"}
                     </div>
                 </div>
 
