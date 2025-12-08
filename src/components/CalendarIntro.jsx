@@ -12,9 +12,9 @@ const CalendarIntro = () => {
                 className="calendar-intro__body"
             >
                 <Paragraph className="calendar-intro__paragraph">
-                    این تقویم، مرجع رسمی زمان‌بندی جلسات پرسش‌وپاسخ مراحل ورود
-                    به برنامه CS Internship است و ساختار برگزاری جلسات گروه صف
-                    را در طول هفته نمایش می‌دهد.
+                    این تقویم مرجع رسمی زمان‌بندی جلسات پرسش‌وپاسخ مراحل ورود به
+                    برنامه CS Internship است و ساختار برگزاری جلسات گروه صف را
+                    در طول هفته نمایش می‌دهد.
                 </Paragraph>
                 <Paragraph className="calendar-intro__paragraph">
                     برای آشنایی با فرایند ورود، می‌توانید پیام پین‌شده‌ی توضیحات

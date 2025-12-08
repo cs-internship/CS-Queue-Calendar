@@ -1,7 +1,7 @@
 export const events = [
     {
         title: "جلسه مرحله سوم",
-        color: "#3BB273",
+        color: "#4AA37C", // 63C29A
         fullName: "پرسش‌وپاسخ داکیومنت فرآیند‌های برنامه CS Internship",
         link: "https://teams.microsoft.com/l/meetup-join/19%3A92b6afa889824abe96a1cfa45204209a%40thread.tacv2/1748521847152?context=%7B%22Tid%22%3A%2224fbf492-43a9-4a8f-ba7b-6f12fa9b8d87%22%2C%22Oid%22%3A%223e1989b9-3427-4202-986e-e2a62f053845%22%7D",
         resource:
@@ -9,7 +9,7 @@ export const events = [
     },
     {
         title: "جلسه مرحله دوم",
-        color: "#5D6EF5",
+        color: "#6C7BEA", // 8D97FF
         fullName: "پرسش‌وپاسخ فیلم معرفی برنامه‌ CS Internship",
         link: "https://teams.microsoft.com/l/meetup-join/19%3A92b6afa889824abe96a1cfa45204209a%40thread.tacv2/1748521728714?context=%7B%22Tid%22%3A%2224fbf492-43a9-4a8f-ba7b-6f12fa9b8d87%22%2C%22Oid%22%3A%223e1989b9-3427-4202-986e-e2a62f053845%22%7D",
         resource:
@@ -17,13 +17,13 @@ export const events = [
     },
     {
         title: "جلسه مصاحبه",
-        color: "#FFB020",
+        color: "#E5A93B", // F1C15A
         fullName: "جلسه مصاحبه ورود به برنامه",
         link: "",
     },
     {
         title: "جلسه مرحله اول",
-        color: "#F35E7F",
+        color: "#E46C86", // FF88A3
         fullName: "پرسش‌وپاسخ داکیومنت CS Internship Overview",
         link: "https://teams.microsoft.com/l/meetup-join/19%3A92b6afa889824abe96a1cfa45204209a%40thread.tacv2/1748716646151?context=%7B%22Tid%22%3A%2224fbf492-43a9-4a8f-ba7b-6f12fa9b8d87%22%2C%22Oid%22%3A%223e1989b9-3427-4202-986e-e2a62f053845%22%7D",
         resource:

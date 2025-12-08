@@ -13,8 +13,8 @@
 }
 
 .ant-picker-date-panel {
-    max-height: calc(100vh - 268px) !important;
-    max-height: calc(100svh - 268px) !important;
+    max-height: calc(100vh - 340px) !important;
+    max-height: calc(100svh - 340px) !important;
     overflow-y: auto !important;
 }
 
@@ -45,7 +45,7 @@ thead {
 }
 
 .ant-picker-calendar {
-    margin: 0 60px;
+    margin: 0 60px 30px;
     border-radius: 10px;
     overflow: hidden;
     border: 1px solid var(--calendar-border-color);
