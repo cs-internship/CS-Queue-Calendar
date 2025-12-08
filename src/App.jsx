@@ -43,7 +43,7 @@ const App = () => {
         >
             <Toastify toastifyObj={toastifyObj} />
 
-            <Header />
+            {/* <Header /> */}
 
             <CSCalendar
                 setAnnouncementData={setAnnouncementData}

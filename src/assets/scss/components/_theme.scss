@@ -4,7 +4,8 @@
 }
 
 [data-theme="light"] {
-    --bg-color: white;
+    --main-color: white;
+    --bg-color: #f7f9fb;
     --text-color: black;
     --footer-bg-color: #dce6f4;
     --thumb-bg-color: #cacaca;
@@ -12,6 +13,7 @@
 }
 
 [data-theme="dark"] {
+    --main-color: #1e1e1e; // check later
     --bg-color: #141414;
     --text-color: white;
     --footer-bg-color: #111;

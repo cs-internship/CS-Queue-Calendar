@@ -22,7 +22,7 @@ thead {
     position: sticky !important;
     top: 0px;
     z-index: 100;
-    background-color: var(--bg-color);
+    background-color: var(--main-color) !important;
 
     th {
         line-height: 22px !important;
