@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Calendar, Button, Select, Tag, Tooltip, Flex } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/fa";
@@ -10,6 +10,7 @@ import CalendarIntro from "./CalendarIntro";
 import { events } from "../constants/events";
 import { startCalendarDate } from "../constants/startCalendarDate";
 import { persianWeekDays } from "../constants/persianWeekDays";
+import { ThemeContext } from "../store/Theme/ThemeContext";
 
 moment.locale("fa");
 dayjs.locale("fa");
@@ -21,6 +22,7 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
 
     const [value, setValue] = useState(today);
     const [width, setWidth] = useState(window.innerWidth);
+    const [yearMonth, setYearMonth] = useState("");
     const [popupData, setPopupData] = useState({
         visible: false,
         event: null,
@@ -28,7 +30,7 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
         rect: null,
     });
 
-    const [yearMonth, setYearMonth] = useState("");
+    const { theme } = useContext(ThemeContext);
 
     const getEventForDate = (date) => {
         const startDate = dayjs(startCalendarDate);
@@ -136,7 +138,11 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
 
                     {event && (
                         <Tag
-                            color={event.color || "#888"}
+                            color={
+                                theme === "light"
+                                    ? event.colorLight
+                                    : event.colorDark || "#888"
+                            }
                             className="stage-tag"
                         >
                             <span className="main-word">

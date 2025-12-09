@@ -2,7 +2,8 @@ export const events = [
     {
         title: "مرحله سوم",
         shortTitle: "مرحله سوم",
-        color: "#4AA37C", // 63C29A
+        colorLight: "#4AA37C",
+        colorDark: "#1E5A42",
         fullName: "پرسش‌وپاسخ داکیومنت فرآیند‌های برنامه CS Internship",
         link: "https://teams.microsoft.com/l/meetup-join/19%3A92b6afa889824abe96a1cfa45204209a%40thread.tacv2/1748521847152?context=%7B%22Tid%22%3A%2224fbf492-43a9-4a8f-ba7b-6f12fa9b8d87%22%2C%22Oid%22%3A%223e1989b9-3427-4202-986e-e2a62f053845%22%7D",
         resource:
@@ -11,7 +12,8 @@ export const events = [
     {
         title: "مرحله دوم",
         shortTitle: "مرحله دوم",
-        color: "#6C7BEA", // 8D97FF
+        colorLight: "#6C7BEA",
+        colorDark: "#273088",
         fullName: "پرسش‌وپاسخ فیلم معرفی برنامه‌ CS Internship",
         link: "https://teams.microsoft.com/l/meetup-join/19%3A92b6afa889824abe96a1cfa45204209a%40thread.tacv2/1748521728714?context=%7B%22Tid%22%3A%2224fbf492-43a9-4a8f-ba7b-6f12fa9b8d87%22%2C%22Oid%22%3A%223e1989b9-3427-4202-986e-e2a62f053845%22%7D",
         resource:
@@ -20,14 +22,16 @@ export const events = [
     {
         title: "مصاحبه",
         shortTitle: "جلسه مصاحبه",
-        color: "#E5A93B", // F1C15A
+        colorLight: "#E5A93B",
+        colorDark: "#7A5A18",
         fullName: "جلسه مصاحبه ورود به برنامه",
         link: "",
     },
     {
         title: "مرحله اول",
         shortTitle: "مرحله اول",
-        color: "#E46C86", // FF88A3
+        colorLight: "#E46C86",
+        colorDark: "#7A2F41",
         fullName: "پرسش‌وپاسخ داکیومنت CS Internship Overview",
         link: "https://teams.microsoft.com/l/meetup-join/19%3A92b6afa889824abe96a1cfa45204209a%40thread.tacv2/1748716646151?context=%7B%22Tid%22%3A%2224fbf492-43a9-4a8f-ba7b-6f12fa9b8d87%22%2C%22Oid%22%3A%223e1989b9-3427-4202-986e-e2a62f053845%22%7D",
         resource:

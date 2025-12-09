@@ -10,15 +10,20 @@
     --footer-bg-color: #dce6f4;
     --thumb-bg-color: #cacaca;
     --calendar-border-color: #afafaf;
+    --card-color: #f7f9fb;
+    --bg-color-alt: #ffffff;
 }
 
 [data-theme="dark"] {
-    --main-color: #1e1e1e; // check later
+    --main-color: #141414;
+    --main-color-alt: #141414;
     --bg-color: #141414;
     --text-color: white;
     --footer-bg-color: #111;
     --thumb-bg-color: #7a7a7a;
     --calendar-border-color: #5a5a5a;
+    --card-color: #141414;
+    --bg-color-alt: #1e1e1e;
 }
 
 .fancy-theme-transition {

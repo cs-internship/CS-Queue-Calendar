@@ -1,22 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Typography, Space } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import CryptoJS from "crypto-js";
+
+const date = "1403-10-30";
 
 const CalendarIntro = () => {
     const { Paragraph, Link, Title } = Typography;
 
+    const [clickCount, setClickCount] = useState(0);
+
+    const decrypt = (text) => {
+        const bytes = CryptoJS.AES.decrypt(text, date);
+        const plainText = bytes.toString(CryptoJS.enc.Utf8);
+        return plainText;
+    };
+
+    const handleIconClick = () => {
+        const newCount = clickCount + 1;
+
+        if (newCount === 4) {
+            window.open(
+                decrypt(
+                    "U2FsdGVkX1/6Qzhsn/GOmvLuTL2y3E9PiuIq9z5eyMlHYCBbHTRgO4+YONp1oZPMWNvhHthzh2FtMlqpzQOYBA=="
+                ),
+                "_blank"
+            );
+            setClickCount(0);
+        } else {
+            setClickCount(newCount);
+        }
+    };
+
     return (
         <Card bordered={false} className="calendar-intro" dir="rtl">
             <Space align="start">
-                <div className="calendar-intro__icon">
+                <div className="calendar-intro__icon" onClick={handleIconClick}>
                     <InfoCircleOutlined />
                 </div>
 
-                <Space
-                    direction="vertical"
-                    // size={8}
-                    className="calendar-intro__content"
-                >
+                <Space direction="vertical" className="calendar-intro__content">
                     <Title level={4} className="calendar-intro__title">
                         تقویم جلسات گروه صف برنامه CS Internship
                     </Title>

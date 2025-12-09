@@ -1,13 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import moment from "jalali-moment";
 import CalendarEventCreator from "./CalendarEventCreator";
 import "../assets/scss/components/_event-popup.scss";
+import { ThemeContext } from "../store/Theme/ThemeContext";
 
 const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
     const popupRef = useRef(null);
 
     const [mounted, setMounted] = useState(visible);
     const [isOpen, setIsOpen] = useState(false);
+
+    const { theme } = useContext(ThemeContext);
 
     const justOpenedRef = useRef(false);
 
@@ -76,9 +79,9 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
 
     const spaceBelow =
         window.innerHeight - (anchorRect.bottom - window.scrollY);
-    const prefersAbove = spaceBelow < 260;
+    const prefersAbove = spaceBelow < 301;
     const top = prefersAbove
-        ? anchorRect.top + window.scrollY - 8 - 260
+        ? anchorRect.top + window.scrollY - 8 - 301
         : anchorRect.bottom + window.scrollY + 8;
 
     const arrowWidth = 14;
@@ -129,7 +132,12 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
                         {event && (
                             <span
                                 className="event-popup__color-dot"
-                                style={{ background: event.color || "#444" }}
+                                style={{
+                                    background:
+                                        theme === "light"
+                                            ? event.colorLight
+                                            : event.colorDark,
+                                }}
                                 aria-hidden
                             />
                         )}

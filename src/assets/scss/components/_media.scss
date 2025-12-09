@@ -115,8 +115,13 @@
     .ant-btn,
     .ant-select-selection-item,
     .modal-header,
-    .ant-input {
+    .ant-input,
+    .ant-space-item div.ant-typography {
         font-size: 12px !important;
+    }
+
+    .ant-space-item h4.ant-typography {
+        font-size: 22px !important;
     }
 
     .modal-title {
