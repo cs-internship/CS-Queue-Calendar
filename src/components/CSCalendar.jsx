@@ -20,6 +20,7 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
     const today = dayjs();
 
     const [value, setValue] = useState(today);
+    const [width, setWidth] = useState(window.innerWidth);
     const [popupData, setPopupData] = useState({
         visible: false,
         event: null,
@@ -54,6 +55,18 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
     const handleMonthYearChange = (month, year) => {
         setValue(value.month(month).year(year));
     };
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWidth(window.innerWidth);
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     const dateCellRender = (date) => {
         const event = getEventForDate(date);
@@ -92,16 +105,6 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
             setPopupData({ visible: true, event, date, rect });
         };
 
-        const stageLabel =
-            (event &&
-                (event.title ||
-                    (event.title &&
-                        (event.title.match(/مرحله\s*[^\s]+/)?.[0] ||
-                            event.title.replace(/^جلسه\s*/u, ""))) ||
-                    (event.fullName &&
-                        event.fullName.replace(/^جلسه\s*/u, "")))) ||
-            "جلسه";
-
         const greg = date.format("YYYY-MM-DD");
         const persianDate = moment(date.toDate())
             .locale("fa")
@@ -136,7 +139,10 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
                             color={event.color || "#888"}
                             className="stage-tag"
                         >
-                            {stageLabel}
+                            <span className="main-word">
+                                {width < 950 ? event.shortTitle : event.title}
+                            </span>{" "}
+                            <span className="meeting-word">جلسه </span>
                         </Tag>
                     )}
                 </div>

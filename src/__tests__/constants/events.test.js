@@ -21,10 +21,10 @@ describe("events constants", () => {
     });
 
     it("should have correct event titles", () => {
-        expect(events[0].title).toBe("جلسه مرحله سوم");
-        expect(events[1].title).toBe("جلسه مرحله دوم");
-        expect(events[2].title).toBe("جلسه مصاحبه");
-        expect(events[3].title).toBe("جلسه مرحله اول");
+        expect(events[0].title).toBe("مرحله سوم");
+        expect(events[1].title).toBe("مرحله دوم");
+        expect(events[2].title).toBe("مصاحبه");
+        expect(events[3].title).toBe("مرحله اول");
     });
 
     it("each event should have non-empty title and fullName", () => {
@@ -43,9 +43,9 @@ describe("events constants", () => {
     });
 
     it("should be ordered correctly", () => {
-        expect(events[0].title).toBe("جلسه مرحله سوم");
-        expect(events[1].title).toBe("جلسه مرحله دوم");
-        expect(events[2].title).toBe("جلسه مصاحبه");
-        expect(events[3].title).toBe("جلسه مرحله اول");
+        expect(events[0].title).toBe("مرحله سوم");
+        expect(events[1].title).toBe("مرحله دوم");
+        expect(events[2].title).toBe("مصاحبه");
+        expect(events[3].title).toBe("مرحله اول");
     });
 });

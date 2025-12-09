@@ -1,5 +1,5 @@
 .calendar-section {
-    min-height: calc(100vh - 128px);
+    height: calc(100vh - 56px);
     gap: 12px;
 }
 
@@ -96,20 +96,27 @@ thead {
 }
 
 .stage-tag {
-    // font-weight: 700;
-    padding: 0 8px;
+    padding: 3px 8px;
     border-radius: 6px;
     font-size: 12px;
-    height: 28px;
+    // height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 3px;
     position: absolute;
     top: 28px;
     width: 100%;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     color: #fff;
     letter-spacing: 0.3px;
+
+    .main-word {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center !important;
+    }
 }
 
 .date-label {
