@@ -1,3 +1,21 @@
+# [1.2.0](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.1.1...v1.2.0) (2025-12-10)
+
+
+### Bug Fixes
+
+* **CSCalendar:** add effect to strip native titles from calendar cells on value change ([e8ec80b](https://github.com/cs-internship/CS-Queue-Calendar/commit/e8ec80bef7d5ab8c1807a8081f55d801293b54a1))
+* **EventPopup:** enhance arrow styling and transition effects for improved popup appearance ([1a58fb8](https://github.com/cs-internship/CS-Queue-Calendar/commit/1a58fb80b29f6967c5e60adff0b665f91249d807))
+
+
+### Features
+
+* **calendar:** add theming support and update event styling ([557c7b9](https://github.com/cs-internship/CS-Queue-Calendar/commit/557c7b9a95bc0a3d8ecca76119a0fcea5b8ee089))
+* **CalendarIntro:** add introductory card for calendar with guidance and links ([b755fb9](https://github.com/cs-internship/CS-Queue-Calendar/commit/b755fb954d8008f01225ea37795aa2e5c2b0da20))
+* **CalendarIntro:** enhance introductory card with detailed guidance and improved layout ([fdfef2e](https://github.com/cs-internship/CS-Queue-Calendar/commit/fdfef2e4531ec4aa567f84423abfd04f91b01ff0))
+* **EventPopup:** enhance popup animations and add unit tests for rendering and close functionality ([a8d6ff1](https://github.com/cs-internship/CS-Queue-Calendar/commit/a8d6ff10164c4fbd69c997c76b9962e02e691555))
+* **Header:** update header title to reflect new calendar name in Persian ([5977e6e](https://github.com/cs-internship/CS-Queue-Calendar/commit/5977e6e63c8bc82e226736380b12f83eb9c96a0d))
+* **tests:** enhance unit tests for EventPopup, FloatButtonSection, Toastify, and CalendarIntro components ([41a3cee](https://github.com/cs-internship/CS-Queue-Calendar/commit/41a3ceed034a0ab6ec4b64f338001e175acb30e8))
+
 ## [1.1.1](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.1.0...v1.1.1) (2025-11-25)
 
 
