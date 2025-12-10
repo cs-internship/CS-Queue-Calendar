@@ -1,562 +1,422 @@
-// import React from "react";
-// import { render, waitFor, screen, fireEvent } from "@testing-library/react";
-// import CSCalendar from "../../components/CSCalendar";
-
-// jest.mock("../../constants/events", () => ({
-//     events: [
-//         {
-//             title: "جلسه مرحله سوم",
-//             fullName: "جلسه مرحله‌ سوم: پرسش‌وپاسخ",
-//             link: "https://teams.microsoft.com/meeting-3",
-//             resource: "https://example.com/resource-3",
-//         },
-//         {
-//             title: "جلسه مرحله دوم",
-//             fullName: "جلسه مرحله‌ دوم: پرسش‌وپاسخ",
-//             link: "https://teams.microsoft.com/meeting-2",
-//             resource: "https://example.com/resource-2",
-//         },
-//         {
-//             title: "جلسه مصاحبه",
-//             fullName: "جلسه مصاحبه ورود به برنامه",
-//             link: "",
-//             resource: "",
-//         },
-//         {
-//             title: "جلسه مرحله اول",
-//             fullName: "جلسه مرحله‌ اول: پرسش‌وپاسخ",
-//             link: "https://teams.microsoft.com/meeting-1",
-//             resource: "https://example.com/resource-1",
-//         },
-//     ],
-// }));
-
-// jest.mock("../../constants/startCalendarDate", () => ({
-//     startCalendarDate: "2025-01-13",
-// }));
-
-// jest.mock("../../constants/persianWeekDays", () => ({
-//     persianWeekDays: [
-//         "شنبه",
-//         "یک‌شنبه",
-//         "دوشنبه",
-//         "سه‌شنبه",
-//         "چهارشنبه",
-//         "پنج‌شنبه",
-//         "جمعه",
-//     ],
-// }));
-
-// jest.mock("../../components/CalendarEventCreator", () => {
-//     return function MockCalendarEventCreator() {
-//         return (
-//             <div data-testid="calendar-event-creator">
-//                 Calendar Event Creator
-//             </div>
-//         );
-//     };
-// });
-
-// // Mock dayjs and moment
-// jest.mock("dayjs", () => {
-//     const originalDayjs = jest.requireActual("dayjs");
-//     return originalDayjs;
-// });
-
-// jest.mock("jalali-moment", () => {
-//     const originalMoment = jest.requireActual("jalali-moment");
-//     return originalMoment;
-// });
-
-// describe("CSCalendar", () => {
-//     const mockSetAnnouncementData = jest.fn();
-//     const mockAddToCurrentWeek = 0;
-
-//     beforeEach(() => {
-//         mockSetAnnouncementData.mockClear();
-//         jest.clearAllMocks();
-//     });
-
-//     it("should render without crashing", () => {
-//         render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-//     });
-
-//     it("should accept setAnnouncementData prop", () => {
-//         render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-//         expect(mockSetAnnouncementData).toBeDefined();
-//     });
-
-//     it("should accept addToCurrentWeek prop", () => {
-//         render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={7}
-//             />
-//         );
-//     });
-
-//     it("should render container", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-//         expect(container).toBeInTheDocument();
-//     });
-
-//     it("should call setAnnouncementData", () => {
-//         render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-//         expect(mockSetAnnouncementData).toHaveBeenCalled();
-//     });
-
-//     it("should update when addToCurrentWeek changes", () => {
-//         const { rerender } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-//         rerender(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={7}
-//             />
-//         );
-//         expect(mockSetAnnouncementData).toHaveBeenCalledTimes(2);
-//     });
-
-//     it("should be accessible", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-//         expect(container).toBeInTheDocument();
-//     });
-
-//     it("should call getEventForDate for selected date", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-
-//         // Calendar should render with events
-//         expect(
-//             container.querySelectorAll(".ant-badge").length
-//         ).toBeGreaterThanOrEqual(0);
-//     });
-
-//     it("should handle onPanelChange", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-
-//         expect(container).toBeInTheDocument();
-//     });
-
-//     it("should have calendar header with navigation buttons", () => {
-//         const { getByText } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-
-//         expect(getByText("ماه قبل")).toBeInTheDocument();
-//         expect(getByText("امروز")).toBeInTheDocument();
-//         expect(getByText("ماه بعد")).toBeInTheDocument();
-//     });
-
-//     it("should not render bottom Alert component anymore (popup replaces it)", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-
-//         expect(container.querySelector(".ant-alert")).not.toBeInTheDocument();
-//     });
-
-//     it("clicking a calendar cell with event should open anchored popup showing event details", async () => {
-//         const { container, getByText } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-
-//         await waitFor(() => {
-//             // find clickable cell wrapper
-//             const cells = container.querySelectorAll(
-//                 ".calendar-cell-with-event"
-//             );
-//             expect(cells.length).toBeGreaterThanOrEqual(0);
-//             // find the first wrapper that actually contains an event (stage-tag)
-//             const clickable = Array.from(cells).find((c) =>
-//                 c.querySelector(".stage-tag")
-//             );
-//             expect(clickable).toBeTruthy();
-//             if (clickable) fireEvent.click(clickable);
-//         });
-
-//         // popup should show the Persian date label
-//         expect(getByText("تاریخ شمسی")).toBeInTheDocument();
-//         // session link should be labeled as Microsoft Teams in Persian and resource should be present
-//         expect(getByText("ماکروسافت تیمز")).toBeInTheDocument();
-//         expect(getByText("مشاهده منبع")).toBeInTheDocument();
-//     });
-
-//     it("clicking the calendar TD (cell square) containing a staged event opens the popup", async () => {
-//         const { container, getByText } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-
-//         await waitFor(() => {
-//             // find a table cell that contains our clickable wrapper
-//             const tds = Array.from(
-//                 container.querySelectorAll(".ant-picker-cell")
-//             );
-//             const tdWithEvent = tds.find((td) =>
-//                 td.querySelector(".calendar-cell-with-event .stage-tag")
-//             );
-
-//             expect(tdWithEvent).toBeTruthy();
-
-//             if (tdWithEvent) {
-//                 fireEvent.click(tdWithEvent);
-//             }
-//         });
-
-//         expect(getByText("تاریخ شمسی")).toBeInTheDocument();
-//         expect(getByText("ماکروسافت تیمز")).toBeInTheDocument();
-//         expect(getByText("مشاهده منبع")).toBeInTheDocument();
-//     });
-
-//     it("every calendar cell should contain a date-label Tag and be annotated with data-date", async () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-
-//         await waitFor(() => {
-//             const wrappers = container.querySelectorAll(
-//                 ".calendar-cell-with-event"
-//             );
-//             expect(wrappers.length).toBeGreaterThan(0);
-//             const hasDateAttr = Array.from(wrappers).some((w) =>
-//                 w.getAttribute("data-date")
-//             );
-//             expect(hasDateAttr).toBeTruthy();
-//         });
-//     });
-
-//     it("should have select elements for month and year", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-
-//         const selects = container.querySelectorAll(".ant-select");
-//         expect(selects.length).toBeGreaterThan(0);
-//     });
-
-//     it("should update announcement data on addToCurrentWeek change", () => {
-//         const { rerender } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-
-//         const firstCallCount = mockSetAnnouncementData.mock.calls.length;
-
-//         rerender(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={7}
-//             />
-//         );
-
-//         const secondCallCount = mockSetAnnouncementData.mock.calls.length;
-//         expect(secondCallCount).toBeGreaterThan(firstCallCount);
-//     });
-
-//     it("should render calendar element", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-
-//         expect(
-//             container.querySelector(".ant-picker-calendar")
-//         ).toBeInTheDocument();
-//     });
-
-//     it("should call getEventForDate for dates before startDate", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={-300}
-//             />
-//         );
-
-//         expect(container).toBeInTheDocument();
-//     });
-
-//     it("should render with different addToCurrentWeek values", () => {
-//         const { rerender } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={-14}
-//             />
-//         );
-
-//         rerender(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={14}
-//             />
-//         );
-
-//         expect(mockSetAnnouncementData).toHaveBeenCalled();
-//     });
-
-//     it("should update year/month state", async () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-
-//         await waitFor(() => {
-//             expect(
-//                 container.querySelector(".ant-picker-calendar")
-//             ).toBeInTheDocument();
-//         });
-//     });
-
-//     it("should render month navigation buttons", () => {
-//         const { getByText } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-
-//         expect(getByText("ماه قبل")).toBeInTheDocument();
-//         expect(getByText("امروز")).toBeInTheDocument();
-//         expect(getByText("ماه بعد")).toBeInTheDocument();
-//     });
-
-//     it("should render calendar with event badges", async () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-
-//         await waitFor(() => {
-//             const badges = container.querySelectorAll(".ant-badge");
-//             expect(badges.length).toBeGreaterThanOrEqual(0);
-//         });
-//     });
-
-//     it("should handle dateCellRender", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-
-//         expect(
-//             container.querySelectorAll(".ant-badge").length
-//         ).toBeGreaterThanOrEqual(0);
-//     });
-
-//     it("should initialize with today's date", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-
-//         const todayBtn = container.querySelector(".today-btn");
-//         expect(todayBtn).toBeInTheDocument();
-//     });
-
-//     it("should not show the anchored popup on initial render", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-
-//         const popup = container.querySelector(".event-popup");
-//         expect(popup).not.toBeInTheDocument();
-//     });
-
-//     it("should handle onPanelChange when month/year changes", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-
-//         const prevBtn = screen.getByText("ماه قبل");
-//         fireEvent.click(prevBtn);
-//         expect(mockSetAnnouncementData).toHaveBeenCalled();
-//     });
-
-//     it("should navigate to next month", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-
-//         const nextBtn = screen.getByText("ماه بعد");
-//         fireEvent.click(nextBtn);
-//         expect(mockSetAnnouncementData).toHaveBeenCalled();
-//     });
-
-//     it("should navigate to previous month", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-
-//         const prevBtn = screen.getByText("ماه قبل");
-//         fireEvent.click(prevBtn);
-//         expect(mockSetAnnouncementData).toHaveBeenCalled();
-//     });
-
-//     it("should click today button", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-
-//         const todayBtn = screen.getByText("امروز");
-//         fireEvent.click(todayBtn);
-//         expect(mockSetAnnouncementData).toHaveBeenCalled();
-//     });
-
-//     it("should handle getEventForDate returns null for dates before startDate", () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={-500}
-//             />
-//         );
-
-//         expect(container).toBeInTheDocument();
-//     });
-
-//     it("should set year/month state when value changes", async () => {
-//         const { container } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-
-//         await waitFor(() => {
-//             expect(mockSetAnnouncementData).toHaveBeenCalled();
-//         });
-//     });
-
-//     it("should set correct announcement data for events after startDate", () => {
-//         render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-
-//         expect(mockSetAnnouncementData).toHaveBeenCalled();
-//         const lastCall =
-//             mockSetAnnouncementData.mock.calls[
-//                 mockSetAnnouncementData.mock.calls.length - 1
-//             ];
-//         expect(lastCall[0]).toBeDefined();
-//     });
-
-//     it("should handle multiple prop changes", () => {
-//         const { rerender } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={0}
-//             />
-//         );
-
-//         const callCount1 = mockSetAnnouncementData.mock.calls.length;
-
-//         rerender(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={7}
-//             />
-//         );
-
-//         const callCount2 = mockSetAnnouncementData.mock.calls.length;
-//         expect(callCount2).toBeGreaterThanOrEqual(callCount1);
-//     });
-
-//     it("should cleanup timeout on unmount", () => {
-//         const { unmount } = render(
-//             <CSCalendar
-//                 setAnnouncementData={mockSetAnnouncementData}
-//                 addToCurrentWeek={mockAddToCurrentWeek}
-//             />
-//         );
-
-//         expect(() => unmount()).not.toThrow();
-//     });
-// });
-
-describe.skip("CSCalendar (temporarily disabled)", () => {
-    it("skipped placeholder", () => {});
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
+import dayjs from "dayjs";
+import moment from "jalali-moment";
+import CSCalendar from "../../components/CSCalendar";
+import { ThemeContext } from "../../store/Theme/ThemeContext";
+import { events } from "../../constants/events";
+import { startCalendarDate } from "../../constants/startCalendarDate";
+
+jest.spyOn(window, "requestAnimationFrame").mockImplementation((cb) => {
+    cb();
+    return 1;
+});
+jest.spyOn(window, "cancelAnimationFrame").mockImplementation(() => {});
+
+const mockPopup = jest.fn();
+jest.mock("../../components/EventPopup", () => {
+    return function MockEventPopup(props) {
+        mockPopup(props);
+        return props.visible ? <div data-testid="event-popup" /> : null;
+    };
+});
+
+jest.mock("../../components/CalendarIntro", () => () => (
+    <div data-testid="calendar-intro" />
+));
+
+jest.mock("antd", () => {
+    const React = require("react");
+
+    const Button = ({ children, onClick, className }) => (
+        <button className={className} onClick={onClick}>
+            {children}
+        </button>
+    );
+
+    const Select = ({ value, onChange, className, children }) => (
+        <select
+            className={className}
+            value={value}
+            data-testid={className || "select"}
+            onChange={(e) => onChange(Number(e.target.value))}
+        >
+            {children}
+        </select>
+    );
+    Select.Option = ({ value, children }) => (
+        <option value={value}>{children}</option>
+    );
+
+    const Tag = ({ children, className, color }) => (
+        <div className={className} data-color={color}>
+            {children}
+        </div>
+    );
+
+    const Tooltip = ({ children }) => <div>{children}</div>;
+
+    const Flex = ({ children, className, gap, justify, align }) => (
+        <div
+            className={className}
+            data-gap={gap}
+            data-justify={justify}
+            data-align={align}
+        >
+            {children}
+        </div>
+    );
+
+    const Calendar = ({
+        value,
+        onSelect,
+        onPanelChange,
+        cellRender,
+        headerRender,
+    }) => {
+        const change = (val) => {
+            onSelect && onSelect(val);
+            onPanelChange && onPanelChange(val);
+        };
+
+        const cells = [value, value.add(1, "day"), value.add(6, "day")];
+
+        return (
+            <div className="ant-picker-calendar">
+                <table className="ant-picker-content">
+                    <thead>
+                        <tr>
+                            {[...Array(7)].map((_, idx) => (
+                                <th key={idx} title={`th-${idx}`}>
+                                    th-{idx}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {cells.map((d, idx) => (
+                            <tr key={idx}>
+                                <td
+                                    className="ant-picker-cell"
+                                    title={`cell-${idx}`}
+                                >
+                                    <div
+                                        className="ant-picker-cell-inner"
+                                        title={`inner-${idx}`}
+                                    >
+                                        {cellRender(d)}
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <div className="header">
+                    {headerRender({
+                        value,
+                        onChange: change,
+                    })}
+                </div>
+            </div>
+        );
+    };
+
+    return { Calendar, Button, Select, Tag, Tooltip, Flex };
+});
+
+describe("CSCalendar", () => {
+    let setAnnouncementDataMock;
+    let announcementState;
+
+    const renderCalendar = (props = {}, theme = "light") =>
+        render(
+            <ThemeContext.Provider value={{ theme, toggleTheme: jest.fn() }}>
+                <CSCalendar
+                    setAnnouncementData={setAnnouncementDataMock}
+                    addToCurrentWeek={0}
+                    {...props}
+                />
+            </ThemeContext.Provider>
+        );
+
+    const getEventForDateLocal = (date) => {
+        const startDate = dayjs(startCalendarDate);
+        if (date.isBefore(startDate, "day")) return null;
+        const daysSinceStart = date.diff(startDate, "day");
+        const weekNumber = Math.floor(daysSinceStart / 7) % 2;
+        if (date.day() === 2) return events[weekNumber];
+        if (date.day() === 0) return events[2 + weekNumber];
+        return null;
+    };
+
+    const computeAnnouncement = (offset = 14) => {
+        const saturdayDate = moment().add(offset, "day").startOf("week");
+        const startWeekDate = saturdayDate
+            .clone()
+            .add(9, "day")
+            .format("YYYY/M/D");
+        const endWeekDate = saturdayDate
+            .clone()
+            .add(16, "day")
+            .format("YYYY/M/D");
+        const firstEventDate = saturdayDate
+            .clone()
+            .add(10, "day")
+            .format("YYYY/M/D");
+        const secondEventDate = saturdayDate
+            .clone()
+            .add(15, "day")
+            .format("YYYY/M/D");
+
+        const startDate = moment("2025-01-13", "YYYY-MM-DD")
+            .locale("fa")
+            .format("YYYY-MM-DD HH:mm:ss");
+
+        let firstEvent = "";
+        let secondEvent = "";
+
+        if (saturdayDate.isAfter(startDate, "day")) {
+            const fe = getEventForDateLocal(
+                dayjs(saturdayDate.clone().add(10, "day").toDate())
+            );
+            const se = getEventForDateLocal(
+                dayjs(saturdayDate.clone().add(15, "day").toDate())
+            );
+
+            if (fe) firstEvent = fe.fullName || fe.title;
+            if (se) secondEvent = se.fullName || se.title;
+        }
+
+        return {
+            startWeekDate,
+            endWeekDate,
+            firstEventDate,
+            secondEventDate,
+            firstEvent,
+            secondEvent,
+        };
+    };
+
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date("2025-01-13T00:00:00Z"));
+        announcementState = {};
+        setAnnouncementDataMock = jest.fn((updater) => {
+            announcementState =
+                typeof updater === "function"
+                    ? updater(announcementState)
+                    : updater;
+        });
+        mockPopup.mockClear();
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+    });
+
+    it("renders event badges for the current week and updates announcement data", () => {
+        const { container } = renderCalendar();
+        jest.runOnlyPendingTimers();
+
+        expect(container.querySelectorAll(".stage-tag").length).toBeGreaterThan(
+            0
+        );
+        expect(setAnnouncementDataMock).toHaveBeenCalled();
+        expect(announcementState.firstEvent).toBeTruthy();
+    });
+
+    it("opens and toggles the popup when clicking a day with an event", async () => {
+        const { container } = renderCalendar();
+        await act(async () => {});
+        const eventCell = Array.from(
+            container.querySelectorAll(".calendar-cell-with-event")
+        ).find((node) => node.querySelector(".stage-tag"));
+        expect(eventCell).toBeInTheDocument();
+
+        fireEvent.click(eventCell);
+        await waitFor(() =>
+            expect(
+                mockPopup.mock.calls.some((call) => call[0].visible === true)
+            ).toBe(true)
+        );
+
+        const refreshedCell = Array.from(
+            container.querySelectorAll(".calendar-cell-with-event")
+        ).find((node) => node.querySelector(".stage-tag"));
+
+        fireEvent.click(refreshedCell);
+        await waitFor(() =>
+            expect(
+                mockPopup.mock.calls.some((call) => call[0].visible === false)
+            ).toBe(true)
+        );
+    });
+
+    it("handles delegated cell clicks on table cells", async () => {
+        const { container } = renderCalendar();
+        await act(async () => {});
+        const tableCell = Array.from(
+            container.querySelectorAll(".ant-picker-cell")
+        ).find((cell) => cell.querySelector(".stage-tag"));
+        fireEvent.click(tableCell);
+
+        await waitFor(() =>
+            expect(
+                mockPopup.mock.calls.some((call) => call[0].visible === true)
+            ).toBe(true)
+        );
+
+        fireEvent.click(tableCell);
+        await waitFor(() =>
+            expect(
+                mockPopup.mock.calls.some((call) => call[0].visible === false)
+            ).toBe(true)
+        );
+    });
+
+    it("opens via keyboard interaction on Enter", async () => {
+        const { container } = renderCalendar();
+        const eventCell = Array.from(
+            container.querySelectorAll(".calendar-cell-with-event")
+        ).find((node) => node.querySelector(".stage-tag"));
+        fireEvent.keyDown(eventCell, { key: "Enter" });
+
+        await waitFor(() =>
+            expect(
+                mockPopup.mock.calls[mockPopup.mock.calls.length - 1][0].visible
+            ).toBe(true)
+        );
+    });
+
+    it("renders short title when viewport width shrinks", () => {
+        const { container } = renderCalendar();
+        Object.defineProperty(window, "innerWidth", { value: 800 });
+        window.dispatchEvent(new Event("resize"));
+
+        const label = container.querySelector(".stage-tag .main-word");
+        expect(label?.textContent).toBe(events[0].shortTitle);
+    });
+
+    it("applies dark theme colors for event tags", () => {
+        const { container } = renderCalendar({}, "dark");
+        const tag = container.querySelector(".stage-tag");
+        expect(tag?.getAttribute("data-color")).toBe(events[0].colorDark);
+    });
+
+    it("handles delegated edge cases and manual popup close", async () => {
+        let capturedDelegator;
+        const originalAdd = Element.prototype.addEventListener;
+        Element.prototype.addEventListener = function (type, handler) {
+            if (
+                type === "click" &&
+                this.classList &&
+                this.classList.contains("ant-picker-calendar")
+            ) {
+                capturedDelegator = handler;
+            }
+            return originalAdd.call(this, type, handler);
+        };
+
+        const { container } = renderCalendar();
+        await act(async () => {});
+        Element.prototype.addEventListener = originalAdd;
+
+        capturedDelegator({
+            target: {
+                closest: (sel) => (sel === ".event-popup" ? true : null),
+            },
+        });
+
+        const tdWithEvent = Array.from(
+            container.querySelectorAll(".ant-picker-cell")
+        ).find((cell) => cell.querySelector(".stage-tag"));
+        const wrapper = tdWithEvent.querySelector(".calendar-cell-with-event");
+
+        wrapper.removeAttribute("data-date");
+        capturedDelegator({ target: tdWithEvent });
+
+        wrapper.setAttribute("data-date", "2025-01-14");
+        capturedDelegator({ target: tdWithEvent });
+
+        await waitFor(() =>
+            expect(
+                mockPopup.mock.calls.some((call) => call[0].visible === true)
+            ).toBe(true)
+        );
+
+        await act(async () => {});
+        capturedDelegator({ target: tdWithEvent });
+        await waitFor(() =>
+            expect(
+                mockPopup.mock.calls.some((call) => call[0].visible === false)
+            ).toBe(true)
+        );
+
+        const lastOnClose =
+            mockPopup.mock.calls[mockPopup.mock.calls.length - 1][0].onClose;
+        act(() => lastOnClose());
+    });
+
+    it("returns previous announcement data when nothing changes", () => {
+        const offset = 14;
+        announcementState = computeAnnouncement(offset);
+        renderCalendar({ addToCurrentWeek: offset });
+        expect(setAnnouncementDataMock).toHaveBeenCalled();
+    });
+
+    it("closes the popup when clicking a day without an event", async () => {
+        const { container } = renderCalendar();
+        const emptyCell = Array.from(
+            container.querySelectorAll(".calendar-cell-with-event")
+        ).find((node) => !node.querySelector(".stage-tag"));
+
+        fireEvent.click(emptyCell);
+
+        await waitFor(() =>
+            expect(
+                mockPopup.mock.calls[mockPopup.mock.calls.length - 1][0].visible
+            ).toBe(false)
+        );
+    });
+
+    it("updates announcement data when navigating weeks forward and backward", () => {
+        renderCalendar({ addToCurrentWeek: 0 });
+        const firstCall = { ...announcementState };
+
+        renderCalendar({ addToCurrentWeek: 7 });
+        const secondCall = { ...announcementState };
+        expect(secondCall.startWeekDate).not.toBe(firstCall.startWeekDate);
+
+        renderCalendar({ addToCurrentWeek: -500 });
+        expect(announcementState.firstEvent).toBe(
+            announcementState.secondEvent
+        );
+        expect(announcementState.firstEvent).toBeTruthy();
+    });
+
+    it("handles header navigation buttons and month/year selects", () => {
+        const { container } = renderCalendar();
+        const headerButtons = container.querySelectorAll("button");
+
+        // previous, today, next
+        fireEvent.click(headerButtons[0]);
+        fireEvent.click(headerButtons[1]);
+        fireEvent.click(headerButtons[2]);
+
+        const selects = container.querySelectorAll("select");
+        fireEvent.change(selects[0], { target: { value: 2026 } });
+        fireEvent.change(selects[1], { target: { value: 5 } });
+
+        expect(setAnnouncementDataMock).toHaveBeenCalled();
+    });
+
+    it("strips native title attributes through requestAnimationFrame cleanup", () => {
+        const { container, unmount } = renderCalendar();
+        const titledCell = container.querySelector(".ant-picker-cell");
+        expect(titledCell).toBeInTheDocument();
+        return waitFor(() =>
+            expect(titledCell?.getAttribute("title")).toBeNull()
+        ).then(unmount);
+    });
 });

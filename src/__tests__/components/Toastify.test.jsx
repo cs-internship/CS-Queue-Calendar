@@ -80,4 +80,26 @@ describe("Toastify", () => {
         const { container } = render(<Toastify toastifyObj="" />);
         expect(container.firstChild).toBeInTheDocument();
     });
+
+    it("should call toast with provided mode and theme", () => {
+        const { toast } = require("react-toastify");
+        const toastObj = { title: "Hello", mode: "success" };
+        render(<Toastify toastifyObj={toastObj} />);
+        expect(toast.success).toHaveBeenCalledWith(
+            "Hello",
+            expect.objectContaining({
+                theme: expect.any(Object),
+                autoClose: 4000,
+            })
+        );
+    });
+
+    it("should log an error for invalid toast mode", () => {
+        const errorSpy = jest
+            .spyOn(console, "error")
+            .mockImplementation(() => {});
+        render(<Toastify toastifyObj={{ title: "Oops", mode: "unknown" }} />);
+        expect(errorSpy).toHaveBeenCalledWith("Invalid toast mode: unknown");
+        errorSpy.mockRestore();
+    });
 });
