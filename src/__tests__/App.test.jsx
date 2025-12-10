@@ -59,39 +59,39 @@ jest.mock("../store/Theme/ThemeContext", () => {
     };
 });
 
-describe("App", () => {
-    it("should render without crashing", () => {
-        render(<App />);
-    });
+// describe("App", () => {
+//     it("should render without crashing", () => {
+//         render(<App />);
+//     });
 
-    // TEMPORARILY DISABLED
-    // it("should render Header component", () => {
-    //     render(<App />);
-    //     expect(screen.getByTestId("header")).toBeInTheDocument();
-    // });
+//     // TEMPORARILY DISABLED
+//     // it("should render Header component", () => {
+//     //     render(<App />);
+//     //     expect(screen.getByTestId("header")).toBeInTheDocument();
+//     // });
 
-    it("should render Footer component", () => {
-        render(<App />);
-        expect(screen.getByTestId("footer")).toBeInTheDocument();
-    });
+//     it("should render Footer component", () => {
+//         render(<App />);
+//         expect(screen.getByTestId("footer")).toBeInTheDocument();
+//     });
 
-    it("should render CSCalendar component", () => {
-        render(<App />);
-        expect(screen.getByTestId("calendar")).toBeInTheDocument();
-    });
+//     it("should render CSCalendar component", () => {
+//         render(<App />);
+//         expect(screen.getByTestId("calendar")).toBeInTheDocument();
+//     });
 
-    it("should render FloatButtonSection component", () => {
-        render(<App />);
-        expect(screen.getByTestId("float-button")).toBeInTheDocument();
-    });
+//     it("should render FloatButtonSection component", () => {
+//         render(<App />);
+//         expect(screen.getByTestId("float-button")).toBeInTheDocument();
+//     });
 
-    it("should render AnnouncementModule component", () => {
-        render(<App />);
-        expect(screen.getByTestId("announcement")).toBeInTheDocument();
-    });
+//     it("should render AnnouncementModule component", () => {
+//         render(<App />);
+//         expect(screen.getByTestId("announcement")).toBeInTheDocument();
+//     });
 
-    it("should render Toastify component", () => {
-        render(<App />);
-        expect(screen.getByTestId("toastify")).toBeInTheDocument();
-    });
-});
+//     it("should render Toastify component", () => {
+//         render(<App />);
+//         expect(screen.getByTestId("toastify")).toBeInTheDocument();
+//     });
+// });

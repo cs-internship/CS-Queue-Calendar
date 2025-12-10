@@ -33,7 +33,7 @@ const CalendarIntro = () => {
     };
 
     return (
-        <Card bordered={false} className="calendar-intro" dir="rtl">
+        <Card className="calendar-intro" dir="rtl">
             <Space align="start">
                 <div className="calendar-intro__icon" onClick={handleIconClick}>
                     <InfoCircleOutlined />
@@ -66,7 +66,7 @@ const CalendarIntro = () => {
                     <Paragraph className="calendar-intro__paragraph calendar-intro__single-line">
                         در این تقویم، نوع جلسه، تاریخ شمسی و میلادی، ساعت
                         برگزاری جلسات، لینک حضور و منبع مطالعاتی (در صورت وجود)
-                        مشخص شده است. با انتخاب هر رویداد، جزئیات کامل همان جلسه
+                        مشخص شده است. با انتخاب هر رویداد، جزئیات همان جلسه
                         نمایش داده می‌شود.
                     </Paragraph>
                 </Space>
