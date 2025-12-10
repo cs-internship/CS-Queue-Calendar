@@ -18,10 +18,11 @@
 body {
     height: 100vh !important;
     height: 100svh !important;
-    overflow-y: hidden;
+    // overflow-y: hidden; TODO: Handle this
     min-width: 780px;
     background-color: var(--bg-color);
     color: var(--text-color);
+    // user-select: none;
 }
 
 ::-webkit-scrollbar {

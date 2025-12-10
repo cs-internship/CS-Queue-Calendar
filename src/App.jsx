@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ConfigProvider, theme } from "antd";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CSCalendar from "./components/CSCalendar";
 import FloatButtonSection from "./components/FloatButtonSection";
@@ -42,8 +41,6 @@ const App = () => {
             }}
         >
             <Toastify toastifyObj={toastifyObj} />
-
-            <Header />
 
             <CSCalendar
                 setAnnouncementData={setAnnouncementData}

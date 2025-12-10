@@ -1,5 +1,6 @@
 .calendar-section {
-    height: calc(100vh - 128px);
+    height: calc(100vh - 56px);
+    gap: 12px;
 }
 
 .ant-badge.ant-badge-status {
@@ -12,8 +13,8 @@
 }
 
 .ant-picker-date-panel {
-    max-height: calc(100vh - 268px) !important;
-    max-height: calc(100svh - 268px) !important;
+    max-height: calc(100vh - 340px) !important;
+    max-height: calc(100svh - 340px) !important;
     overflow-y: auto !important;
 }
 
@@ -21,7 +22,7 @@ thead {
     position: sticky !important;
     top: 0px;
     z-index: 100;
-    background-color: var(--bg-color);
+    background-color: var(--main-color) !important;
 
     th {
         line-height: 22px !important;
@@ -44,7 +45,7 @@ thead {
 }
 
 .ant-picker-calendar {
-    margin: 0 60px;
+    margin: 0 60px 30px;
     border-radius: 10px;
     overflow: hidden;
     border: 1px solid var(--calendar-border-color);
@@ -55,6 +56,86 @@ thead {
     margin: 20px 60px;
     border-radius: 10px;
     height: 50px;
+}
+
+.calendar-cell-with-event {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 48px;
+    cursor: pointer;
+}
+
+.ant-picker-calendar-date-today {
+    position: absolute;
+    border-radius: 8px;
+    background: linear-gradient(
+        180deg,
+        rgba(47, 111, 237, 0.05),
+        rgba(47, 111, 237, 0.03)
+    ) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    z-index: 0;
+    width: 100%;
+    top: 2px;
+    height: calc(100% - 8px);
+}
+
+.today-badge__label {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(47, 111, 237, 0.95);
+    background: rgba(255, 255, 255, 0.85);
+    padding: 2px 8px;
+    border-radius: 999px;
+    box-shadow: 0 2px 6px rgba(16, 24, 40, 0.06);
+    pointer-events: none;
+}
+
+.stage-tag {
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    // height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    position: absolute;
+    top: 28px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    color: #fff;
+    letter-spacing: 0.3px;
+
+    .main-word {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center !important;
+    }
+}
+
+.date-label {
+    background: transparent;
+    border: transparent;
+    color: var(--text-color);
+    padding: 0 6px;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    margin-inline-end: 0;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ant-picker-calendar .ant-picker-calendar-date-value {
+    display: none;
 }
 
 .ant-select {
@@ -70,5 +151,23 @@ thead {
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+}
+
+.ant-picker-cell:not(.ant-picker-cell-in-view) {
+    .stage-tag {
+        background-color: #5d6ef5 !important;
+    }
+}
+
+.tooltip-style {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 2px 4px;
+
+    div {
+        font-size: 13px;
+        line-height: 19px;
     }
 }

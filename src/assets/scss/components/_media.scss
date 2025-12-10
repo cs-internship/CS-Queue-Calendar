@@ -1,15 +1,44 @@
+@media (max-width: 950px) {
+    .meeting-word {
+        display: none !important;
+    }
+
+    .main-word {
+        white-space: pre-wrap !important;
+    }
+}
+
 @media (max-width: 768px) {
     body {
-        overflow-y: auto !important;
-        min-width: 400px !important;
+        min-width: 320px !important;
+    }
+
+    .ant-card.calendar-intro {
+        padding: 2px 16px 2px 16px !important;
+
+        .ant-card-body {
+            padding: 0 !important;
+        }
+
+        .calendar-intro__icon {
+            display: none !important;
+        }
+    }
+
+    .ant-space-item .calendar-intro__title {
+        margin-bottom: 0 !important;
+    }
+
+    .calendar-intro__content {
+        gap: 6px !important;
     }
 
     .calendar-section {
-        height: unset !important;
+        height: calc(100vh - 48px) !important;
     }
 
     .ant-picker-calendar {
-        margin: 0 10px !important;
+        margin: 0 10px 10px !important;
     }
 
     .ant-picker-calendar-date {
@@ -33,9 +62,9 @@
         }
     }
 
-    .ant-picker-panel {
-        height: calc(100vh - 232px);
-    }
+    // .ant-picker-panel {
+    //     height: calc(100vh - 232px);
+    // }
 
     .ant-alert {
         margin: 10px 10px !important;
@@ -47,12 +76,12 @@
     }
 
     .ant-float-btn-group.ant-float-btn-group-circle {
-        bottom: 63px !important;
+        bottom: 16px !important;
         left: 4px !important;
     }
 
     .fancy-theme-transition {
-        bottom: 63px !important;
+        bottom: 16px !important;
         left: 15px !important;
     }
 
@@ -92,6 +121,16 @@
     .modal-header,
     .ant-input {
         font-size: 12px !important;
+    }
+
+    .ant-space-item div.ant-typography,
+    a.ant-typography {
+        font-size: 13px !important;
+        // text-align: justify !important;
+    }
+
+    .ant-space-item h4.ant-typography {
+        font-size: 22px !important;
     }
 
     .modal-title {

@@ -61,11 +61,14 @@ describe("AnnouncementModule", () => {
             firstEvent: "",
             secondEvent: "",
         },
-        setAddToCurrentWeek: jest.fn(),
+        setAddToCurrentWeek: jest.fn((updater) =>
+            typeof updater === "function" ? updater(0) : updater
+        ),
     };
 
     beforeEach(() => {
         jest.clearAllMocks();
+        navigator.clipboard.writeText = jest.fn();
     });
 
     it("should render without crashing", () => {
@@ -121,7 +124,9 @@ describe("AnnouncementModule", () => {
     });
 
     it("should accept setAddToCurrentWeek prop", () => {
-        const setAddToCurrentWeek = jest.fn();
+        const setAddToCurrentWeek = jest.fn((fn) =>
+            typeof fn === "function" ? fn(0) : fn
+        );
         render(
             <AnnouncementModule
                 {...defaultProps}
@@ -191,7 +196,9 @@ describe("AnnouncementModule", () => {
     });
 
     it("should handle next week button click", () => {
-        const setAddToCurrentWeek = jest.fn();
+        const setAddToCurrentWeek = jest.fn((fn) =>
+            typeof fn === "function" ? fn(0) : fn
+        );
         render(
             <AnnouncementModule
                 {...defaultProps}
@@ -206,7 +213,9 @@ describe("AnnouncementModule", () => {
     });
 
     it("should handle current week button click", () => {
-        const setAddToCurrentWeek = jest.fn();
+        const setAddToCurrentWeek = jest.fn((fn) =>
+            typeof fn === "function" ? fn(0) : fn
+        );
         render(
             <AnnouncementModule
                 {...defaultProps}
@@ -221,7 +230,9 @@ describe("AnnouncementModule", () => {
     });
 
     it("should handle previous week button click", () => {
-        const setAddToCurrentWeek = jest.fn();
+        const setAddToCurrentWeek = jest.fn((fn) =>
+            typeof fn === "function" ? fn(0) : fn
+        );
         render(
             <AnnouncementModule
                 {...defaultProps}
@@ -274,7 +285,9 @@ describe("AnnouncementModule", () => {
     it("should have proper callbacks", () => {
         const setIsModalOpen = jest.fn();
         const setToastifyObj = jest.fn();
-        const setAddToCurrentWeek = jest.fn();
+        const setAddToCurrentWeek = jest.fn((fn) =>
+            typeof fn === "function" ? fn(0) : fn
+        );
 
         render(
             <AnnouncementModule
@@ -380,7 +393,9 @@ describe("AnnouncementModule", () => {
     });
 
     it("should handle next week button click", () => {
-        const setAddToCurrentWeek = jest.fn();
+        const setAddToCurrentWeek = jest.fn((fn) =>
+            typeof fn === "function" ? fn(0) : fn
+        );
         render(
             <AnnouncementModule
                 {...defaultProps}
@@ -395,7 +410,9 @@ describe("AnnouncementModule", () => {
     });
 
     it("should handle current week button click", () => {
-        const setAddToCurrentWeek = jest.fn();
+        const setAddToCurrentWeek = jest.fn((fn) =>
+            typeof fn === "function" ? fn(0) : fn
+        );
         render(
             <AnnouncementModule
                 {...defaultProps}
@@ -410,7 +427,9 @@ describe("AnnouncementModule", () => {
     });
 
     it("should handle previous week button click", () => {
-        const setAddToCurrentWeek = jest.fn();
+        const setAddToCurrentWeek = jest.fn((fn) =>
+            typeof fn === "function" ? fn(0) : fn
+        );
         render(
             <AnnouncementModule
                 {...defaultProps}
@@ -573,5 +592,66 @@ describe("AnnouncementModule", () => {
         const backButton = getByText("بازگشت");
         fireEvent.click(backButton);
         expect(setIsModalOpen).toHaveBeenCalledWith(false);
+    });
+
+    it("should copy announcement text and show success toast", async () => {
+        const announcementData = {
+            startWeekDate: "2025/1/13",
+            endWeekDate: "2025/1/20",
+            firstEventDate: "2025/1/15",
+            secondEventDate: "2025/1/19",
+            firstEvent: "First : Event",
+            secondEvent: "Second",
+        };
+
+        const setToastifyObj = jest.fn();
+        navigator.clipboard.writeText.mockResolvedValueOnce();
+
+        render(
+            <AnnouncementModule
+                {...defaultProps}
+                isModalOpen={true}
+                setToastifyObj={setToastifyObj}
+                announcementData={announcementData}
+            />
+        );
+
+        const copyButton = screen.getByText("کپی پیام");
+        fireEvent.click(copyButton);
+
+        await waitFor(() =>
+            expect(setToastifyObj).toHaveBeenCalledWith(expect.any(Function))
+        );
+        expect(navigator.clipboard.writeText).toHaveBeenCalled();
+    });
+
+    it("should show error toast when copy fails", async () => {
+        const announcementData = {
+            startWeekDate: "2025/1/13",
+            endWeekDate: "2025/1/20",
+            firstEventDate: "2025/1/15",
+            secondEventDate: "2025/1/19",
+            firstEvent: "First",
+            secondEvent: "Second",
+        };
+
+        const setToastifyObj = jest.fn((updater) => updater());
+        navigator.clipboard.writeText.mockRejectedValueOnce(
+            new Error("denied")
+        );
+
+        render(
+            <AnnouncementModule
+                {...defaultProps}
+                isModalOpen={true}
+                setToastifyObj={setToastifyObj}
+                announcementData={announcementData}
+            />
+        );
+
+        const copyButton = screen.getByText("کپی پیام");
+        fireEvent.click(copyButton);
+
+        await waitFor(() => expect(setToastifyObj).toHaveBeenCalled());
     });
 });

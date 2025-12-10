@@ -18,6 +18,7 @@ jest.mock("@ant-design/icons", () => ({
 // Mock Ant Design components
 jest.mock("antd", () => {
     const React = require("react");
+    const handlers = [];
     const FloatButtonGroup = ({ children, ...props }) => (
         <div
             data-testid="float-button-group"
@@ -27,17 +28,21 @@ jest.mock("antd", () => {
             {children}
         </div>
     );
-    const FloatButton = ({ children, onClick, disabled, ...props }) => (
-        <div
-            data-testid="float-button"
-            onClick={onClick}
-            disabled={disabled}
-            {...props}
-        >
-            {children}
-        </div>
-    );
+    const FloatButton = ({ children, onClick, disabled, ...props }) => {
+        handlers.push(onClick);
+        return (
+            <div
+                data-testid="float-button"
+                onClick={onClick}
+                disabled={disabled}
+                {...props}
+            >
+                {children}
+            </div>
+        );
+    };
     FloatButton.Group = FloatButtonGroup;
+    FloatButton.__handlers = handlers;
 
     return {
         FloatButton,
@@ -229,6 +234,15 @@ describe("FloatButtonSection", () => {
         expect(transitionDiv).toBeInTheDocument();
 
         jest.useRealTimers();
+    });
+
+    it("should run cleanup returned by handleChangeTheme", () => {
+        const setIsModalOpen = jest.fn();
+        render(<FloatButtonSection setIsModalOpen={setIsModalOpen} />);
+        const { FloatButton } = require("antd");
+        const cleanup = FloatButton.__handlers[6]();
+        expect(typeof cleanup).toBe("function");
+        cleanup();
     });
 
     it("should handle announcement button click", () => {

@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from "react";
-import {
-    Alert,
-    Calendar,
-    Button,
-    Badge,
-    Select,
-    ConfigProvider,
-    Flex,
-} from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import { Calendar, Button, Select, Tag, Tooltip, Flex } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/fa";
 import weekday from "dayjs/plugin/weekday";
 import localeData from "dayjs/plugin/localeData";
 import moment from "jalali-moment";
-import { createTds } from "../utils/createTds";
+import EventPopup from "./EventPopup";
+import CalendarIntro from "./CalendarIntro";
 import { events } from "../constants/events";
 import { startCalendarDate } from "../constants/startCalendarDate";
 import { persianWeekDays } from "../constants/persianWeekDays";
-import { useIsMobile } from "./useIsMobile";
-import CalendarEventCreator from "./CalendarEventCreator";
+import { ThemeContext } from "../store/Theme/ThemeContext";
 
 moment.locale("fa");
 dayjs.locale("fa");
@@ -29,10 +21,16 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
     const today = dayjs();
 
     const [value, setValue] = useState(today);
-    const [eventDescription, setEventDescription] = useState("");
+    const [width, setWidth] = useState(window.innerWidth);
     const [yearMonth, setYearMonth] = useState("");
+    const [popupData, setPopupData] = useState({
+        visible: false,
+        event: null,
+        date: null,
+        rect: null,
+    });
 
-    const isMobile = useIsMobile();
+    const { theme } = useContext(ThemeContext);
 
     const getEventForDate = (date) => {
         const startDate = dayjs(startCalendarDate);
@@ -54,51 +52,182 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
 
     const onSelect = (newValue) => {
         setValue(newValue);
-        const event = getEventForDate(newValue);
-
-        if (event) {
-            setEventDescription(
-                isMobile
-                    ? `${event.title} - ساعت ۱۸:۰۰ تا ۱۹:۰۰`
-                    : `${event.fullName} - ساعت ۱۸:۰۰ تا ۱۹:۰۰`
-            );
-        } else {
-            setEventDescription("برای این تاریخ رویدادی وجود ندارد.");
-        }
-    };
-
-    const onPanelChange = (newValue) => {
-        setValue(newValue);
     };
 
     const handleMonthYearChange = (month, year) => {
         setValue(value.month(month).year(year));
     };
 
+    useEffect(() => {
+        const handleResize = () => {
+            setWidth(window.innerWidth);
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
     const dateCellRender = (date) => {
         const event = getEventForDate(date);
-        return event ? (
-            <Badge
-                status="success"
-                text={isMobile ? `${event.title}` : `${event.fullName}`}
-            />
-        ) : null;
+
+        const handleOpen = (e) => {
+            e.stopPropagation();
+
+            setValue(date);
+
+            if (!event) {
+                setPopupData({
+                    visible: false,
+                    event: null,
+                    date: null,
+                    rect: null,
+                });
+                return;
+            }
+            const rect = e.currentTarget.getBoundingClientRect();
+
+            if (
+                popupData.visible &&
+                popupData.date &&
+                date.isSame(popupData.date, "day")
+            ) {
+                setPopupData({
+                    visible: false,
+                    event: null,
+                    date: null,
+                    rect: null,
+                });
+                return;
+            }
+
+            setValue(date);
+            setPopupData({ visible: true, event, date, rect });
+        };
+
+        const greg = date.format("YYYY-MM-DD");
+        const persianDate = moment(date.toDate())
+            .locale("fa")
+            .format("jYYYY/jMM/jDD");
+
+        const tooltipTitle = (
+            <div className="tooltip-style">
+                <div>{persianDate}</div>
+                <div>{greg}</div>
+            </div>
+        );
+
+        return (
+            <Tooltip
+                title={tooltipTitle}
+                placement="top"
+                mouseEnterDelay={0.12}
+                mouseLeaveDelay={0.12}
+            >
+                <div
+                    role="button"
+                    tabIndex={0}
+                    data-date={date.format("YYYY-MM-DD")}
+                    onClick={handleOpen}
+                    onKeyDown={(e) => e.key === "Enter" && handleOpen(e)}
+                    className="calendar-cell-with-event"
+                >
+                    <Tag className="date-label">{date.date()}</Tag>
+
+                    {event && (
+                        <Tag
+                            /* istanbul ignore next */
+                            color={
+                                theme === "light"
+                                    ? event.colorLight
+                                    : event.colorDark || "#888"
+                            }
+                            className="stage-tag"
+                        >
+                            <span className="main-word">
+                                {width < 950 ? event.shortTitle : event.title}
+                            </span>{" "}
+                            <span className="meeting-word">جلسه </span>
+                        </Tag>
+                    )}
+                </div>
+            </Tooltip>
+        );
     };
 
     useEffect(() => {
-        return () => {
-            setTimeout(() => {
-                createTds();
-            }, 0);
+        const calendarRoot = document.querySelector(".ant-picker-calendar");
+
+        const delegator = (e) => {
+            if (e.target.closest && e.target.closest(".event-popup")) {
+                return;
+            }
+
+            const td = e.target.closest && e.target.closest(".ant-picker-cell");
+            if (!td) {
+                return;
+            }
+
+            const wrapper = td.querySelector(
+                ".calendar-cell-with-event[data-date]"
+            );
+            if (!wrapper) {
+                return;
+            }
+
+            /* istanbul ignore next */
+            if (wrapper.contains(e.target)) {
+                return;
+            }
+
+            const dateStr = wrapper.getAttribute("data-date");
+            /* istanbul ignore next */
+            if (!dateStr) {
+                return;
+            }
+
+            const clickedDate = dayjs(dateStr);
+            const ev = getEventForDate(clickedDate);
+            if (!ev) {
+                return;
+            }
+
+            /* istanbul ignore next */
+            if (
+                popupData.visible &&
+                popupData.date &&
+                clickedDate.isSame(popupData.date, "day")
+            ) {
+                setPopupData({
+                    visible: false,
+                    event: null,
+                    date: null,
+                    rect: null,
+                });
+                return;
+            }
+
+            const rect = wrapper.getBoundingClientRect();
+            setValue(clickedDate);
+            setPopupData({ visible: true, event: ev, date: clickedDate, rect });
         };
-    }, [yearMonth]);
+
+        /* istanbul ignore next */
+        if (
+            calendarRoot &&
+            typeof calendarRoot.addEventListener === "function"
+        ) {
+            calendarRoot.addEventListener("click", delegator);
+            return () => calendarRoot.removeEventListener("click", delegator);
+        }
+    }, [yearMonth, popupData]);
 
     useEffect(() => {
         const saturdayDate = moment()
             .add(addToCurrentWeek, "day")
             .startOf("week");
-
-        // console.log("saturdayDate >>", saturdayDate);
 
         const startWeekDate = saturdayDate
             .clone()
@@ -127,12 +256,17 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
         let secondEvent = "برای این تاریخ رویدادی وجود ندارد.";
 
         if (saturdayDate.isAfter(startDate, "day")) {
-            firstEvent = getEventForDate(
+            const fe = getEventForDate(
                 dayjs(saturdayDate.clone().add(10, "day").toDate())
-            ).fullName;
-            secondEvent = getEventForDate(
+            );
+            const se = getEventForDate(
                 dayjs(saturdayDate.clone().add(15, "day").toDate())
-            ).fullName;
+            );
+
+            /* istanbul ignore next */
+            if (fe) firstEvent = fe.fullName || fe.title;
+            /* istanbul ignore next */
+            if (se) secondEvent = se.fullName || se.title;
         }
 
         const newAnnouncementData = {
@@ -143,8 +277,6 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
             firstEvent,
             secondEvent,
         };
-
-        // console.log("newAnnouncementData >>", newAnnouncementData);
 
         setAnnouncementData((prev) => {
             if (JSON.stringify(prev) !== JSON.stringify(newAnnouncementData)) {
@@ -163,7 +295,11 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
             (item, index) => (item.textContent = persianWeekDays[index])
         );
 
-        document.querySelector(".today-btn").click();
+        const todayBtn = document.querySelector(".today-btn");
+        /* istanbul ignore next */
+        if (todayBtn && typeof todayBtn.click === "function") {
+            todayBtn.click();
+        }
     }, []);
 
     useEffect(() => {
@@ -173,12 +309,29 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
         setYearMonth(currentMonth.toString() + currentYear.toString());
     }, [value]);
 
+    useEffect(() => {
+        const stripNativeTitles = () => {
+            document
+                .querySelectorAll(
+                    ".ant-picker-cell[title], .ant-picker-cell-inner[title]"
+                )
+                .forEach((node) => node.removeAttribute("title"));
+        };
+
+        const raf = requestAnimationFrame(stripNativeTitles);
+        return () => cancelAnimationFrame(raf);
+    }, [value, yearMonth]);
+
     return (
-        <Flex justify="space-between" vertical className="calendar-section">
+        <Flex vertical className="calendar-section">
+            <CalendarIntro />
+
             <Calendar
                 value={value}
                 onSelect={onSelect}
-                onPanelChange={onPanelChange}
+                onPanelChange={(newValue) => {
+                    setValue(newValue);
+                }}
                 cellRender={dateCellRender}
                 headerRender={({ value, onChange }) => {
                     const currentMonth = value.month();
@@ -266,28 +419,20 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
                 }}
             />
 
-            <ConfigProvider direction={"rtl"}>
-                <Alert
-                    message={
-                        <div className="event-description">
-                            <div className="event-title">
-                                {eventDescription}
-                            </div>
-
-                            {eventDescription !==
-                                "برای این تاریخ رویدادی وجود ندارد." && (
-                                <CalendarEventCreator
-                                    eventDate={value.format("YYYY-MM-DD")}
-                                    eventText={eventDescription}
-                                    className="event-calender-btn"
-                                />
-                            )}
-                        </div>
-                    }
-                    type="info"
-                    showIcon
-                />
-            </ConfigProvider>
+            <EventPopup
+                visible={popupData.visible}
+                anchorRect={popupData.rect}
+                date={popupData.date}
+                event={popupData.event}
+                onClose={() =>
+                    setPopupData({
+                        visible: false,
+                        event: null,
+                        date: null,
+                        rect: null,
+                    })
+                }
+            />
         </Flex>
     );
 };

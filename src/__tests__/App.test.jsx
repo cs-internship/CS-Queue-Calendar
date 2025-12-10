@@ -1,96 +1,164 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import App from "../App";
+import { ThemeContext } from "../store/Theme/ThemeContext";
 
-// Mock child components
-jest.mock("../components/Header", () => {
-    return function DummyHeader() {
-        return <div data-testid="header">Header</div>;
+jest.mock("antd", () => {
+    const React = require("react");
+    const theme = {
+        defaultAlgorithm: "defaultAlgorithm",
+        darkAlgorithm: "darkAlgorithm",
     };
+
+    const ConfigProvider = ({ children, theme: themeProp }) => (
+        <div
+            data-testid="config-provider"
+            data-theme={JSON.stringify(themeProp)}
+        >
+            {children}
+        </div>
+    );
+
+    return { ConfigProvider, theme };
 });
 
-jest.mock("../components/Footer", () => {
-    return function DummyFooter() {
-        return <div data-testid="footer">Footer</div>;
-    };
-});
+const mockCsCalendar = jest.fn();
+let mockAnnouncementProps = null;
 
 jest.mock("../components/CSCalendar", () => {
-    return function DummyCSCalendar() {
-        return <div data-testid="calendar">Calendar</div>;
+    const React = require("react");
+    return function MockCSCalendar(props) {
+        mockCsCalendar(props);
+        React.useEffect(() => {
+            props.setAnnouncementData({
+                startWeekDate: "2025/01/13",
+                endWeekDate: "2025/01/20",
+                firstEventDate: "2025/01/15",
+                secondEventDate: "2025/01/19",
+                firstEvent: "First",
+                secondEvent: "Second",
+            });
+        }, [props.setAnnouncementData]);
+        return <div data-testid="calendar" />;
     };
 });
 
+jest.mock("../components/Footer", () => () => (
+    <div data-testid="footer">footer</div>
+));
+
 jest.mock("../components/FloatButtonSection", () => {
-    return function DummyFloatButtonSection() {
-        return <div data-testid="float-button">Float Button</div>;
+    return function MockFloatButtonSection({ setIsModalOpen }) {
+        return (
+            <button
+                data-testid="float-toggle"
+                onClick={() => setIsModalOpen(true)}
+            >
+                toggle
+            </button>
+        );
     };
 });
 
 jest.mock("../components/AnnouncementModule", () => {
-    return function DummyAnnouncementModule() {
-        return <div data-testid="announcement">Announcement</div>;
+    return function MockAnnouncementModule(props) {
+        mockAnnouncementProps = props;
+        return (
+            <div
+                data-testid="announcement"
+                onClick={() => props.setAddToCurrentWeek((prev) => prev + 1)}
+            >
+                announcement
+            </div>
+        );
     };
 });
 
 jest.mock("../components/Toastify", () => {
-    return function DummyToastify() {
-        return <div data-testid="toastify">Toastify</div>;
-    };
-});
-
-jest.mock("../store/StoreProvider", () => {
-    return function DummyStoreProvider({ children }) {
-        return <div data-testid="store-provider">{children}</div>;
-    };
-});
-
-// Mock ThemeContext
-jest.mock("../store/Theme/ThemeContext", () => {
-    const React = require("react");
-    const mockThemeContext = {
-        theme: "light",
-        toggleTheme: jest.fn(),
-    };
-    return {
-        __esModule: true,
-        default: React.createContext(mockThemeContext),
-        ThemeContext: React.createContext(mockThemeContext),
+    return function MockToastify({ toastifyObj }) {
+        return (
+            <div data-testid="toastify" data-mode={toastifyObj?.mode || ""} />
+        );
     };
 });
 
 describe("App", () => {
-    it("should render without crashing", () => {
-        render(<App />);
+    beforeEach(() => {
+        document.body.className = "";
+        jest.useFakeTimers();
+        jest.clearAllMocks();
+        mockAnnouncementProps = null;
+        mockCsCalendar.mockClear();
     });
 
-    it("should render Header component", () => {
-        render(<App />);
-        expect(screen.getByTestId("header")).toBeInTheDocument();
+    afterEach(() => {
+        jest.useRealTimers();
     });
 
-    it("should render Footer component", () => {
-        render(<App />);
+    const renderWithTheme = (themeValue = "light") =>
+        render(
+            <ThemeContext.Provider
+                value={{ theme: themeValue, toggleTheme: jest.fn() }}
+            >
+                <App />
+            </ThemeContext.Provider>
+        );
+
+    it("applies the correct theme algorithm and mounts children for light mode", () => {
+        renderWithTheme("light");
+        jest.runAllTimers();
+
+        const providers = screen.getAllByTestId("config-provider");
+        expect(providers.length).toBeGreaterThan(0);
+        const outerTheme = JSON.parse(providers[0].dataset.theme);
+        expect(outerTheme.algorithm).toBe("defaultAlgorithm");
+        expect(screen.getByTestId("calendar")).toBeInTheDocument();
         expect(screen.getByTestId("footer")).toBeInTheDocument();
     });
 
-    it("should render CSCalendar component", () => {
-        render(<App />);
-        expect(screen.getByTestId("calendar")).toBeInTheDocument();
+    it("switches to dark algorithm when theme context is dark", () => {
+        renderWithTheme("dark");
+        jest.runAllTimers();
+
+        const providers = screen.getAllByTestId("config-provider");
+        const outerTheme = JSON.parse(providers[0].dataset.theme);
+        expect(outerTheme.algorithm).toBe("darkAlgorithm");
     });
 
-    it("should render FloatButtonSection component", () => {
-        render(<App />);
-        expect(screen.getByTestId("float-button")).toBeInTheDocument();
+    it("adds the loaded class to body after the initial effect", () => {
+        renderWithTheme();
+        expect(document.body.classList.contains("loaded")).toBe(false);
+        jest.runAllTimers();
+        expect(document.body.classList.contains("loaded")).toBe(true);
     });
 
-    it("should render AnnouncementModule component", () => {
-        render(<App />);
-        expect(screen.getByTestId("announcement")).toBeInTheDocument();
+    it("propagates announcement data from calendar to announcement module", async () => {
+        renderWithTheme();
+        await waitFor(() =>
+            expect(mockAnnouncementProps?.announcementData?.firstEvent).toBe(
+                "First"
+            )
+        );
+        expect(mockCsCalendar).toHaveBeenCalled();
     });
 
-    it("should render Toastify component", () => {
-        render(<App />);
-        expect(screen.getByTestId("toastify")).toBeInTheDocument();
+    it("updates addToCurrentWeek state when announcement module requests it", async () => {
+        renderWithTheme();
+        fireEvent.click(screen.getByTestId("announcement"));
+
+        await waitFor(() => {
+            const lastCall =
+                mockCsCalendar.mock.calls[mockCsCalendar.mock.calls.length - 1];
+            expect(lastCall[0].addToCurrentWeek).toBe(1);
+        });
+    });
+
+    it("opens the announcement modal via float button toggle", async () => {
+        renderWithTheme();
+        fireEvent.click(screen.getByTestId("float-toggle"));
+
+        await waitFor(() =>
+            expect(mockAnnouncementProps?.isModalOpen).toBe(true)
+        );
     });
 });
