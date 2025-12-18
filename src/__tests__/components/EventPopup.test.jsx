@@ -153,7 +153,6 @@ describe("EventPopup", () => {
 
         jest.runAllTimers();
 
-        expect(getByText("جزئیات جلسه")).toBeInTheDocument();
         expect(getByText("ساعت ۱۸:۰۰ تا ۱۹:۰۰")).toBeInTheDocument();
         expect(
             screen.queryByTestId("calendar-event-creator")

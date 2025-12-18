@@ -145,7 +145,7 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
                             />
                         )}
                         <div className="event-popup__header-title">
-                            {event?.title || "جزئیات جلسه"}
+                            {"جلسه" + " " + event?.title || "جزئیات جلسه"}
                         </div>
                     </div>
                 </div>
