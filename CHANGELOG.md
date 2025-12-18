@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.1...v1.2.2) (2025-12-18)
+
+
+### Bug Fixes
+
+* **EventPopup:** update header title format to include event type ([2d1d9bb](https://github.com/cs-internship/CS-Queue-Calendar/commit/2d1d9bb082cac2502ba376076809579d76679656))
+
 ## [1.2.1](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.0...v1.2.1) (2025-12-18)
 
 
