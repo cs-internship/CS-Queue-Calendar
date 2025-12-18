@@ -264,9 +264,18 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
             );
 
             /* istanbul ignore next */
-            if (fe) firstEvent = fe.fullName || fe.title;
+            if (fe) {
+                firstEvent = "جلسه " + fe.title + ": " + fe.fullName;
+            }
+
             /* istanbul ignore next */
-            if (se) secondEvent = se.fullName || se.title;
+            if (se) {
+                if (se.title !== "مصاحبه") {
+                    secondEvent = "جلسه " + se.title + ": " + se.fullName;
+                } else {
+                    secondEvent = se.fullName;
+                }
+            }
         }
 
         const newAnnouncementData = {
