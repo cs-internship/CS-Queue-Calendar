@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.0...v1.2.1) (2025-12-18)
+
+
+### Bug Fixes
+
+* **calendar:** update event display format in announcements for better clarity ([6d64378](https://github.com/cs-internship/CS-Queue-Calendar/commit/6d64378794af89f16c8118e2d40e3d1d9885373f))
+
 # [1.2.0](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.1.1...v1.2.0) (2025-12-10)
 
 
