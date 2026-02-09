@@ -1,3 +1,11 @@
+## [1.2.3](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.2...v1.2.3) (2026-02-09)
+
+
+### Bug Fixes
+
+* **App:** trigger cicd ([078c711](https://github.com/cs-internship/CS-Queue-Calendar/commit/078c711e70e3df7a065d7197fb7291318b5f1126))
+* **Footer:** update copyright year to display current year dynamically ([548a685](https://github.com/cs-internship/CS-Queue-Calendar/commit/548a685e078f61d3dc9d10611e05742409387791))
+
 ## [1.2.2](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.1...v1.2.2) (2025-12-18)
 
 
