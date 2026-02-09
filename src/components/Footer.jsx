@@ -1,6 +1,8 @@
 import React from "react";
 
 const Footer = () => {
+    const currentYear = new Date().getFullYear();
+
     return (
         <a
             href="https://github.com/cs-internship"
@@ -8,7 +10,7 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer"
         >
-            &copy; CS Internship 2025
+            &copy; CS Internship {currentYear}
         </a>
     );
 };

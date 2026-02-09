@@ -39,9 +39,10 @@ describe("Footer", () => {
         expect(screen.getByText(/© CS Internship/)).toBeInTheDocument();
     });
 
-    it("should display year 2025", () => {
+    it("should display year", () => {
         render(<Footer />);
-        expect(screen.getByText(/2025/)).toBeInTheDocument();
+        const currentYear = new Date().getFullYear();
+        expect(screen.getByText(new RegExp(currentYear))).toBeInTheDocument();
     });
 
     it("should have page-footer class", () => {
