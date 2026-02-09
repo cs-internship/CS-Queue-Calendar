@@ -6,7 +6,6 @@ const CalendarEventCreator = ({ eventDate, eventText }) => {
         const [year, month, day] = eventDate.split("-").map(Number);
 
         const pad = (num) => num.toString().padStart(2, "0");
-
         const formatDate = (y, m, d, h, min) =>
             `${y}${pad(m)}${pad(d)}T${pad(h)}${pad(min)}00`;
 
