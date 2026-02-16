@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.3...v1.2.4) (2026-02-16)
+
+
+### Bug Fixes
+
+* update dependencies and improve test structure ([25bf57a](https://github.com/cs-internship/CS-Queue-Calendar/commit/25bf57af5c7269e4ef0435060c286843292dfc32))
+
 ## [1.2.3](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.2...v1.2.3) (2026-02-09)
 
 
