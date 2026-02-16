@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Calendar, Button, Select, Tag, Tooltip, Flex } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/fa";
@@ -138,7 +138,6 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
 
                     {event && (
                         <Tag
-                            /* istanbul ignore next */
                             color={
                                 theme === "light"
                                     ? event.colorLight
@@ -177,13 +176,12 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
                 return;
             }
 
-            /* istanbul ignore next */
             if (wrapper.contains(e.target)) {
                 return;
             }
 
             const dateStr = wrapper.getAttribute("data-date");
-            /* istanbul ignore next */
+
             if (!dateStr) {
                 return;
             }
@@ -194,7 +192,6 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
                 return;
             }
 
-            /* istanbul ignore next */
             if (
                 popupData.visible &&
                 popupData.date &&
@@ -214,7 +211,6 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
             setPopupData({ visible: true, event: ev, date: clickedDate, rect });
         };
 
-        /* istanbul ignore next */
         if (
             calendarRoot &&
             typeof calendarRoot.addEventListener === "function"
@@ -263,12 +259,10 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
                 dayjs(saturdayDate.clone().add(15, "day").toDate())
             );
 
-            /* istanbul ignore next */
             if (fe) {
                 firstEvent = "جلسه " + fe.title + ": " + fe.fullName;
             }
 
-            /* istanbul ignore next */
             if (se) {
                 if (se.title !== "مصاحبه") {
                     secondEvent = "جلسه " + se.title + ": " + se.fullName;
@@ -305,7 +299,7 @@ const CSCalendar = ({ setAnnouncementData, addToCurrentWeek }) => {
         );
 
         const todayBtn = document.querySelector(".today-btn");
-        /* istanbul ignore next */
+
         if (todayBtn && typeof todayBtn.click === "function") {
             todayBtn.click();
         }

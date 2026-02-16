@@ -37,7 +37,7 @@ jest.mock("antd", () => {
                 <textarea value={value} onChange={onChange} {...props} />
             ),
         },
-        Spin: ({ size, className }) => (
+        Spin: ({ _size, className }) => (
             <div data-testid="spinner" className={className}></div>
         ),
         Flex: ({ children, ...props }) => (
@@ -80,7 +80,7 @@ describe("AnnouncementModule", () => {
             <AnnouncementModule {...defaultProps} isModalOpen={false} />
         );
         expect(
-            container.querySelector('[data-testid="modal"]')
+            container.querySelector(`[data-testid="modal"]`)
         ).not.toBeInTheDocument();
     });
 
@@ -384,7 +384,6 @@ describe("AnnouncementModule", () => {
             />
         );
 
-        const buttons = screen.getAllByRole("button");
         const copyButton = screen.getByText("کپی پیام");
         const backButton = screen.getByText("بازگشت");
 

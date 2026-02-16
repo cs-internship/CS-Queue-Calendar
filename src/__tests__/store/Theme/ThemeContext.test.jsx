@@ -1,4 +1,3 @@
-import React from "react";
 import { ThemeContext } from "../../../store/Theme/ThemeContext";
 
 describe("ThemeContext", () => {

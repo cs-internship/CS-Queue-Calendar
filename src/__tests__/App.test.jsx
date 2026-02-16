@@ -29,8 +29,11 @@ jest.mock("../components/CSCalendar", () => {
     const React = require("react");
     return function MockCSCalendar(props) {
         mockCsCalendar(props);
+
+        const { setAnnouncementData } = props;
+
         React.useEffect(() => {
-            props.setAnnouncementData({
+            setAnnouncementData({
                 startWeekDate: "2025/01/13",
                 endWeekDate: "2025/01/20",
                 firstEventDate: "2025/01/15",
@@ -38,14 +41,19 @@ jest.mock("../components/CSCalendar", () => {
                 firstEvent: "First",
                 secondEvent: "Second",
             });
-        }, [props.setAnnouncementData]);
+        }, [setAnnouncementData]);
+
         return <div data-testid="calendar" />;
     };
 });
 
-jest.mock("../components/Footer", () => () => (
-    <div data-testid="footer">footer</div>
-));
+jest.mock("../components/Footer", () => {
+    const MockFooter = () => <div data-testid="footer">footer</div>;
+
+    MockFooter.displayName = "MockFooter";
+
+    return MockFooter;
+});
 
 jest.mock("../components/FloatButtonSection", () => {
     return function MockFloatButtonSection({ setIsModalOpen }) {

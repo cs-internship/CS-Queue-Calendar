@@ -1,5 +1,4 @@
 import { Button } from "antd";
-import React from "react";
 
 const CalendarEventCreator = ({ eventDate, eventText }) => {
     const createGoogleCalendarLink = () => {

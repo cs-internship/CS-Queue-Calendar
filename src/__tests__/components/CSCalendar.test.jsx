@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import dayjs from "dayjs";
 import moment from "jalali-moment";
@@ -22,9 +22,13 @@ jest.mock("../../components/EventPopup", () => {
     };
 });
 
-jest.mock("../../components/CalendarIntro", () => () => (
-    <div data-testid="calendar-intro" />
-));
+jest.mock("../../components/CalendarIntro", () => {
+    const MockCalendarIntro = () => <div data-testid="calendar-intro" />;
+
+    MockCalendarIntro.displayName = "MockCalendarIntro";
+
+    return MockCalendarIntro;
+});
 
 jest.mock("antd", () => {
     const React = require("react");
@@ -45,9 +49,13 @@ jest.mock("antd", () => {
             {children}
         </select>
     );
-    Select.Option = ({ value, children }) => (
+    const SelectOption = ({ value, children }) => (
         <option value={value}>{children}</option>
     );
+
+    SelectOption.displayName = "Select.Option";
+
+    Select.Option = SelectOption;
 
     const Tag = ({ children, className, color }) => (
         <div className={className} data-color={color}>

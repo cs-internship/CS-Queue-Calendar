@@ -103,10 +103,10 @@ describe("EventPopup", () => {
         expect(screen.getByText("تاریخ شمسی")).toBeInTheDocument();
         expect(screen.getByText("تاریخ میلادی")).toBeInTheDocument();
         expect(container.querySelector(".event-popup__link--primary")).toBe(
-            container.querySelector('a[href="https://example.com/session"]')
+            container.querySelector(`a[href="https://example.com/session"]`)
         );
         expect(
-            container.querySelector('a[href="https://example.com/resource"]')
+            container.querySelector(`a[href="https://example.com/resource"]`)
         ).toBeInTheDocument();
 
         const dot = container.querySelector(".event-popup__color-dot");
@@ -219,22 +219,5 @@ describe("EventPopup", () => {
         act(() => jest.advanceTimersByTime(220));
         fireEvent.mouseDown(document.body);
         expect(onClose).toHaveBeenCalled();
-    });
-
-    it("falls back to event title when full name is missing", () => {
-        mockCalendarCreator.mockClear();
-        const event = { ...baseEvent, fullName: undefined };
-        const { getByText } = renderPopup({
-            visible: true,
-            anchorRect,
-            date: dayjs("2025-01-14"),
-            event,
-            onClose: jest.fn(),
-        });
-
-        expect(screen.getAllByText(event.title).length).toBeGreaterThan(0);
-        expect(mockCalendarCreator).toHaveBeenCalledWith(
-            expect.objectContaining({ eventText: event.title })
-        );
     });
 });

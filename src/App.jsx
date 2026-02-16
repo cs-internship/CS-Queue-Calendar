@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ConfigProvider, theme } from "antd";
 import Footer from "./components/Footer";
 import CSCalendar from "./components/CSCalendar";

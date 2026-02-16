@@ -16,7 +16,7 @@
     "lint:fix": "eslint src --ext .js,.jsx --format stylish --fix",
     "act": "act --env-file .env.act --quiet",
     "prepare": "husky",
-    "check": "npm run format:check && npm run test"
+    "check": "npm run format:check && npm run lint && npm run test"
   },
   "repository": {
     "type": "git",

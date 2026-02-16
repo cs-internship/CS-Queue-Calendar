@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card, Typography, Space } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import CryptoJS from "crypto-js";

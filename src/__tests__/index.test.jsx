@@ -32,7 +32,7 @@ jest.mock("../assets/scss/index.scss", () => ({}), { virtual: true });
 
 describe("index.jsx entry point", () => {
     beforeEach(() => {
-        document.body.innerHTML = '<div id="root"></div>';
+        document.body.innerHTML = `<div id="root"></div>`;
         const { createRoot } = require("react-dom/client");
         createRoot.mockReturnValue({ render: mockRender });
         createRoot.mockClear();

@@ -208,7 +208,7 @@ describe("FloatButtonSection", () => {
 
     it("should handle theme toggle with transition", () => {
         const setIsModalOpen = jest.fn();
-        const { getAllByTestId, container } = render(
+        const { getAllByTestId } = render(
             <FloatButtonSection setIsModalOpen={setIsModalOpen} />
         );
         const buttons = getAllByTestId("float-button");
