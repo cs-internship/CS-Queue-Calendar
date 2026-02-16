@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { FloatButton, Tooltip } from "antd";
-import { ThemeContext } from "../store/Theme/ThemeContext";
 import {
     PlusOutlined,
     LinkedinOutlined,
@@ -12,6 +11,8 @@ import {
     NotificationOutlined,
     CopyOutlined,
 } from "@ant-design/icons";
+
+import { ThemeContext } from "../store/Theme/ThemeContext";
 
 const FloatButtonSection = ({ setIsModalOpen }) => {
     const { toggleTheme } = useContext(ThemeContext);

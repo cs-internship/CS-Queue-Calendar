@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+
 import { ThemeProvider } from "../../../store/Theme/ThemeProvider";
 import { ThemeContext } from "../../../store/Theme/ThemeContext";
 

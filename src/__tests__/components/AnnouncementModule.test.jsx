@@ -1,6 +1,6 @@
-import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
 import AnnouncementModule from "../../components/AnnouncementModule";
 
 // Mock navigator.clipboard
@@ -13,7 +13,6 @@ Object.defineProperty(navigator, "clipboard", {
 
 // Mock Ant Design components
 jest.mock("antd", () => {
-    const React = require("react");
     return {
         Button: ({ onClick, children, ...props }) => (
             <button onClick={onClick} {...props}>

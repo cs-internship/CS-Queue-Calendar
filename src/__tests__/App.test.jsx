@@ -1,10 +1,9 @@
-import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+
 import App from "../App";
 import { ThemeContext } from "../store/Theme/ThemeContext";
 
 jest.mock("antd", () => {
-    const React = require("react");
     const theme = {
         defaultAlgorithm: "defaultAlgorithm",
         darkAlgorithm: "darkAlgorithm",

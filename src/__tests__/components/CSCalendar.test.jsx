@@ -1,8 +1,8 @@
-import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import dayjs from "dayjs";
 import moment from "jalali-moment";
+
 import CSCalendar from "../../components/CSCalendar";
 import { ThemeContext } from "../../store/Theme/ThemeContext";
 import { events } from "../../constants/events";
@@ -31,8 +31,6 @@ jest.mock("../../components/CalendarIntro", () => {
 });
 
 jest.mock("antd", () => {
-    const React = require("react");
-
     const Button = ({ children, onClick, className }) => (
         <button className={className} onClick={onClick}>
             {children}

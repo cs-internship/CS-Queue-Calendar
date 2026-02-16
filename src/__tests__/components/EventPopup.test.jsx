@@ -1,13 +1,12 @@
-import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import dayjs from "dayjs";
+
 import EventPopup from "../../components/EventPopup";
 import { ThemeContext } from "../../store/Theme/ThemeContext";
 
 const mockCalendarCreator = jest.fn();
 jest.mock("../../components/CalendarEventCreator", () => {
-    const React = require("react");
     return function MockCalendarEventCreator(props) {
         mockCalendarCreator(props);
         return <div data-testid="calendar-event-creator" />;

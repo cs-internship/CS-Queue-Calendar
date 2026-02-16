@@ -1,5 +1,5 @@
-import React from "react";
 import { render, fireEvent } from "@testing-library/react";
+
 import FloatButtonSection from "../../components/FloatButtonSection";
 
 // Mock Ant Design icons
@@ -17,7 +17,6 @@ jest.mock("@ant-design/icons", () => ({
 
 // Mock Ant Design components
 jest.mock("antd", () => {
-    const React = require("react");
     const handlers = [];
     const FloatButtonGroup = ({ children, ...props }) => (
         <div

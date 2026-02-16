@@ -1,10 +1,9 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import CryptoJS from "crypto-js";
+
 import CalendarIntro from "../../components/CalendarIntro";
 
 jest.mock("antd", () => {
-    const React = require("react");
     return {
         Card: ({ children, ...props }) => (
             <div data-testid="card" {...props}>

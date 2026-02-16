@@ -14,7 +14,6 @@ jest.mock("../App", () => {
 });
 
 jest.mock("../store/StoreProvider", () => {
-    const React = require("react");
     function MockStoreProvider({ children }) {
         return <div data-testid="store-provider">{children}</div>;
     }

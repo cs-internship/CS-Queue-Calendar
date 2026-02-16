@@ -9,6 +9,7 @@
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
+        "plugin:import/recommended",
         "plugin:prettier/recommended"
     ],
     "parserOptions": {
@@ -21,20 +22,77 @@
     "settings": {
         "react": {
             "version": "detect"
+        },
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx"]
+            }
         }
     },
-    "plugins": ["react", "react-hooks"],
+    "plugins": ["react", "react-hooks", "react-refresh", "import"],
     "rules": {
-        "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+        "no-unused-vars": [
+            "warn",
+            { "argsIgnorePattern": "^_", "ignoreRestSiblings": true }
+        ],
         "no-console": "off",
+
+        "eqeqeq": ["error", "always"],
+        "no-var": "error",
+        "prefer-const": ["warn", { "destructuring": "all" }],
+        "no-implicit-coercion": "warn",
+
         "quotes": ["error", "double", { "allowTemplateLiterals": true }],
         "semi": ["error", "always"],
+
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
+        "react/jsx-uses-react": "off",
+        "react/jsx-uses-vars": "error",
+
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+
+        "react-refresh/only-export-components": [
+            "warn",
+            { "allowConstantExport": true }
+        ],
+
         "prettier/prettier": [
             "warn",
             {
                 "endOfLine": "auto"
+            }
+        ],
+
+        "import/order": [
+            "warn",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    ["parent", "sibling"],
+                    "index"
+                ],
+                "newlines-between": "always"
+            }
+        ],
+
+        "import/no-duplicates": "warn",
+        "import/no-unresolved": [
+            "error",
+            {
+                "ignore": [
+                    "\\.css$",
+                    "\\.scss$",
+                    "\\.sass$",
+                    "\\.svg$",
+                    "\\.png$",
+                    "\\.jpg$",
+                    "\\.jpeg$",
+                    "\\.gif$"
+                ]
             }
         ]
     }
