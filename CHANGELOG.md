@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.5...v1.2.6) (2026-10-11)
+
+
+### Bug Fixes
+
+* revert version to 1.2.3 in package-lock.json ([6140ee4](https://github.com/cs-internship/CS-Queue-Calendar/commit/6140ee4c3619bfffca1b082d44856427e7cd0620))
+
 ## [1.2.5](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.4...v1.2.5) (2026-10-11)
 
 
