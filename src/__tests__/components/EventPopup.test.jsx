@@ -74,7 +74,7 @@ describe("EventPopup", () => {
         expect(container.firstChild).toBeNull();
     });
 
-    it("renders event details, resource links, and calendar creator", () => {
+    it("renders event details without session links, resources, or time", () => {
         const onClose = jest.fn();
         const date = dayjs("2025-01-14");
 
@@ -98,15 +98,18 @@ describe("EventPopup", () => {
         ).toContain("is-open");
         expect(popupNode?.style.width).toBeTruthy();
         expect(screen.getByText("Full Event Title")).toBeInTheDocument();
-        expect(screen.getByText("10:00 - 11:00")).toBeInTheDocument();
         expect(screen.getByText("تاریخ شمسی")).toBeInTheDocument();
         expect(screen.getByText("تاریخ میلادی")).toBeInTheDocument();
-        expect(container.querySelector(".event-popup__link--primary")).toBe(
-            container.querySelector(`a[href="https://example.com/session"]`)
-        );
         expect(
             container.querySelector(`a[href="https://example.com/resource"]`)
-        ).toBeInTheDocument();
+        ).not.toBeInTheDocument();
+        expect(
+            container.querySelector(`a[href="https://example.com/session"]`)
+        ).not.toBeInTheDocument();
+        expect(screen.queryByText("10:00 - 11:00")).not.toBeInTheDocument();
+        expect(screen.queryByText("لینک جلسه")).not.toBeInTheDocument();
+        expect(screen.queryByText("منبع")).not.toBeInTheDocument();
+        expect(screen.queryByText("زمان")).not.toBeInTheDocument();
 
         const dot = container.querySelector(".event-popup__color-dot");
         expect(dot?.style.background).toContain("34");
@@ -152,7 +155,10 @@ describe("EventPopup", () => {
 
         jest.runAllTimers();
 
-        expect(getByText("ساعت ۱۸:۰۰ تا ۱۹:۰۰")).toBeInTheDocument();
+        expect(getByText("تاریخ شمسی")).toBeInTheDocument();
+        expect(
+            screen.queryByText("ساعت ۱۸:۰۰ تا ۱۹:۰۰")
+        ).not.toBeInTheDocument();
         expect(
             screen.queryByTestId("calendar-event-creator")
         ).not.toBeInTheDocument();
