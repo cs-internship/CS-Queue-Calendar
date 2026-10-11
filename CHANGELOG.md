@@ -1,3 +1,11 @@
+## [1.2.5](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.4...v1.2.5) (2026-10-11)
+
+
+### Bug Fixes
+
+* add yaml dependency for tailwindcss ([dea825d](https://github.com/cs-internship/CS-Queue-Calendar/commit/dea825d617c3378fb740dddf1ea13b7f5126f3f8))
+* modify announcement message ([f4719bc](https://github.com/cs-internship/CS-Queue-Calendar/commit/f4719bc78172d7baba1a9f86aad15664a543119d))
+
 ## [1.2.4](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.3...v1.2.4) (2026-02-16)
 
 
