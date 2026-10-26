@@ -1,3 +1,11 @@
+## [1.2.7](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.6...v1.2.7) (2026-10-26)
+
+
+### Bug Fixes
+
+* trigger release ([81f09f4](https://github.com/cs-internship/CS-Queue-Calendar/commit/81f09f4940ce76f2b556bf346b1292bd9bb97698))
+* trigger release ([688ebd2](https://github.com/cs-internship/CS-Queue-Calendar/commit/688ebd22c147a4488b24a724efdd416f0dca7105))
+
 ## [1.2.6](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.5...v1.2.6) (2026-10-11)
 
 
