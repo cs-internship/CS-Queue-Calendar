@@ -1,3 +1,10 @@
+## [1.2.8](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.7...v1.2.8) (2026-11-02)
+
+
+### Bug Fixes
+
+* **EventPopup:** remove session links, resources, and time from event details rendering ([a816ec2](https://github.com/cs-internship/CS-Queue-Calendar/commit/a816ec2816e591a3cff556e40928dd2fed14914e))
+
 ## [1.2.7](https://github.com/cs-internship/CS-Queue-Calendar/compare/v1.2.6...v1.2.7) (2026-10-26)
 
 
