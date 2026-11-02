@@ -164,49 +164,8 @@ const EventPopup = ({ visible, anchorRect, date, event, onClose }) => {
                                 {event.fullName || event.title}
                             </div>
                         </div>
-
-                        {event.link && (
-                            <div className="event-popup__row">
-                                <div className="event-popup__label">
-                                    لینک جلسه
-                                </div>
-                                <div className="event-popup__value">
-                                    <a
-                                        href={event.link}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="event-popup__link event-popup__link--primary"
-                                    >
-                                        {"ماکروسافت تیمز"}
-                                    </a>
-                                </div>
-                            </div>
-                        )}
-
-                        {event.resource && (
-                            <div className="event-popup__row">
-                                <div className="event-popup__label">منبع</div>
-                                <div className="event-popup__value">
-                                    <a
-                                        href={event.resource}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="event-popup__link"
-                                    >
-                                        {"مشاهده منبع"}
-                                    </a>
-                                </div>
-                            </div>
-                        )}
                     </>
                 )}
-
-                <div className="event-popup__row">
-                    <div className="event-popup__label">زمان</div>
-                    <div className="event-popup__value">
-                        {event?.time || "ساعت ۱۸:۰۰ تا ۱۹:۰۰"}
-                    </div>
-                </div>
 
                 {date && event && (
                     <div className="event-popup__creator">
