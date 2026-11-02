@@ -100,7 +100,7 @@ jobs:
             @semantic-release/git
             @semantic-release/github
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get created tag
         id: get_tag
